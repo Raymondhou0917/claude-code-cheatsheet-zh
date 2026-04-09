@@ -1,0 +1,76 @@
+name: Check upstream updates
+
+on:
+  schedule:
+    # 每天 UTC 16:00（台北 00:00）檢查一次
+    - cron: '0 16 * * *'
+  workflow_dispatch: # 手動觸發
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch upstream version
+        id: upstream
+        run: |
+          UPSTREAM_HTML=$(curl -sL https://cc.storyfox.cz)
+          UPSTREAM_VER=$(echo "$UPSTREAM_HTML" | grep -oE 'Claude Code v[0-9.]+' | head -1 | sed 's/Claude Code //')
+          if [ -z "$UPSTREAM_VER" ]; then
+            echo "::warning::Could not extract upstream version"
+            exit 0
+          fi
+          echo "version=$UPSTREAM_VER" >> "$GITHUB_OUTPUT"
+          echo "Upstream version: $UPSTREAM_VER"
+
+      - name: Get current version from README
+        id: current
+        run: |
+          CURRENT_VER=$(grep -oE 'Claude Code v[0-9.]+' README.md | head -1 | sed 's/Claude Code //')
+          if [ -z "$CURRENT_VER" ]; then
+            CURRENT_VER="unknown"
+          fi
+          echo "version=$CURRENT_VER" >> "$GITHUB_OUTPUT"
+          echo "Current version: $CURRENT_VER"
+
+      - name: Compare and create issue
+        if: steps.upstream.outputs.version != '' && steps.upstream.outputs.version != steps.current.outputs.version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPSTREAM_VER: ${{ steps.upstream.outputs.version }}
+          CURRENT_VER: ${{ steps.current.outputs.version }}
+        run: |
+          # 避免重複開 issue
+          EXISTING=$(gh issue list --state open --label "upstream-update" --json title -q ".[].title" | grep "$UPSTREAM_VER" || true)
+          if [ -n "$EXISTING" ]; then
+            echo "Issue already exists for $UPSTREAM_VER, skipping."
+            exit 0
+          fi
+
+          gh label create "upstream-update" --color "0E8A16" --description "上游版本更新通知" 2>/dev/null || true
+
+          gh issue create \
+            --title "🔄 上游更新：Claude Code ${UPSTREAM_VER}（目前 ${CURRENT_VER}）" \
+            --label "upstream-update" \
+            --body "## 偵測到上游更新
+
+| 項目 | 版本 |
+|:--|:--|
+| **原站** | Claude Code ${UPSTREAM_VER} |
+| **目前翻譯版** | Claude Code ${CURRENT_VER} |
+
+## 待辦
+
+- [ ] 前往 [cc.storyfox.cz](https://cc.storyfox.cz/) 確認變更內容
+- [ ] 查看 [官方 Changelog](https://code.claude.com/docs/en/changelog) 對照新功能
+- [ ] 更新 \`index.html\` 翻譯
+- [ ] 更新 README 版本對齊資訊
+- [ ] 部署確認
+
+---
+*由 GitHub Actions 自動偵測*"
