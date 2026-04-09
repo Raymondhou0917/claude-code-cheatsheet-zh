@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.92</span>
-          <span class="last-updated">更新日期：2026 年 4 月 4 日</span>
+          <span class="version-info">Claude Code v2.1.97</span>
+          <span class="last-updated">更新日期：2026 年 4 月 8 日</span>
         </div>
       </div>
     </header>
@@ -562,12 +562,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li><code>forceRemoteSettingsRefresh</code> 策略 — 啟動時強制刷新遠端設定 (v2.1.92)</li>
-        <li>互動式 Bedrock 設定精靈（登入畫面）(v2.1.92)</li>
-        <li><code>/cost</code> 新增各模型 + 快取命中明細 (v2.1.92)</li>
-        <li><code>/release-notes</code> 改為互動式版本選擇器 (v2.1.92)</li>
-        <li>移除 <code>/tag</code> 和 <code>/vim</code> 指令 (v2.1.92)</li>
-        <li>Write 工具大檔案 diff 速度提升 60% (v2.1.92)</li>
+        <li><code>Ctrl+O</code> 在 <code>NO_FLICKER</code> 模式新增焦點檢視（提示詞、工具摘要、最終回應）(v2.1.97)</li>
+        <li><code>refreshInterval</code> 自訂狀態列每 N 秒重新整理 (v2.1.97)</li>
+        <li><code>workspace.git_worktree</code> 納入狀態列 JSON 輸入 (v2.1.97)</li>
+        <li><code>/agents</code> 顯示「● N running」執行中指標 (v2.1.97)</li>
+        <li><code>CLAUDE_CODE_USE_MANTLE=1</code> 透過 Mantle 啟用 Amazon Bedrock (v2.1.94)</li>
+        <li>API key / Bedrock / Vertex / Foundry / Team / Enterprise 使用者預設 effort 提高 (v2.1.94)</li>
       </ul>
     </div>
 
@@ -583,7 +583,7 @@
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">C</span></span> <span class="desc">取消輸入／中斷生成</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">D</span></span> <span class="desc">結束對話</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">L</span></span> <span class="desc">清除畫面</span></div>
-          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span> <span class="desc">切換詳細／逐字稿模式</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span> <span class="desc">切換詳細／逐字稿／焦點模式<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">R</span></span> <span class="desc">反向搜尋歷史</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">G</span></span> <span class="desc">在編輯器中開啟提示詞</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc">在編輯器中開啟（別名）</span></div>
@@ -617,9 +617,7 @@
           <div class="row"><span class="key"><span class="keycap">A</span></span> <span class="desc">所有專案</span></div>
           <div class="row"><span class="key"><span class="keycap">B</span></span> <span class="desc">目前分支</span></div>
 
-          <div class="sub-header">逐字稿模式 (Ctrl+O)</div>
-          <div class="row"><span class="key"><span class="keycap">/</span></span> <span class="desc">搜尋逐字稿</span></div>
-          <div class="row"><span class="key"><span class="keycap">N</span> / <span class="keycap">⇧</span><span class="keycap">N</span></span> <span class="desc">下一個／上一個結果</span></div>
+          <div class="sub-header">逐字稿／焦點模式 (Ctrl+O)</div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc">切換顯示全部</span></div>
           <div class="row"><span class="key"><span class="keycap">Q</span> / <span class="keycap">Esc</span></span> <span class="desc">離開逐字稿</span></div>
         </div>
@@ -683,7 +681,7 @@
           <div class="row"><span class="key">/mcp</span> <span class="desc">管理 MCP 伺服器</span></div>
           <div class="row"><span class="key">/hooks</span> <span class="desc">管理 Hooks</span></div>
           <div class="row"><span class="key">/skills</span> <span class="desc">列出可用 Skills</span></div>
-          <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents</span></div>
+          <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents + 執行中數量指標<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
           <div class="row"><span class="key">/chrome</span> <span class="desc">Chrome 整合</span></div>
           <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛</span></div>
           <div class="row"><span class="key">/add-dir &lt;路徑&gt;</span> <span class="desc">新增工作目錄</span></div>
@@ -716,8 +714,10 @@
         <div class="section-content">
           <div class="sub-header">CLAUDE.md 位置</div>
           <div class="row"><span class="key">./CLAUDE.md</span> <span class="desc">專案（團隊共享）</span></div>
+          <div class="row"><span class="key">./.claude/CLAUDE.md</span> <span class="desc">專案（團隊共享，替代位置）</span></div>
+          <div class="row"><span class="key">./CLAUDE.local.md</span> <span class="desc">個人本機（已 gitignore）</span></div>
           <div class="row"><span class="key">~/.claude/CLAUDE.md</span> <span class="desc">個人（所有專案）</span></div>
-          <div class="row"><span class="key">/etc/claude-code/</span> <span class="desc">受管理（組織層級）</span></div>
+          <div class="row"><span class="key">/etc/claude-code/</span> <span class="desc">受管理（Linux/WSL，組織層級）</span></div>
           <div class="sub-header">規則與匯入</div>
           <div class="row"><span class="key">.claude/rules/*.md</span> <span class="desc">專案規則</span></div>
           <div class="row"><span class="key">~/.claude/rules/*.md</span> <span class="desc">使用者規則</span></div>
@@ -749,6 +749,7 @@
           <div class="row"><span class="key">--worktree name</span> <span class="desc">每個功能獨立分支</span></div>
           <div class="row"><span class="key">isolation: worktree</span> <span class="desc">Agent 在獨立 worktree 運行</span></div>
           <div class="row"><span class="key">sparsePaths</span> <span class="desc">僅 checkout 需要的目錄</span></div>
+          <div class="row"><span class="key">workspace.git_worktree</span> <span class="desc">狀態列 JSON：連結的 worktree 路徑<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
           <div class="row"><span class="key">/batch</span> <span class="desc">自動建立 worktrees</span></div>
           <div class="sub-header">語音模式</div>
           <div class="row"><span class="key">/voice</span> <span class="desc">啟用按鍵說話</span></div>
@@ -799,6 +800,7 @@
           <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">暫停 Headless → 稍後恢復</span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
           <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc">強制刷新：阻擋啟動直到取得最新設定<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
+          <div class="row"><span class="key">refreshInterval</span> <span class="desc">自訂狀態列每 N 秒重新執行<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
           <div class="sub-header">重要環境變數</div>
           <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
           <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
@@ -809,7 +811,10 @@
           <div class="row"><span class="key">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> <span class="desc">串流逾時看門狗（預設 90s）</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">替代畫面渲染（=1）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc">在 <code>-p</code> 模式跳過 MCP 等待<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_USE_MANTLE</span> <span class="desc">透過 Mantle 使用 Bedrock（=1）<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
         </div>
       </section>
       </div>
@@ -890,7 +895,9 @@
           <div class="row"><span class="key">--remote</span> <span class="desc">Web Session</span></div>
           <div class="row"><span class="key">--effort</span> <span class="desc">low/medium/high/max</span></div>
           <div class="row"><span class="key">--permission-mode</span> <span class="desc">plan/default/…</span></div>
+          <div class="row"><span class="key">--allow-dangerously-skip-permissions</span> <span class="desc">將 bypassPermissions 加入 Shift+Tab 循環</span></div>
           <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc">跳過所有權限提示 ⚠️</span></div>
+          <div class="row"><span class="key">--remote-control / --rc</span> <span class="desc">互動式 Remote Control Session</span></div>
           <div class="row"><span class="key">--chrome</span> <span class="desc">Chrome 整合</span></div>
           <div class="row"><span class="key">PowerShell 工具</span> <span class="desc">Windows 預覽版<span class="badge-new" data-added="2026-03-26">NEW</span></span></div>
         </div>
