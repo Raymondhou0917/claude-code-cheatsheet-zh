@@ -1,0 +1,74 @@
+name: Check upstream updates
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch upstream version
+        id: upstream
+        run: |
+          UPSTREAM_HTML=$(curl -sL https://cc.storyfox.cz)
+          UPSTREAM_VER=$(echo "$UPSTREAM_HTML" | grep -oE 'Claude Code v[0-9.]+' | head -1 | sed 's/Claude Code //')
+          if [ -z "$UPSTREAM_VER" ]; then
+            echo "::warning::Could not extract upstream version"
+            exit 0
+          fi
+          echo "version=$UPSTREAM_VER" >> "$GITHUB_OUTPUT"
+          echo "Upstream version: $UPSTREAM_VER"
+
+      - name: Get current version from README
+        id: current
+        run: |
+          CURRENT_VER=$(grep -oE 'Claude Code v[0-9.]+' README.md | head -1 | sed 's/Claude Code //')
+          if [ -z "$CURRENT_VER" ]; then
+            CURRENT_VER="unknown"
+          fi
+          echo "version=$CURRENT_VER" >> "$GITHUB_OUTPUT"
+          echo "Current version: $CURRENT_VER"
+
+      - name: Compare and create issue
+        if: steps.upstream.outputs.version != '' && steps.upstream.outputs.version != steps.current.outputs.version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPSTREAM_VER: ${{ steps.upstream.outputs.version }}
+          CURRENT_VER: ${{ steps.current.outputs.version }}
+        run: |
+          EXISTING=$(gh issue list --state open --label "upstream-update" --json title -q ".[].title" | grep "$UPSTREAM_VER" || true)
+          if [ -n "$EXISTING" ]; then
+            echo "Issue already exists for $UPSTREAM_VER, skipping."
+            exit 0
+          fi
+
+          gh label create "upstream-update" --color "0E8A16" --description "Upstream version update" 2>/dev/null || true
+
+          gh issue create \
+            --title "upstream update: Claude Code ${UPSTREAM_VER} (current: ${CURRENT_VER})" \
+            --label "upstream-update" \
+            --body "## Upstream Update Detected
+
+          | Item | Version |
+          |:--|:--|
+          | **Upstream** | Claude Code ${UPSTREAM_VER} |
+          | **Current** | Claude Code ${CURRENT_VER} |
+
+          ## TODO
+
+          - [ ] Check [cc.storyfox.cz](https://cc.storyfox.cz/) for changes
+          - [ ] Review [official Changelog](https://code.claude.com/docs/en/changelog)
+          - [ ] Update \`index.html\` translation
+          - [ ] Update README version info
+          - [ ] Verify deployment
+
+          ---
+          *Auto-detected by GitHub Actions*"
