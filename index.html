@@ -552,7 +552,7 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.114</span>
+          <span class="version-info">Claude Code v2.1.116</span>
           <span class="last-updated">更新日期：2026 年 4 月 20 日</span>
         </div>
       </div>
@@ -562,6 +562,10 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>/resume</code> 大型 Session（≥ 40 MB）速度提升 67%<span class="badge-new" data-added="2026-04-20">NEW</span></li>
+        <li>思考旋轉指示改為行內進度提示（顯示「仍在思考中」、「即將完成」）<span class="badge-new" data-added="2026-04-20">NEW</span></li>
+        <li><code>/reload-plugins</code> 自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></li>
+        <li>Bash 工具偵測到 <code>gh</code> 觸及 GitHub API 速率限制時顯示提示<span class="badge-new" data-added="2026-04-20">NEW</span></li>
         <li>Claude Opus 4.7 新增 <code>xhigh</code> effort 等級 — 介於 <code>high</code> 與 <code>max</code> 之間，可透過 <code>/effort</code>、<code>--effort</code> 與模型選擇器使用；<code>/effort</code> 不帶參數時會開啟可用方向鍵調整的互動式滑桿<span class="badge-new" data-added="2026-04-17">NEW</span></li>
         <li><code>/ultrareview [PR#]</code> — 以多 Agent 平行分析進行雲端程式碼全面審查<span class="badge-new" data-added="2026-04-17">NEW</span></li>
         <li><code>/theme</code> 新增「Auto（跟隨終端機）」選項，自動對應終端機的深／淺色模式<span class="badge-new" data-added="2026-04-17">NEW</span></li>
@@ -690,7 +694,7 @@
           <div class="row"><span class="key">/skills</span> <span class="desc">列出可用 Skills</span></div>
           <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents（執行中 + 函式庫分頁，快速啟動／檢查）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">/chrome</span> <span class="desc">Chrome 整合</span></div>
-          <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛</span></div>
+          <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛，自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></span></div>
           <div class="row"><span class="key">/team-onboarding</span> <span class="desc">從本地使用記錄生成團隊入門指南<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
           <div class="row"><span class="key">/add-dir &lt;路徑&gt;</span> <span class="desc">新增工作目錄</span></div>
 
