@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.116</span>
-          <span class="last-updated">更新日期：2026 年 4 月 20 日</span>
+          <span class="version-info">Claude Code v2.1.120</span>
+          <span class="last-updated">更新日期：2026 年 4 月 26 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,17 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>CLAUDE_CODE_HIDE_CWD</code> 隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li><code>prUrlTemplate</code> 設定：自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li><code>--from-pr</code> 現支援 GitLab MR、Bitbucket PR 與 GitHub Enterprise URL<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li>Hooks 事件新增 <code>duration_ms</code> 回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li><code>/config</code> 設定持久化至 <code>~/.claude/settings.json</code>，支援 project/local/policy 層級覆寫<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li>Vim 視覺模式 <code>v</code>（選取 + 運算子）與視覺行模式 <code>V</code><span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li><code>/cost</code> 與 <code>/stats</code> 合併為 <code>/usage</code>（兩者仍作為捷徑保留）<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li>Hooks 可透過 <code>type: "mcp_tool"</code> 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li><code>DISABLE_UPDATES</code> 封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></li>
+        <li>Agent frontmatter <code>mcpServers</code> 可在 <code>--agent</code> 主執行緒 session 中載入<span class="badge-new" data-added="2026-04-22">NEW</span></li>
+        <li><code>CLAUDE_CODE_FORK_SUBAGENT=1</code> 在外部建置上啟用分叉子 Agent<span class="badge-new" data-added="2026-04-22">NEW</span></li>
         <li><code>/resume</code> 大型 Session（≥ 40 MB）速度提升 67%<span class="badge-new" data-added="2026-04-20">NEW</span></li>
         <li>思考旋轉指示改為行內進度提示（顯示「仍在思考中」、「即將完成」）<span class="badge-new" data-added="2026-04-20">NEW</span></li>
         <li><code>/reload-plugins</code> 自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></li>
@@ -629,6 +640,10 @@
           <div class="sub-header">逐字稿／焦點模式 (Ctrl+O)</div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc">切換顯示全部</span></div>
           <div class="row"><span class="key"><span class="keycap">Q</span> / <span class="keycap">Esc</span></span> <span class="desc">離開逐字稿</span></div>
+
+          <div class="sub-header">Vim 模式</div>
+          <div class="row"><span class="key"><span class="keycap">v</span></span> <span class="desc">視覺模式（選取 + 運算子）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key"><span class="keycap">V</span></span> <span class="desc">視覺行模式<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
         </div>
       </section>
 
@@ -714,7 +729,7 @@
           <div class="row"><span class="key">/insights</span> <span class="desc">分析 Session 報告</span></div>
           <div class="row"><span class="key">/desktop</span> <span class="desc">在桌面版繼續</span></div>
           <div class="row"><span class="key">/remote-control</span> <span class="desc">橋接至 claude.ai/code（/rc）</span></div>
-          <div class="row"><span class="key">/usage</span> <span class="desc">方案限額與速率狀態</span></div>
+          <div class="row"><span class="key">/usage</span> <span class="desc">方案限額、速率狀態（含 <code>/cost</code>、<code>/stats</code> 功能）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">/schedule</span> <span class="desc">雲端排程任務</span></div>
           <div class="row"><span class="key">/security-review</span> <span class="desc">變更的安全性分析</span></div>
           <div class="row"><span class="key">/help</span> <span class="desc">顯示說明 + 指令</span></div>
@@ -817,6 +832,10 @@
           <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">allowedChannelPlugins</span> <span class="desc">管理員頻道外掛白名單</span></div>
           <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">暫停 Headless → 稍後恢復</span></div>
+          <div class="row"><span class="key">hooks: type: "mcp_tool"</span> <span class="desc">Hook 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: duration_ms</span> <span class="desc">Hook 事件回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
           <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc">強制刷新：阻擋啟動直到取得最新設定<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
           <div class="row"><span class="key">refreshInterval</span> <span class="desc">自訂狀態列每 N 秒重新執行<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
@@ -829,6 +848,9 @@
           <div class="row"><span class="key">FORCE_PROMPT_CACHING_5M</span> <span class="desc">強制 5 分鐘 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_FORK_SUBAGENT</span> <span class="desc">在外部建置上啟用分叉子 Agent（=1）<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
+          <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_HIDE_CWD</span> <span class="desc">隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc">自訂 /model 選項</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SUBPROCESS_ENV_SCRUB</span> <span class="desc">從子程序移除憑證</span></div>
           <div class="row"><span class="key">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> <span class="desc">串流逾時看門狗（預設 90s）</span></div>
@@ -872,6 +894,7 @@
           <div class="row"><span class="key">${CLAUDE_SKILL_DIR}</span> <span class="desc">Skill 所在目錄</span></div>
           <div class="row"><span class="key">!`cmd`</span> <span class="desc">動態上下文注入</span></div>
           <div class="row"><span class="key">plugin bin/</span> <span class="desc">隨附可執行檔供 Bash 工具使用<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
+          <div class="row"><span class="key">plugin themes/</span> <span class="desc">外掛附帶自訂主題<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
 
           <div class="sub-header">內建 Agents</div>
           <div class="row"><span class="key">Explore</span> <span class="desc">快速唯讀（Haiku）</span></div>
@@ -888,6 +911,7 @@
           <div class="row"><span class="key">initialPrompt</span> <span class="desc">第一回合自動提交</span></div>
           <div class="row"><span class="key">SendMessage</span> <span class="desc">恢復 Agent（取代 resume）</span></div>
           <div class="row"><span class="key">@agent-name</span> <span class="desc">提及命名子 Agent<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+          <div class="row"><span class="key">mcpServers</span> <span class="desc">在 <code>--agent</code> 主執行緒 session 中載入 MCP 伺服器<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
         </div>
       </section>
 
@@ -908,6 +932,7 @@
           <div class="row"><span class="key">-n / --name</span> <span class="desc">Session 名稱</span></div>
           <div class="row"><span class="key">--add-dir</span> <span class="desc">新增目錄</span></div>
           <div class="row"><span class="key">--agent</span> <span class="desc">使用 Agent</span></div>
+          <div class="row"><span class="key">--from-pr [URL]</span> <span class="desc">從 PR 恢復（支援 GitHub / GitLab / Bitbucket / GHE）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">--allowedTools</span> <span class="desc">預先核准工具</span></div>
           <div class="row"><span class="key">--output-format</span> <span class="desc">json/stream</span></div>
           <div class="row"><span class="key">--json-schema</span> <span class="desc">結構化輸出</span></div>
