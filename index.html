@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.120</span>
-          <span class="last-updated">更新日期：2026 年 4 月 26 日</span>
+          <span class="version-info">Claude Code v2.1.121</span>
+          <span class="last-updated">更新日期：2026 年 4 月 29 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,10 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>MCP 伺服器設定新增 <code>alwaysLoad</code> 選項 — 設為 <code>true</code> 時，該伺服器所有工具跳過工具搜尋延遲、始終可用<span class="badge-new" data-added="2026-04-28">NEW</span></li>
+        <li><code>/skills</code> 新增輸入篩選搜尋框，快速定位長列表中的 Skill<span class="badge-new" data-added="2026-04-28">NEW</span></li>
+        <li>PostToolUse Hooks 可透過 <code>hookSpecificOutput.updatedToolOutput</code> 替換所有工具的輸出（先前僅限 MCP 工具）<span class="badge-new" data-added="2026-04-28">NEW</span></li>
+        <li><code>claude plugin prune</code> — 移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></li>
         <li><code>CLAUDE_CODE_HIDE_CWD</code> 隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></li>
         <li><code>prUrlTemplate</code> 設定：自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></li>
         <li><code>--from-pr</code> 現支援 GitLab MR、Bitbucket PR 與 GitHub Enterprise URL<span class="badge-new" data-added="2026-04-23">NEW</span></li>
@@ -666,6 +670,7 @@
           <div class="row"><span class="key">Elicitation</span> <span class="desc">伺服器可在任務中請求輸入</span></div>
           <div class="row"><span class="key">2KB 上限</span> <span class="desc">工具描述 + 伺服器指令限制</span></div>
           <div class="row"><span class="key">maxResultSizeChars</span> <span class="desc">_meta 標註覆寫（最高 500K）<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
+          <div class="row"><span class="key">alwaysLoad</span> <span class="desc">跳過工具搜尋延遲，工具始終可用（MCP server config）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -706,7 +711,7 @@
           <div class="row"><span class="key">/memory</span> <span class="desc">編輯 CLAUDE.md 檔案</span></div>
           <div class="row"><span class="key">/mcp</span> <span class="desc">管理 MCP 伺服器</span></div>
           <div class="row"><span class="key">/hooks</span> <span class="desc">管理 Hooks</span></div>
-          <div class="row"><span class="key">/skills</span> <span class="desc">列出可用 Skills</span></div>
+          <div class="row"><span class="key">/skills</span> <span class="desc">列出可用 Skills（可輸入即時篩選）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents（執行中 + 函式庫分頁，快速啟動／檢查）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">/chrome</span> <span class="desc">Chrome 整合</span></div>
           <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛，自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></span></div>
@@ -834,6 +839,7 @@
           <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">暫停 Headless → 稍後恢復</span></div>
           <div class="row"><span class="key">hooks: type: "mcp_tool"</span> <span class="desc">Hook 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">hooks: duration_ms</span> <span class="desc">Hook 事件回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">hookSpecificOutput.updatedToolOutput</span> <span class="desc">PostToolUse Hook 覆寫所有工具輸出（非僅 MCP）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
@@ -926,6 +932,7 @@
           <div class="row"><span class="key">claude -c</span> <span class="desc">繼續上次</span></div>
           <div class="row"><span class="key">claude -r "名稱"</span> <span class="desc">恢復 Session</span></div>
           <div class="row"><span class="key">claude update</span> <span class="desc">更新</span></div>
+          <div class="row"><span class="key">claude plugin prune</span> <span class="desc">移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
