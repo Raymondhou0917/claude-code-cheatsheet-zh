@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.121</span>
-          <span class="last-updated">更新日期：2026 年 4 月 29 日</span>
+          <span class="version-info">Claude Code v2.1.126</span>
+          <span class="last-updated">更新日期：2026 年 5 月 2 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,13 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>claude project purge [path]</code> — 刪除專案所有 Claude Code 狀態（逐字稿、任務、檔案歷史、設定項目）；支援 <code>--dry-run</code>、<code>-y/--yes</code>、<code>-i/--interactive</code>、<code>--all</code><span class="badge-new" data-added="2026-05-01">NEW</span></li>
+        <li><code>claude auth login</code> 支援在瀏覽器無法回呼 localhost 時（WSL2、SSH、容器），直接在終端機貼入 OAuth 認證碼<span class="badge-new" data-added="2026-05-01">NEW</span></li>
+        <li><code>--dangerously-skip-permissions</code> 現在也繞過 <code>.claude/</code>、<code>.git/</code>、<code>.vscode/</code> 及 Shell 設定檔的寫入確認（高危刪除指令仍會提示）<span class="badge-new" data-added="2026-05-01">NEW</span></li>
+        <li><code>/model</code> 選擇器：<code>ANTHROPIC_BASE_URL</code> 指向相容 Gateway 時，自動列出 <code>/v1/models</code> 端點的模型清單<span class="badge-new" data-added="2026-05-01">NEW</span></li>
+        <li><code>ANTHROPIC_BEDROCK_SERVICE_TIER</code> — 選擇 Bedrock 服務層級（<code>default</code> / <code>flex</code> / <code>priority</code>），以 <code>X-Amzn-Bedrock-Service-Tier</code> header 傳送<span class="badge-new" data-added="2026-04-28">NEW</span></li>
+        <li><code>/resume</code> 搜尋框支援貼入 PR URL，快速跳至建立該 PR 的 Session（支援 GitHub、GitHub Enterprise、GitLab、Bitbucket）<span class="badge-new" data-added="2026-04-28">NEW</span></li>
+        <li><code>/mcp</code> 顯示被同名手動伺服器遮蔽的 claude.ai connectors，並提示移除重複項目<span class="badge-new" data-added="2026-04-28">NEW</span></li>
         <li>MCP 伺服器設定新增 <code>alwaysLoad</code> 選項 — 設為 <code>true</code> 時，該伺服器所有工具跳過工具搜尋延遲、始終可用<span class="badge-new" data-added="2026-04-28">NEW</span></li>
         <li><code>/skills</code> 新增輸入篩選搜尋框，快速定位長列表中的 Skill<span class="badge-new" data-added="2026-04-28">NEW</span></li>
         <li>PostToolUse Hooks 可透過 <code>hookSpecificOutput.updatedToolOutput</code> 替換所有工具的輸出（先前僅限 MCP 工具）<span class="badge-new" data-added="2026-04-28">NEW</span></li>
@@ -863,6 +870,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">替代畫面渲染（=1）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc">在 <code>-p</code> 模式跳過 MCP 等待<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_USE_MANTLE</span> <span class="desc">透過 Mantle 使用 Bedrock（=1）<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+          <div class="row"><span class="key">ANTHROPIC_BEDROCK_SERVICE_TIER</span> <span class="desc">選擇 Bedrock 服務層級（default / flex / priority）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PERFORCE_MODE</span> <span class="desc">Perforce 模式：唯讀檔案自動提示 p4 edit（=1）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_CERT_STORE</span> <span class="desc">設為 bundled 僅使用內建 CA 憑證<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
@@ -933,6 +941,8 @@
           <div class="row"><span class="key">claude -r "名稱"</span> <span class="desc">恢復 Session</span></div>
           <div class="row"><span class="key">claude update</span> <span class="desc">更新</span></div>
           <div class="row"><span class="key">claude plugin prune</span> <span class="desc">移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+          <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
+          <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
@@ -956,7 +966,7 @@
           <div class="row"><span class="key">--permission-mode</span> <span class="desc">plan/default/…</span></div>
           <div class="row"><span class="key">--exclude-dynamic-system-prompt-sections</span> <span class="desc">列印模式省略動態段落（跨使用者提示快取優化）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">--allow-dangerously-skip-permissions</span> <span class="desc">將 bypassPermissions 加入 Shift+Tab 循環</span></div>
-          <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc">跳過所有權限提示 ⚠️</span></div>
+          <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc">跳過所有權限提示，含 <code>.claude/</code> <code>.git/</code> <code>.vscode/</code> 等保護路徑 ⚠️<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">--remote-control / --rc</span> <span class="desc">互動式 Remote Control Session</span></div>
           <div class="row"><span class="key">--chrome</span> <span class="desc">Chrome 整合</span></div>
           <div class="row"><span class="key">PowerShell 工具</span> <span class="desc">Windows 預覽版<span class="badge-new" data-added="2026-03-26">NEW</span></span></div>
