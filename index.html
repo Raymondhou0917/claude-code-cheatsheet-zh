@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.126</span>
-          <span class="last-updated">更新日期：2026 年 5 月 2 日</span>
+          <span class="version-info">Claude Code v2.1.138</span>
+          <span class="last-updated">更新日期：2026 年 5 月 11 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>新增 <code>settings.autoMode.hard_deny</code> — 無條件套用的 Auto 模式分類器拒絕規則 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
+        <li>修復 <code>/clear</code> 後 MCP 伺服器被靜默移除的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
+        <li>修復並行寫入憑證導致 OAuth token 被覆寫、陷入登入迴圈的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
+        <li>WSL2：從 Windows 剪貼簿貼上圖片現在透過 PowerShell fallback 正常運作 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
+        <li>修復 Windows 上 VS Code 擴充無法啟動的問題 (v2.1.137)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
+        <li>50+ 修正：終端機模式、MCP 工具、設定、權限 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
         <li><code>claude project purge [path]</code> — 刪除專案所有 Claude Code 狀態（逐字稿、任務、檔案歷史、設定項目）；支援 <code>--dry-run</code>、<code>-y/--yes</code>、<code>-i/--interactive</code>、<code>--all</code><span class="badge-new" data-added="2026-05-01">NEW</span></li>
         <li><code>claude auth login</code> 支援在瀏覽器無法回呼 localhost 時（WSL2、SSH、容器），直接在終端機貼入 OAuth 認證碼<span class="badge-new" data-added="2026-05-01">NEW</span></li>
         <li><code>--dangerously-skip-permissions</code> 現在也繞過 <code>.claude/</code>、<code>.git/</code>、<code>.vscode/</code> 及 Shell 設定檔的寫入確認（高危刪除指令仍會提示）<span class="badge-new" data-added="2026-05-01">NEW</span></li>
@@ -837,6 +843,8 @@
           <div class="row"><span class="key">modelOverrides</span> <span class="desc">映射模型選擇器 → 自訂 ID</span></div>
           <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
           <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
+          <div class="row"><span class="key">worktree.baseRef</span> <span class="desc">Worktree diff 比對的基準分支<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+          <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
           <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
           <div class="row"><span class="key">hooks: if</span> <span class="desc">條件式 Hooks（權限規則語法）</span></div>
           <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
@@ -876,6 +884,9 @@
           <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -943,6 +954,7 @@
           <div class="row"><span class="key">claude plugin prune</span> <span class="desc">移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
+          <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
@@ -966,6 +978,7 @@
           <div class="row"><span class="key">--permission-mode</span> <span class="desc">plan/default/…</span></div>
           <div class="row"><span class="key">--exclude-dynamic-system-prompt-sections</span> <span class="desc">列印模式省略動態段落（跨使用者提示快取優化）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">--allow-dangerously-skip-permissions</span> <span class="desc">將 bypassPermissions 加入 Shift+Tab 循環</span></div>
+          <div class="row"><span class="key">--plugin-url</span> <span class="desc">從 URL 抓取外掛 <code>.zip</code><span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc">跳過所有權限提示，含 <code>.claude/</code> <code>.git/</code> <code>.vscode/</code> 等保護路徑 ⚠️<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">--remote-control / --rc</span> <span class="desc">互動式 Remote Control Session</span></div>
           <div class="row"><span class="key">--chrome</span> <span class="desc">Chrome 整合</span></div>
