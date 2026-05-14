@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.138</span>
-          <span class="last-updated">更新日期：2026 年 5 月 11 日</span>
+          <span class="version-info">Claude Code v2.1.140</span>
+          <span class="last-updated">更新日期：2026 年 5 月 14 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,14 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>Agent tool <code>subagent_type</code> 匹配不再區分大小寫或分隔符（<code>code-reviewer</code> 與 <code>Code Reviewer</code> 等同） (v2.1.140)<span class="badge-new" data-added="2026-05-12">NEW</span></li>
+        <li><code>/goal [條件]</code> — 設定完成條件，Claude 持續跨回合工作直到達成，含即時 elapsed/turns/tokens 覆蓋面板；支援互動／<code>-p</code>／遠端控制模式 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li><code>/scroll-speed</code> — 調整滑鼠滾輪速度，含即時預覽 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li><code>claude plugin details &lt;name&gt;</code> — 顯示外掛元件清單及預估每 session token 費用 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li>逐字稿檢視器新增導航快捷鍵：<kbd>?</kbd>（快捷鍵說明）、<kbd>{</kbd>/<kbd>}</kbd>（跳至上／下一個使用者訊息）、<kbd>v</kbd>（切換快捷鍵面板） (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li>PostToolUse Hooks 新增 <code>continueOnBlock: true</code> 選項 — 被拒時回傳拒絕原因給 Claude 並繼續本回合 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li>Hooks <code>args: string[]</code> exec form — 直接 spawn 指令不透過 shell，路徑佔位符無需引號 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
+        <li>MCP stdio 伺服器現在收到 <code>CLAUDE_PROJECT_DIR</code> 環境變數（與 Hooks 環境一致） (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
         <li>新增 <code>settings.autoMode.hard_deny</code> — 無條件套用的 Auto 模式分類器拒絕規則 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
         <li>修復 <code>/clear</code> 後 MCP 伺服器被靜默移除的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
         <li>修復並行寫入憑證導致 OAuth token 被覆寫、陷入登入迴圈的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
@@ -657,6 +665,9 @@
           <div class="sub-header">逐字稿／焦點模式 (Ctrl+O)</div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc">切換顯示全部</span></div>
           <div class="row"><span class="key"><span class="keycap">Q</span> / <span class="keycap">Esc</span></span> <span class="desc">離開逐字稿</span></div>
+          <div class="row"><span class="key"><span class="keycap">?</span></span> <span class="desc">顯示快捷鍵說明<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key"><span class="keycap">{</span> / <span class="keycap">}</span></span> <span class="desc">跳至上／下一個使用者訊息<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key"><span class="keycap">v</span></span> <span class="desc">切換快捷鍵面板<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
 
           <div class="sub-header">Vim 模式</div>
           <div class="row"><span class="key"><span class="keycap">v</span></span> <span class="desc">視覺模式（選取 + 運算子）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
@@ -716,6 +727,7 @@
           <div class="row"><span class="key">/permissions</span> <span class="desc">查看／更新權限</span></div>
           <div class="row"><span class="key">/effort [等級]</span> <span class="desc">設定 effort（low/medium/high/xhigh/max）；不帶參數時開啟方向鍵互動式滑桿<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
           <div class="row"><span class="key">/color [顏色]</span> <span class="desc">設定提示列顏色</span></div>
+          <div class="row"><span class="key">/scroll-speed</span> <span class="desc">調整滑鼠滾輪速度（含即時預覽）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">/keybindings</span> <span class="desc">自訂鍵盤快捷鍵</span></div>
           <div class="row"><span class="key">/terminal-setup</span> <span class="desc">設定終端機按鍵綁定</span></div>
 
@@ -735,6 +747,7 @@
           <div class="row"><span class="key">/powerup</span> <span class="desc">互動式功能教學<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
           <div class="row"><span class="key">/btw &lt;問題&gt;</span> <span class="desc">附帶問題（不佔上下文）</span></div>
           <div class="row"><span class="key">/plan [描述]</span> <span class="desc">計畫模式（+ 自動啟動）</span></div>
+          <div class="row"><span class="key">/goal [條件]</span> <span class="desc">設定完成條件，Claude 持續工作直到達成<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">/ultraplan</span> <span class="desc">在瀏覽器 Session 草擬計畫，自動建立雲端環境<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
           <div class="row"><span class="key">/ultrareview [PR#]</span> <span class="desc">雲端程式碼審查 — 多 Agent 平行分析<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
           <div class="row"><span class="key">/focus</span> <span class="desc">切換焦點模式（僅全螢幕）<span class="badge-new" data-added="2026-04-16">NEW</span></span></div>
@@ -855,6 +868,8 @@
           <div class="row"><span class="key">hooks: type: "mcp_tool"</span> <span class="desc">Hook 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">hooks: duration_ms</span> <span class="desc">Hook 事件回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">hookSpecificOutput.updatedToolOutput</span> <span class="desc">PostToolUse Hook 覆寫所有工具輸出（非僅 MCP）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: continueOnBlock</span> <span class="desc">PostToolUse 被拒時回傳拒絕原因給 Claude 並繼續本回合（設為 <code>true</code>）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: args: string[]</span> <span class="desc">exec form：直接 spawn 指令不透過 shell，路徑佔位符無需引號<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
@@ -887,6 +902,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_PROJECT_DIR</span> <span class="desc">MCP stdio 伺服器可用的專案目錄路徑（與 Hooks 環境一致）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -952,6 +968,7 @@
           <div class="row"><span class="key">claude -r "名稱"</span> <span class="desc">恢復 Session</span></div>
           <div class="row"><span class="key">claude update</span> <span class="desc">更新</span></div>
           <div class="row"><span class="key">claude plugin prune</span> <span class="desc">移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+          <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
