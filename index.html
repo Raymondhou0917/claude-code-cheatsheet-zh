@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.140</span>
-          <span class="last-updated">更新日期：2026 年 5 月 14 日</span>
+          <span class="version-info">Claude Code v2.1.143</span>
+          <span class="last-updated">更新日期：2026 年 5 月 17 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,18 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>claude agents [--cwd &lt;path&gt;]</code> — 所有 Claude Code Session 統一清單（執行中、已阻塞、已完成），<code>--cwd</code> 可限定目錄範圍 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
+        <li><code>claude agents</code> 新增旗標：<code>--add-dir</code>、<code>--settings</code>、<code>--mcp-config</code>、<code>--plugin-dir</code>、<code>--permission-mode</code>、<code>--model</code>、<code>--effort</code>、<code>--dangerously-skip-permissions</code> (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li>快速模式預設升至 Opus 4.7；以 <code>CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE=1</code> 可固定使用 Opus 4.6 (v2.1.142)<span class="badge-new" data-added="2026-05-14">NEW</span></li>
+        <li><code>worktree.bgIsolation: "none"</code> — 讓背景 session 直接編輯工作目錄，無需 EnterWorktree (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li><code>claude plugin disable</code> 若其他已啟用外掛依賴該目標則拒絕停用，並提示可複製的停用鏈指令；<code>claude plugin enable</code> 現在自動強制啟用所有遞移依賴 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li><code>CLAUDE_CODE_STOP_HOOK_BLOCK_CAP</code> — 覆寫 stop hooks 連續阻塞警告上限（預設 8 次）(v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li><code>CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY=1</code> — 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li><code>ANTHROPIC_WORKSPACE_ID</code> — 工作負載身份聯盟：將 minted token 範圍限定至特定工作區 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
+        <li><code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS</code> — 透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
+        <li>外掛根目錄有 <code>SKILL.md</code> 且無 <code>skills/</code> 子目錄時自動作為 Skill 提供；<code>/plugin</code> 詳情頁顯示 LSP 伺服器資訊 (v2.1.142)<span class="badge-new" data-added="2026-05-14">NEW</span></li>
+        <li><code>NO_COLOR</code> / <code>FORCE_COLOR</code> 現在僅套用至子程序，不影響 Claude Code UI 顏色 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
+        <li>Rewind 選單新增「Summarize up to here」— 壓縮早期上下文，同時保留近期對話完整 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
         <li>Agent tool <code>subagent_type</code> 匹配不再區分大小寫或分隔符（<code>code-reviewer</code> 與 <code>Code Reviewer</code> 等同） (v2.1.140)<span class="badge-new" data-added="2026-05-12">NEW</span></li>
         <li><code>/goal [條件]</code> — 設定完成條件，Claude 持續跨回合工作直到達成，含即時 elapsed/turns/tokens 覆蓋面板；支援互動／<code>-p</code>／遠端控制模式 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
         <li><code>/scroll-speed</code> — 調整滑鼠滾輪速度，含即時預覽 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
@@ -857,6 +869,7 @@
           <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
           <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
           <div class="row"><span class="key">worktree.baseRef</span> <span class="desc">Worktree diff 比對的基準分支<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+          <div class="row"><span class="key">worktree.bgIsolation</span> <span class="desc"><code>"none"</code>：背景 session 直接編輯工作目錄，無需 EnterWorktree<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
           <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
           <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
           <div class="row"><span class="key">hooks: if</span> <span class="desc">條件式 Hooks（權限規則語法）</span></div>
@@ -884,6 +897,8 @@
           <div class="row"><span class="key">FORCE_PROMPT_CACHING_5M</span> <span class="desc">強制 5 分鐘 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY</span> <span class="desc">設為 <code>1</code> 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE</span> <span class="desc">設為 <code>1</code> 將快速模式固定使用 Opus 4.6（預設已升至 Opus 4.7）<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_FORK_SUBAGENT</span> <span class="desc">在外部建置上啟用分叉子 Agent（=1）<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
           <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_HIDE_CWD</span> <span class="desc">隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
@@ -903,6 +918,10 @@
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_PROJECT_DIR</span> <span class="desc">MCP stdio 伺服器可用的專案目錄路徑（與 Hooks 環境一致）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_STOP_HOOK_BLOCK_CAP</span> <span class="desc">覆寫 stop hooks 連續阻塞警告上限（預設 8 次）<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+          <div class="row"><span class="key">ANTHROPIC_WORKSPACE_ID</span> <span class="desc">工作負載身份聯盟：將 minted token 範圍限定至特定工作區<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_PREFER_HTTPS</span> <span class="desc">透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
+          <div class="row"><span class="key">NO_COLOR / FORCE_COLOR</span> <span class="desc">現在僅套用至子程序，不影響 Claude Code UI 顏色<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -936,6 +955,7 @@
           <div class="row"><span class="key">!`cmd`</span> <span class="desc">動態上下文注入</span></div>
           <div class="row"><span class="key">plugin bin/</span> <span class="desc">隨附可執行檔供 Bash 工具使用<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
           <div class="row"><span class="key">plugin themes/</span> <span class="desc">外掛附帶自訂主題<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">plugin SKILL.md</span> <span class="desc">根目錄有 SKILL.md 且無 skills/ 子目錄時，外掛自動作為 Skill 提供<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
 
           <div class="sub-header">內建 Agents</div>
           <div class="row"><span class="key">Explore</span> <span class="desc">快速唯讀（Haiku）</span></div>
@@ -971,6 +991,7 @@
           <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
+          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
