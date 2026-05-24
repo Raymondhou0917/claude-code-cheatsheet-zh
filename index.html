@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.143</span>
-          <span class="last-updated">更新日期：2026 年 5 月 17 日</span>
+          <span class="version-info">Claude Code v2.1.150</span>
+          <span class="last-updated">更新日期：2026 年 5 月 24 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,15 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>/code-review [等級]</code> — 原 <code>/simplify</code>，現改為回報正確性錯誤並可指定 effort（如 <code>/code-review high</code>）；加 <code>--comment</code> 可直接在 GitHub PR 發行內聯留言 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
+        <li><code>claude agents --json</code> — 以 JSON 輸出所有執行中 Claude Session，適合腳本整合（tmux、狀態列、Session 選擇器）(v2.1.145)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
+        <li><code>claude agents</code> 中以 <code>Ctrl+T</code> 釘選背景 Session — 空閒時保持常駐、自動重啟套用更新、記憶體不足時最後釋放 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
+        <li><code>/usage</code> 現在顯示分類用量明細（Skills、子 Agent、外掛、各 MCP 伺服器費用）(v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
+        <li><code>/diff</code> 詳細檢視支援鍵盤捲動（方向鍵、<code>j</code>/<code>k</code>、<code>PgUp</code>/<code>PgDn</code>、<code>Space</code>、<code>Home</code>/<code>End</code>）(v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
+        <li><code>/extra-usage</code> 更名為 <code>/usage-credits</code>（舊名仍可使用）(v2.1.144)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
+        <li>Enterprise：<code>allowAllClaudeAiMcps</code> 受管理設定 — 隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器 (v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
+        <li>Stop / SubagentStop Hook 輸入新增 <code>background_tasks</code> 與 <code>session_crons</code> 欄位 (v2.1.145)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
+        <li><code>/resume</code> 現在也支援背景 Session（<code>claude --bg</code> 或 Agent View 啟動），在列表中以 <code>bg</code> 標記 (v2.1.144)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
         <li><code>claude agents [--cwd &lt;path&gt;]</code> — 所有 Claude Code Session 統一清單（執行中、已阻塞、已完成），<code>--cwd</code> 可限定目錄範圍 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
         <li><code>claude agents</code> 新增旗標：<code>--add-dir</code>、<code>--settings</code>、<code>--mcp-config</code>、<code>--plugin-dir</code>、<code>--permission-mode</code>、<code>--model</code>、<code>--effort</code>、<code>--dangerously-skip-permissions</code> (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
         <li>快速模式預設升至 Opus 4.7；以 <code>CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE=1</code> 可固定使用 Opus 4.6 (v2.1.142)<span class="badge-new" data-added="2026-05-14">NEW</span></li>
@@ -645,7 +654,7 @@
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">G</span></span> <span class="desc">在編輯器中開啟提示詞</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc">在編輯器中開啟（別名）</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">B</span></span> <span class="desc">將任務移至背景</span></div>
-          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">T</span></span> <span class="desc">切換任務清單</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">T</span></span> <span class="desc">釘選/取消釘選背景 Session（<code>claude agents</code> 中）；一般模式切換任務清單<span class="badge-new" data-added="2026-05-21">NEW</span></span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">V</span></span> <span class="desc">貼上圖片（[Image #N] 標籤）</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span class="keycap">Ctrl</span><span class="keycap">K</span></span> <span class="desc">終止背景 Agent</span></div>
           <div class="row"><span class="key"><span class="keycap">Esc</span><span class="keycap">Esc</span></span> <span class="desc">回溯或摘要</span></div>
@@ -724,7 +733,7 @@
           <div class="row"><span class="key">/branch [名稱]</span> <span class="desc">分支對話（/fork 別名）</span></div>
           <div class="row"><span class="key">/cost</span> <span class="desc">Token 用量（各模型 + 快取明細）<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
           <div class="row"><span class="key">/context</span> <span class="desc">視覺化上下文（格狀圖）</span></div>
-          <div class="row"><span class="key">/diff</span> <span class="desc">互動式差異檢視器</span></div>
+          <div class="row"><span class="key">/diff</span> <span class="desc">互動式差異檢視器；詳細檢視支援鍵盤捲動（方向鍵、j/k、PgUp/PgDn）<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
           <div class="row"><span class="key">/copy [N]</span> <span class="desc">複製最近（或第 N 筆）回應</span></div>
           <div class="row"><span class="key">/rewind</span> <span class="desc">回溯對話／程式碼檢查點</span></div>
           <div class="row"><span class="key">/undo</span> <span class="desc">/rewind 的別名<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
@@ -733,7 +742,7 @@
 
           <div class="sub-header">設定</div>
           <div class="row"><span class="key">/config</span> <span class="desc">開啟設定</span></div>
-          <div class="row"><span class="key">/model [模型]</span> <span class="desc">切換模型（←→ 調整 effort）<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">/model [模型]</span> <span class="desc">切換模型（僅目前 Session）；選擇器中按 <kbd>d</kbd> 設定新 Session 預設<span class="badge-new" data-added="2026-05-21">NEW</span></span></div>
           <div class="row"><span class="key">/fast [on|off]</span> <span class="desc">切換快速模式</span></div>
           <div class="row"><span class="key">/theme</span> <span class="desc">更換色彩主題 — 含「Auto（跟隨終端機）」深／淺色選項<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
           <div class="row"><span class="key">/permissions</span> <span class="desc">查看／更新權限</span></div>
@@ -772,7 +781,8 @@
           <div class="row"><span class="key">/insights</span> <span class="desc">分析 Session 報告</span></div>
           <div class="row"><span class="key">/desktop</span> <span class="desc">在桌面版繼續</span></div>
           <div class="row"><span class="key">/remote-control</span> <span class="desc">橋接至 claude.ai/code（/rc）</span></div>
-          <div class="row"><span class="key">/usage</span> <span class="desc">方案限額、速率狀態（含 <code>/cost</code>、<code>/stats</code> 功能）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">/usage</span> <span class="desc">方案限額、速率狀態（含 <code>/cost</code>、<code>/stats</code> 功能）；分類用量明細（Skills／子 Agent／外掛／各 MCP 費用）<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
+          <div class="row"><span class="key">/usage-credits</span> <span class="desc">用量點數（原 <code>/extra-usage</code>，舊名仍可使用）<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">/schedule</span> <span class="desc">雲端排程任務</span></div>
           <div class="row"><span class="key">/security-review</span> <span class="desc">變更的安全性分析</span></div>
           <div class="row"><span class="key">/help</span> <span class="desc">顯示說明 + 指令</span></div>
@@ -883,6 +893,9 @@
           <div class="row"><span class="key">hookSpecificOutput.updatedToolOutput</span> <span class="desc">PostToolUse Hook 覆寫所有工具輸出（非僅 MCP）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">hooks: continueOnBlock</span> <span class="desc">PostToolUse 被拒時回傳拒絕原因給 Claude 並繼續本回合（設為 <code>true</code>）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">hooks: args: string[]</span> <span class="desc">exec form：直接 spawn 指令不透過 shell，路徑佔位符無需引號<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: background_tasks</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：目前執行中的背景任務清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: session_crons</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：已排程的 Session Cron 清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+          <div class="row"><span class="key">allowAllClaudeAiMcps</span> <span class="desc">企業受管理設定：隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
           <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
@@ -933,7 +946,7 @@
         <div class="section-content">
           <div class="sub-header">內建 Skills</div>
           <div class="row"><span class="key">Skill tool</span> <span class="desc">發現內建斜線指令（/init、/review、/security-review…）<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">/simplify</span> <span class="desc">程式碼審查（3 個平行 Agent）</span></div>
+          <div class="row"><span class="key">/code-review [等級]</span> <span class="desc">程式碼審查，回報正確性錯誤；<code>--comment</code> 在 GitHub PR 發行內聯留言（原 <code>/simplify</code>）<span class="badge-new" data-added="2026-05-21">NEW</span></span></div>
           <div class="row"><span class="key">/batch</span> <span class="desc">大規模平行變更（5-30 worktrees）</span></div>
           <div class="row"><span class="key">/debug [描述]</span> <span class="desc">從除錯日誌排錯</span></div>
           <div class="row"><span class="key">/loop [間隔]</span> <span class="desc">週期性排程任務</span></div>
@@ -991,7 +1004,7 @@
           <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
-          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
+          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
