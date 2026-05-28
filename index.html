@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.150</span>
-          <span class="last-updated">更新日期：2026 年 5 月 24 日</span>
+          <span class="version-info">Claude Code v2.1.152</span>
+          <span class="last-updated">更新日期：2026 年 5 月 28 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,14 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>/code-review --fix</code> — 審查後將建議直接套用至工作目錄；<code>/simplify</code> 現為此功能的別名 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li>Skills / 斜線指令 frontmatter 新增 <code>disallowed-tools</code> — Skill 啟用期間從模型中移除指定工具 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li><code>/reload-skills</code> — 重新掃描 Skill 目錄，無需重啟 Session；SessionStart Hook 可回傳 <code>reloadSkills: true</code> 讓安裝後立即生效 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li><code>MessageDisplay</code> Hook 事件 — 讓 Hook 在顯示前轉換或隱藏助理訊息文字 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li>SessionStart Hook 可透過 <code>hookSpecificOutput.sessionTitle</code> 設定 Session 標題（啟動與恢復均適用）(v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li><code>pluginSuggestionMarketplaces</code> 受管理設定 — 管理員可白名單組織市集，允許情境提示建議外掛 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li><code>--fallback-model</code> — 主要模型找不到時自動切換至備援模型 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
+        <li><code>OTEL_METRICS_INCLUDE_ENTRYPOINT=true</code> — OpenTelemetry 指標新增 <code>app.entrypoint</code> Session 來源屬性 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
         <li><code>/code-review [等級]</code> — 原 <code>/simplify</code>，現改為回報正確性錯誤並可指定 effort（如 <code>/code-review high</code>）；加 <code>--comment</code> 可直接在 GitHub PR 發行內聯留言 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
         <li><code>claude agents --json</code> — 以 JSON 輸出所有執行中 Claude Session，適合腳本整合（tmux、狀態列、Session 選擇器）(v2.1.145)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
         <li><code>claude agents</code> 中以 <code>Ctrl+T</code> 釘選背景 Session — 空閒時保持常駐、自動重啟套用更新、記憶體不足時最後釋放 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
@@ -761,6 +769,7 @@
           <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents（執行中 + 函式庫分頁，快速啟動／檢查）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">/chrome</span> <span class="desc">Chrome 整合</span></div>
           <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛，自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></span></div>
+          <div class="row"><span class="key">/reload-skills</span> <span class="desc">重新掃描 Skill 目錄，無需重啟 Session<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">/team-onboarding</span> <span class="desc">從本地使用記錄生成團隊入門指南<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
           <div class="row"><span class="key">/add-dir &lt;路徑&gt;</span> <span class="desc">新增工作目錄</span></div>
 
@@ -896,6 +905,10 @@
           <div class="row"><span class="key">hooks: background_tasks</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：目前執行中的背景任務清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">hooks: session_crons</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：已排程的 Session Cron 清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">allowAllClaudeAiMcps</span> <span class="desc">企業受管理設定：隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
+          <div class="row"><span class="key">pluginSuggestionMarketplaces</span> <span class="desc">受管理設定：白名單組織市集，允許情境提示建議外掛<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">MessageDisplay</span> <span class="desc">Hook 事件：在顯示前轉換或隱藏助理訊息文字<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">hookSpecificOutput.sessionTitle</span> <span class="desc">SessionStart Hook 回傳值：設定 Session 標題（啟動與恢復均適用）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">reloadSkills: true</span> <span class="desc">SessionStart Hook 回傳值：重新掃描 Skill 目錄，讓安裝後立即生效<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
@@ -935,6 +948,7 @@
           <div class="row"><span class="key">ANTHROPIC_WORKSPACE_ID</span> <span class="desc">工作負載身份聯盟：將 minted token 範圍限定至特定工作區<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_PREFER_HTTPS</span> <span class="desc">透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
           <div class="row"><span class="key">NO_COLOR / FORCE_COLOR</span> <span class="desc">現在僅套用至子程序，不影響 Claude Code UI 顏色<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+          <div class="row"><span class="key">OTEL_METRICS_INCLUDE_ENTRYPOINT</span> <span class="desc">設為 <code>true</code> 時在 OpenTelemetry 指標中加入 <code>app.entrypoint</code> Session 來源屬性<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -946,7 +960,7 @@
         <div class="section-content">
           <div class="sub-header">內建 Skills</div>
           <div class="row"><span class="key">Skill tool</span> <span class="desc">發現內建斜線指令（/init、/review、/security-review…）<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">/code-review [等級]</span> <span class="desc">程式碼審查，回報正確性錯誤；<code>--comment</code> 在 GitHub PR 發行內聯留言（原 <code>/simplify</code>）<span class="badge-new" data-added="2026-05-21">NEW</span></span></div>
+          <div class="row"><span class="key">/code-review [等級]</span> <span class="desc">程式碼審查，回報正確性錯誤；<code>--fix</code> 直接套用建議；<code>--comment</code> 在 GitHub PR 發行內聯留言（<code>/simplify</code> 為 <code>--fix</code> 別名）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">/batch</span> <span class="desc">大規模平行變更（5-30 worktrees）</span></div>
           <div class="row"><span class="key">/debug [描述]</span> <span class="desc">從除錯日誌排錯</span></div>
           <div class="row"><span class="key">/loop [間隔]</span> <span class="desc">週期性排程任務</span></div>
@@ -959,6 +973,7 @@
           <div class="sub-header">Skill Frontmatter</div>
           <div class="row"><span class="key">description</span> <span class="desc">自動觸發條件</span></div>
           <div class="row"><span class="key">allowed-tools</span> <span class="desc">跳過權限提示</span></div>
+          <div class="row"><span class="key">disallowed-tools</span> <span class="desc">Skill 啟用時從模型中移除指定工具<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">model</span> <span class="desc">覆寫 Skill 使用的模型</span></div>
           <div class="row"><span class="key">effort</span> <span class="desc">覆寫 effort 等級</span></div>
           <div class="row"><span class="key">paths: [globs]</span> <span class="desc">路徑限定（YAML 列表）<span class="badge-new" data-added="2026-03-26">NEW</span></span></div>
@@ -1008,6 +1023,7 @@
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
+          <div class="row"><span class="key">--fallback-model</span> <span class="desc">主要模型找不到時自動切換至備援模型<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
           <div class="row"><span class="key">-n / --name</span> <span class="desc">Session 名稱</span></div>
           <div class="row"><span class="key">--add-dir</span> <span class="desc">新增目錄</span></div>
