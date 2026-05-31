@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.152</span>
-          <span class="last-updated">更新日期：2026 年 5 月 28 日</span>
+          <span class="version-info">Claude Code v2.1.158</span>
+          <span class="last-updated">更新日期：2026 年 5 月 31 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,18 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>Auto 模式現在可在 Bedrock、Vertex 和 Foundry 上使用（Opus 4.7 + 4.8）；以 <code>CLAUDE_CODE_ENABLE_AUTO_MODE=1</code> 啟用 (v2.1.158)<span class="badge-new" data-added="2026-05-30">NEW</span></li>
+        <li><code>.claude/skills/</code> 目錄下的外掛現在自動載入，無需 Marketplace (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
+        <li><code>claude plugin init &lt;name&gt;</code> — 快速建立新外掛目錄鷹架 (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
+        <li><code>settings.json</code> 的 <code>agent</code> 欄位現在在已派送 Session 中正確生效 (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
+        <li><code>EnterWorktree</code> Hook 現在可在 Session 中途切換 Claude 管理的 Worktrees (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
+        <li>Opus 4.8 正式發布 — 預設 effort 升為 <code>xhigh</code>；快速模式以 2× 費率換取 2.5× 速度；50+ 項修正 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li>動態工作流程 — 讓 Claude 建立可在背景協調數十至數百個 Agent 的自動化工作流程 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li>精簡系統提示 (Lean system prompt) 現為大多數模型的預設（Haiku / Sonnet / Opus 4.7 及更早版本除外）(v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li>Plugin 可在 <code>plugin.json</code> 宣告 <code>defaultEnabled: false</code> — 安裝後預設停用 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li><code>claude agents</code> 自動完成現在可建議原生斜線指令與內建 Skills (v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li>狀態列指令現在可接收 <code>COLUMNS</code> 與 <code>LINES</code> 環境變數 (v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
+        <li>外掛 GitHub/Git 來源新增 <code>skipLfs</code> 選項（略過 LFS 大型檔案）(v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
         <li><code>/code-review --fix</code> — 審查後將建議直接套用至工作目錄；<code>/simplify</code> 現為此功能的別名 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
         <li>Skills / 斜線指令 frontmatter 新增 <code>disallowed-tools</code> — Skill 啟用期間從模型中移除指定工具 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
         <li><code>/reload-skills</code> — 重新掃描 Skill 目錄，無需重啟 Session；SessionStart Hook 可回傳 <code>reloadSkills: true</code> 讓安裝後立即生效 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
@@ -837,6 +849,7 @@
           <div class="row"><span class="key">"ultrathink"</span> <span class="desc">單回合最大 effort</span></div>
           <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span> <span class="desc">檢視思考過程（詳細模式）</span></div>
           <div class="row"><span class="key">/effort</span> <span class="desc">○ low · ◐ medium · ● high · ★ max</span></div>
+          <div class="row"><span class="key">Opus 4.8</span> <span class="desc">預設 effort xhigh；快速模式 2× 費率 / 2.5× 速度<span class="badge-new" data-added="2026-05-28">NEW</span></span></div>
           <div class="sub-header">自動模式被拒</div>
           <div class="row"><span class="key">/permissions → Recent</span> <span class="desc">按 <span class="keycap">R</span> 重試被拒操作<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
           <div class="sub-header">Git Worktrees</div>
@@ -949,6 +962,8 @@
           <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_PREFER_HTTPS</span> <span class="desc">透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
           <div class="row"><span class="key">NO_COLOR / FORCE_COLOR</span> <span class="desc">現在僅套用至子程序，不影響 Claude Code UI 顏色<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_METRICS_INCLUDE_ENTRYPOINT</span> <span class="desc">設為 <code>true</code> 時在 OpenTelemetry 指標中加入 <code>app.entrypoint</code> Session 來源屬性<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AUTO_MODE</span> <span class="desc">設為 <code>1</code> 在 Bedrock / Vertex / Foundry 上啟用 Auto 模式（Opus 4.7 + 4.8）<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
+          <div class="row"><span class="key">OTEL_LOG_TOOL_DETAILS</span> <span class="desc">設為 <code>1</code> 時，<code>tool_decision</code> 遙測事件包含 <code>tool_parameters</code> 詳情<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -967,7 +982,7 @@
           <div class="row"><span class="key">/claude-api</span> <span class="desc">載入 API + SDK 參考</span></div>
 
           <div class="sub-header">自訂 Skill 位置</div>
-          <div class="row"><span class="key">.claude/skills/&lt;名稱&gt;/</span> <span class="desc">專案 Skills</span></div>
+          <div class="row"><span class="key">.claude/skills/&lt;名稱&gt;/</span> <span class="desc">專案 Skills（自動載入，無需 Marketplace）<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
           <div class="row"><span class="key">~/.claude/skills/&lt;名稱&gt;/</span> <span class="desc">個人 Skills</span></div>
 
           <div class="sub-header">Skill Frontmatter</div>
@@ -984,6 +999,7 @@
           <div class="row"><span class="key">plugin bin/</span> <span class="desc">隨附可執行檔供 Bash 工具使用<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
           <div class="row"><span class="key">plugin themes/</span> <span class="desc">外掛附帶自訂主題<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">plugin SKILL.md</span> <span class="desc">根目錄有 SKILL.md 且無 skills/ 子目錄時，外掛自動作為 Skill 提供<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
+          <div class="row"><span class="key">plugin.json: defaultEnabled</span> <span class="desc">設為 <code>false</code> 讓外掛安裝後預設停用<span class="badge-new" data-added="2026-05-28">NEW</span></span></div>
 
           <div class="sub-header">內建 Agents</div>
           <div class="row"><span class="key">Explore</span> <span class="desc">快速唯讀（Haiku）</span></div>
@@ -1001,6 +1017,7 @@
           <div class="row"><span class="key">SendMessage</span> <span class="desc">恢復 Agent（取代 resume）</span></div>
           <div class="row"><span class="key">@agent-name</span> <span class="desc">提及命名子 Agent<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">mcpServers</span> <span class="desc">在 <code>--agent</code> 主執行緒 session 中載入 MCP 伺服器<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
+          <div class="row"><span class="key">agent</span> <span class="desc"><code>settings.json</code> 中的 <code>agent</code> 欄位在已派送 Session 中正確生效<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
         </div>
       </section>
 
@@ -1016,6 +1033,7 @@
           <div class="row"><span class="key">claude -r "名稱"</span> <span class="desc">恢復 Session</span></div>
           <div class="row"><span class="key">claude update</span> <span class="desc">更新</span></div>
           <div class="row"><span class="key">claude plugin prune</span> <span class="desc">移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+          <div class="row"><span class="key">claude plugin init &lt;name&gt;</span> <span class="desc">建立新外掛的目錄鷹架<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
           <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
