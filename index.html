@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.158</span>
-          <span class="last-updated">更新日期：2026 年 5 月 31 日</span>
+          <span class="version-info">Claude Code v2.1.160</span>
+          <span class="last-updated">更新日期：2026 年 6 月 3 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,10 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>Edit 工具改進：單檔 <code>grep</code>/<code>egrep</code>/<code>fgrep</code> 執行後即可直接編輯，不再需要額外的 Read 呼叫 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
+        <li><code>acceptEdits</code> 模式安全強化：寫入可授予程式執行權的建置工具設定檔（<code>.npmrc</code>、<code>.yarnrc*</code>、<code>bunfig.toml</code>、<code>.bazelrc</code>、<code>.pre-commit-config.yaml</code>、<code>.devcontainer/</code> 等）前會顯示提示 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
+        <li>寫入 Shell 啟動設定檔（<code>.zshenv</code>、<code>.zlogin</code>、<code>.bash_login</code>）或 <code>~/.config/git/</code> 前，現在會顯示安全提示，避免意外指令執行 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
+        <li>修復多項問題：WSL 複製選取無法寫入 Windows 剪貼簿（改用 PowerShell 互動取代 OSC 52）、從 <code>claude agents</code> 恢復已完成 Session 時掉失對話記錄、背景 Agent 恢復後仍顯示於 Completed 清單等 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
         <li>Auto 模式現在可在 Bedrock、Vertex 和 Foundry 上使用（Opus 4.7 + 4.8）；以 <code>CLAUDE_CODE_ENABLE_AUTO_MODE=1</code> 啟用 (v2.1.158)<span class="badge-new" data-added="2026-05-30">NEW</span></li>
         <li><code>.claude/skills/</code> 目錄下的外掛現在自動載入，無需 Marketplace (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
         <li><code>claude plugin init &lt;name&gt;</code> — 快速建立新外掛目錄鷹架 (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
