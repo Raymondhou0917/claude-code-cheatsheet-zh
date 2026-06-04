@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.160</span>
-          <span class="last-updated">更新日期：2026 年 6 月 3 日</span>
+          <span class="version-info">Claude Code v2.1.161</span>
+          <span class="last-updated">更新日期：2026 年 6 月 4 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>OTEL_RESOURCE_ATTRIBUTES</code> 值現在作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（團隊、倉庫等）切分用量指標 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li><code>claude agents</code> 介面改進：任務分散時列表顯示 <code>done/total</code> 進度；Peek 面板顯示執行最久的項目 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li><code>/mcp</code> 現在將從未登入的 claude.ai connectors 折疊收納至「顯示未使用的連接器」列 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>Linux 全螢幕模式剪貼簿改進：優先使用 <code>wl-copy</code>/<code>xclip</code>/<code>xsel</code>，同時寫入 clipboard 與 PRIMARY selection（支援中鍵貼上）(v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>修復平行工具執行：Bash 指令失敗不再取消同批次的其他呼叫，各工具獨立回傳結果 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>修復受管理設定 <code>forceLoginOrgUUID</code>/<code>forceLoginMethod</code> 阻擋第三方 Provider Session（Bedrock、Vertex、Foundry、Mantle）的問題（v2.1.146 regression）(v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
         <li>Edit 工具改進：單檔 <code>grep</code>/<code>egrep</code>/<code>fgrep</code> 執行後即可直接編輯，不再需要額外的 Read 呼叫 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
         <li><code>acceptEdits</code> 模式安全強化：寫入可授予程式執行權的建置工具設定檔（<code>.npmrc</code>、<code>.yarnrc*</code>、<code>bunfig.toml</code>、<code>.bazelrc</code>、<code>.pre-commit-config.yaml</code>、<code>.devcontainer/</code> 等）前會顯示提示 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
         <li>寫入 Shell 啟動設定檔（<code>.zshenv</code>、<code>.zlogin</code>、<code>.bash_login</code>）或 <code>~/.config/git/</code> 前，現在會顯示安全提示，避免意外指令執行 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
@@ -968,6 +974,7 @@
           <div class="row"><span class="key">OTEL_METRICS_INCLUDE_ENTRYPOINT</span> <span class="desc">設為 <code>true</code> 時在 OpenTelemetry 指標中加入 <code>app.entrypoint</code> Session 來源屬性<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AUTO_MODE</span> <span class="desc">設為 <code>1</code> 在 Bedrock / Vertex / Foundry 上啟用 Auto 模式（Opus 4.7 + 4.8）<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_LOG_TOOL_DETAILS</span> <span class="desc">設為 <code>1</code> 時，<code>tool_decision</code> 遙測事件包含 <code>tool_parameters</code> 詳情<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
+          <div class="row"><span class="key">OTEL_RESOURCE_ATTRIBUTES</span> <span class="desc">值作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（如 team、repo）切分用量指標<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
         </div>
       </section>
       </div>
