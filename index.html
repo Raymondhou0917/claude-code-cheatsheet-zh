@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.161</span>
-          <span class="last-updated">更新日期：2026 年 6 月 4 日</span>
+          <span class="version-info">Claude Code v2.1.162</span>
+          <span class="last-updated">更新日期：2026 年 6 月 5 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>claude agents --json</code> 輸出新增 <code>waitingFor</code> 欄位，顯示等待中 Session 目前被什麼阻塞 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
+        <li>斜線指令自動完成改進：點擊建議項目後填入提示框，再按 <kbd>Enter</kbd> 執行 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
+        <li>Remote Control UI 改版：改以常駐底部 pill 形式顯示，取代原先的啟動提示訊息 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
+        <li>IDE 名稱更新：Windsurf 在 UI 中全面更名為 Devin Desktop (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
+        <li>修復多項問題：<code>claude --bg</code> 冷啟動崩潰（socket missing）、<code>claude agents</code> 因自動更新重複檢查導致退出凍結、高 CPU 負載下 Esc/方向鍵失去回應、<code>SendMessage</code> 在 <code>CLAUDE_CODE_TMPDIR</code> 路徑過深時跨 Session 訊息失效、背景 Session 附加前額外延遲 5 秒 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
         <li><code>OTEL_RESOURCE_ATTRIBUTES</code> 值現在作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（團隊、倉庫等）切分用量指標 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
         <li><code>claude agents</code> 介面改進：任務分散時列表顯示 <code>done/total</code> 進度；Peek 面板顯示執行最久的項目 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
         <li><code>/mcp</code> 現在將從未登入的 claude.ai connectors 折疊收納至「顯示未使用的連接器」列 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
@@ -1048,7 +1053,7 @@
           <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
-          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合（含 <code>waitingFor</code> 欄位顯示阻塞原因）；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
