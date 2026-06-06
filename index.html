@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.162</span>
-          <span class="last-updated">更新日期：2026 年 6 月 5 日</span>
+          <span class="version-info">Claude Code v2.1.163</span>
+          <span class="last-updated">更新日期：2026 年 6 月 6 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,13 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>/plugin list</code> 新增 <code>--enabled</code>/<code>--disabled</code> 篩選旗標，快速查看已啟用或停用的外掛 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li><code>/btw</code> 新增 <code>c</code> 快捷鍵 — 直接複製原始 Markdown 格式回應至剪貼簿（貼上時保留格式）(v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li><code>requiredMinimumVersion</code> / <code>requiredMaximumVersion</code> 受管理設定 — 版本不在允許範圍時拒絕啟動並引導至核准版本 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>Stop / SubagentStop Hook 可回傳 <code>hookSpecificOutput.additionalContext</code> — 給 Claude 回饋並繼續本回合，不標記為 hook 錯誤 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>Skills 指令主體新增 <code>\$</code> 跳脫語法 — 在數字前輸入字面 <code>$</code> 而不觸發參數替換（如 <code>\$1</code>）(v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>stdio MCP 伺服器在 <code>--resume</code> 時收到與 Hooks / Bash 相同的 <code>CLAUDE_CODE_SESSION_ID</code> (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
+        <li>修復多項問題：<code>claude -p</code> 背景指令結束後永久懸掛、Bedrock/Vertex/Foundry 搭配 <code>CI=true</code> 時 ANTHROPIC_API_KEY 錯誤、bazel / EDR 環境 Bash 失敗（<code>$TMPDIR</code>）、Windows 「EEXIST」session-env 目錄錯誤、受管理權限規則在啟動期間未套用、背景 session 恢復後遺失正在執行的背景任務、Hook <code>if: "Bash(...)"</code> 誤對所有含 <code>$()</code>/<code>$VAR</code> 指令觸發等 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
         <li><code>claude agents --json</code> 輸出新增 <code>waitingFor</code> 欄位，顯示等待中 Session 目前被什麼阻塞 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
         <li>斜線指令自動完成改進：點擊建議項目後填入提示框，再按 <kbd>Enter</kbd> 執行 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
         <li>Remote Control UI 改版：改以常駐底部 pill 形式顯示，取代原先的啟動提示訊息 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
@@ -795,6 +802,7 @@
           <div class="row"><span class="key">/skills</span> <span class="desc">列出可用 Skills（可輸入即時篩選）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
           <div class="row"><span class="key">/agents</span> <span class="desc">管理 Agents（執行中 + 函式庫分頁，快速啟動／檢查）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
           <div class="row"><span class="key">/chrome</span> <span class="desc">Chrome 整合</span></div>
+          <div class="row"><span class="key">/plugin list</span> <span class="desc">列出已安裝外掛（<code>--enabled</code>/<code>--disabled</code> 篩選）<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">/reload-plugins</span> <span class="desc">熱載入外掛，自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></span></div>
           <div class="row"><span class="key">/reload-skills</span> <span class="desc">重新掃描 Skill 目錄，無需重啟 Session<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">/team-onboarding</span> <span class="desc">從本地使用記錄生成團隊入門指南<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
@@ -802,7 +810,7 @@
 
           <div class="sub-header">特殊指令</div>
           <div class="row"><span class="key">/powerup</span> <span class="desc">互動式功能教學<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
-          <div class="row"><span class="key">/btw &lt;問題&gt;</span> <span class="desc">附帶問題（不佔上下文）</span></div>
+          <div class="row"><span class="key">/btw &lt;問題&gt;</span> <span class="desc">附帶問題（不佔上下文）；按 <kbd>c</kbd> 可複製原始 Markdown 回應<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">/plan [描述]</span> <span class="desc">計畫模式（+ 自動啟動）</span></div>
           <div class="row"><span class="key">/goal [條件]</span> <span class="desc">設定完成條件，Claude 持續工作直到達成<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">/ultraplan</span> <span class="desc">在瀏覽器 Session 草擬計畫，自動建立雲端環境<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
@@ -932,8 +940,11 @@
           <div class="row"><span class="key">hooks: args: string[]</span> <span class="desc">exec form：直接 spawn 指令不透過 shell，路徑佔位符無需引號<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">hooks: background_tasks</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：目前執行中的背景任務清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">hooks: session_crons</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：已排程的 Session Cron 清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+          <div class="row"><span class="key">hookSpecificOutput.additionalContext</span> <span class="desc">Stop / SubagentStop Hook 回傳值：給 Claude 回饋並繼續本回合，不標記為 hook 錯誤<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">allowAllClaudeAiMcps</span> <span class="desc">企業受管理設定：隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
           <div class="row"><span class="key">pluginSuggestionMarketplaces</span> <span class="desc">受管理設定：白名單組織市集，允許情境提示建議外掛<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">requiredMinimumVersion</span> <span class="desc">受管理設定：版本低於此值時拒絕啟動<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+          <div class="row"><span class="key">requiredMaximumVersion</span> <span class="desc">受管理設定：版本高於此值時拒絕啟動，引導至核准版本<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">MessageDisplay</span> <span class="desc">Hook 事件：在顯示前轉換或隱藏助理訊息文字<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">hookSpecificOutput.sessionTitle</span> <span class="desc">SessionStart Hook 回傳值：設定 Session 標題（啟動與恢復均適用）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">reloadSkills: true</span> <span class="desc">SessionStart Hook 回傳值：重新掃描 Skill 目錄，讓安裝後立即生效<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
@@ -968,7 +979,7 @@
           <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID；stdio MCP 伺服器在 <code>--resume</code> 時也收到相同值<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_PROJECT_DIR</span> <span class="desc">MCP stdio 伺服器可用的專案目錄路徑（與 Hooks 環境一致）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
@@ -1010,6 +1021,7 @@
           <div class="row"><span class="key">paths: [globs]</span> <span class="desc">路徑限定（YAML 列表）<span class="badge-new" data-added="2026-03-26">NEW</span></span></div>
           <div class="row"><span class="key">context: fork</span> <span class="desc">在子 Agent 中執行</span></div>
           <div class="row"><span class="key">$ARGUMENTS</span> <span class="desc">使用者輸入預留位</span></div>
+          <div class="row"><span class="key">\$ 跳脫語法</span> <span class="desc">在指令主體中以 <code>\$</code> 輸入字面 <code>$</code>（如 <code>\$1</code> 不觸發參數替換）<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">${CLAUDE_SKILL_DIR}</span> <span class="desc">Skill 所在目錄</span></div>
           <div class="row"><span class="key">!`cmd`</span> <span class="desc">動態上下文注入</span></div>
           <div class="row"><span class="key">plugin bin/</span> <span class="desc">隨附可執行檔供 Bash 工具使用<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
