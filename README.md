@@ -12,7 +12,7 @@
 
 | 項目 | 狀態 |
 |:--|:--|
-| **對齊版本** | Claude Code v2.1.163 |
+| **對齊版本** | Claude Code v2.1.165 |
 | **最後更新** | 2026-06-06 |
 | **原站** | [cc.storyfox.cz](https://cc.storyfox.cz/) |
 | **官方文件** | [code.claude.com/docs](https://code.claude.com/docs) |
