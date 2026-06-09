@@ -8,6 +8,13 @@
 
 翻譯自 [cc.storyfox.cz](https://cc.storyfox.cz/)（原作者 [@phasE89](https://x.com/phasE89)），完整涵蓋 Claude Code 的鍵盤快捷鍵、斜線指令、CLI 旗標、MCP 伺服器、記憶檔案、Skills、Agents、環境變數。
 
+## 📖 兩份文檔，看你要「查」還是「懂」
+
+| 文檔 | 用途 | 適合 |
+|:--|:--|:--|
+| **速查表**（[線上版](https://raymondhou0917.github.io/claude-code-cheatsheet-zh/) / `index.html`） | 快速查指令語法、快捷鍵、CLI 旗標 | 已經知道要用什麼，只想查怎麼打 |
+| **[功能應用情境指南（FEATURES.md）](FEATURES.md)** | 解釋「這功能幹嘛、什麼時候用」，含 30+ 功能的應用情境與選擇建議 | 還不熟、想知道某功能值不值得學 |
+
 ## 版本對齊資訊
 
 | 項目 | 狀態 |
