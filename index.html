@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.168</span>
-          <span class="last-updated">更新日期：2026 年 6 月 8 日</span>
+          <span class="version-info">Claude Code v2.1.169</span>
+          <span class="last-updated">更新日期：2026 年 6 月 10 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>--safe-mode</code> 旗標與 <code>CLAUDE_CODE_SAFE_MODE</code> 環境變數 — 一鍵停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器）以排錯 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
+        <li><code>/cd &lt;路徑&gt;</code> 指令 — 切換工作目錄而不中斷 prompt cache (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
+        <li><code>disableBundledSkills</code> 設定與 <code>CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</code> 環境變數 — 隱藏內建 Skills、工作流程與斜線指令 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
+        <li><code>post-session</code> 生命週期 Hook — 自我托管環境：Session 結束後、工作區刪除前執行；子程序 SIGTERM→SIGKILL 延遲時間可設定（預設 5 秒）(v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
+        <li><code>claude agents --all</code> 新旗標含已完成 Session；JSON 輸出新增 <code>id</code> 與 <code>state</code> 欄位 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
         <li>v2.1.168 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-08">NEW</span></li>
         <li>v2.1.167 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-07">NEW</span></li>
         <li><code>fallbackModel</code> 設定 — 最多指定三個備援模型，依序嘗試（主要模型過載或不可用時自動切換）(v2.1.166)<span class="badge-new" data-added="2026-06-06">NEW</span></li>
@@ -788,6 +793,7 @@
           <div class="row"><span class="key">/undo</span> <span class="desc">/rewind 的別名<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">/recap</span> <span class="desc">回來時摘要 Session 上下文<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">/export</span> <span class="desc">匯出對話</span></div>
+          <div class="row"><span class="key">/cd &lt;路徑&gt;</span> <span class="desc">切換工作目錄而不中斷 prompt cache<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
 
           <div class="sub-header">設定</div>
           <div class="row"><span class="key">/config</span> <span class="desc">開啟設定</span></div>
@@ -953,6 +959,8 @@
           <div class="row"><span class="key">requiredMinimumVersion</span> <span class="desc">受管理設定：版本低於此值時拒絕啟動<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">requiredMaximumVersion</span> <span class="desc">受管理設定：版本高於此值時拒絕啟動，引導至核准版本<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
           <div class="row"><span class="key">fallbackModel</span> <span class="desc">最多指定三個備援模型，依序嘗試（主要模型過載或不可用時）<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
+          <div class="row"><span class="key">disableBundledSkills</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+          <div class="row"><span class="key">post-session hook</span> <span class="desc">自我托管生命週期 Hook：Session 結束後、工作區刪除前執行；SIGTERM→SIGKILL 延遲時間可設定<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
           <div class="row"><span class="key">MessageDisplay</span> <span class="desc">Hook 事件：在顯示前轉換或隱藏助理訊息文字<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">hookSpecificOutput.sessionTitle</span> <span class="desc">SessionStart Hook 回傳值：設定 Session 標題（啟動與恢復均適用）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">reloadSkills: true</span> <span class="desc">SessionStart Hook 回傳值：重新掃描 Skill 目錄，讓安裝後立即生效<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
@@ -999,6 +1007,8 @@
           <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AUTO_MODE</span> <span class="desc">設為 <code>1</code> 在 Bedrock / Vertex / Foundry 上啟用 Auto 模式（Opus 4.7 + 4.8）<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_LOG_TOOL_DETAILS</span> <span class="desc">設為 <code>1</code> 時，<code>tool_decision</code> 遙測事件包含 <code>tool_parameters</code> 詳情<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_RESOURCE_ATTRIBUTES</span> <span class="desc">值作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（如 team、repo）切分用量指標<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器），等同 <code>--safe-mode</code> 旗標<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -1073,12 +1083,13 @@
           <div class="row"><span class="key">claude plugin details &lt;name&gt;</span> <span class="desc">顯示外掛元件清單及預估每 session token 費用<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
           <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">刪除專案所有 CC 狀態（--dry-run / -y / -i / --all）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
-          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合（含 <code>waitingFor</code> 欄位顯示阻塞原因）；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+          <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合（含 <code>waitingFor</code>、<code>id</code>、<code>state</code> 欄位）；<code>--all</code> 含已完成 Session；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
           <div class="row"><span class="key">--model</span> <span class="desc">指定模型</span></div>
           <div class="row"><span class="key">--fallback-model</span> <span class="desc">主要模型找不到時自動切換至備援模型<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">--thinking disabled</span> <span class="desc">停用預設會思考的模型的思考功能<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
+          <div class="row"><span class="key">--safe-mode</span> <span class="desc">停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器）以排錯<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
           <div class="row"><span class="key">-n / --name</span> <span class="desc">Session 名稱</span></div>
           <div class="row"><span class="key">--add-dir</span> <span class="desc">新增目錄</span></div>
