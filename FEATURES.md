@@ -7,11 +7,15 @@
 | 項目 | 內容 |
 |:--|:--|
 | 對齊版本 | Claude Code v2.1.16x（2026-06） |
-| 最後更新 | 2026-06-09 |
+| 最後更新 | 2026-06-13 |
 | 更新頻率 | 約一個月一次（對照官方 [changelog](https://code.claude.com/docs/en/changelog)） |
 | 官方文件 | [code.claude.com/docs](https://code.claude.com/docs) |
 
-**怎麼用這份指南**：照「我現在想幹嘛」找對應分類，每個功能都有「適合用」「別用在」幫你判斷。不用從頭讀，當索引翻就好。
+> [!IMPORTANT]
+> **第一輪閱讀建議**：新手不用從頭背指令。先讀「自動化與排程」「品質與驗證」「日常效率指令」三段，知道常見任務該用哪一類功能，再回頭查細節。
+
+> [!TIP]
+> **怎麼用這份指南**：照「我現在想幹嘛」找對應分類，每個功能都有「適合用」「別用在」幫你判斷。不用從頭讀，當索引翻就好。
 
 ---
 
@@ -35,6 +39,9 @@
 | `/loop` | 你開著的對話裡 | 你在場，盯一件會變的事到有結果（電腦要開、視窗要在） |
 | `/schedule` | Anthropic 雲端 | 無人值守、定時跑，電腦關機也照跑（但碰不到你本機檔案） |
 | `/goal` | 你開著的對話裡 | 設一個完成條件，讓它自己一輪輪做到達標才停 |
+
+> [!WARNING]
+> **最常踩坑**：`/loop` 和 `/goal` 都依賴目前對話；`/schedule` 在雲端跑，看不到你的本機檔案。只要任務需要讀本機未提交內容，就不要丟給 `/schedule`。
 
 ### `/loop` — 在對話裡定時自動重跑同一句指令
 
@@ -93,6 +100,9 @@
 | `agent teams` | 一組 AI 像團隊互相討論挑錯 | 能 | 最貴 |
 | `claude agents` | 儀表板管多個背景 session | — | 各自吃額度 |
 | `ultracode` / workflow | 一句話編排數十到上百 agent | 由腳本協調 | 大任務專用 |
+
+> [!NOTE]
+> **先小後大**：一般探索、讀 log、整理檔案先用 `subagents`；只有在「需要多個 AI 互相挑錯」時，才考慮 `agent teams` 或 `ultracode`。
 
 ### subagents（子代理委派）
 
@@ -167,6 +177,9 @@
 | `/simplify` | 只清乾淨不抓 bug，且直接幫你改 |
 | `/verify` | 真的把 app 跑起來、操作、看它能不能動 |
 | `/run` | 只負責把 app 啟動起來看效果 |
+
+> [!IMPORTANT]
+> **交付前順序**：先跑測試與 linter，再用 `/code-review` 看 diff，最後用 `/verify` 實際跑流程取證。`/run` 只能確認「看得到」，不能代表功能驗證完成。
 
 ### `/code-review` — 改完程式的品質把關
 
@@ -246,9 +259,8 @@
 
 **Hooks 是什麼**：寫在設定檔（`settings.json`）裡的「事件 → 指令」對照表。Claude Code 走到某個生命週期節點時，**一定**會自動執行你綁的指令——重點是「確定性」，不像放 CLAUDE.md 靠 AI 自由心證。設定檔三層：`~/.claude/settings.json`（全專案）、專案 `.claude/settings.json`（可進 git 共享）、`.claude/settings.local.json`（單機不進 git）。打 `/hooks` 可看（唯讀）目前掛了哪些。
 
-> 想要「每次都一定發生」的事（格式化、通知、擋危險操作、注入背景）→ 用 hook。
-> 需要 AI 判斷的彈性指引 → 放 CLAUDE.md / Skill。
-> 要擋死的硬權限 → 用 permissions 規則（hook 的篩選是 best-effort，會 fail-open）。
+> [!TIP]
+> **三層分工**：想要「每次都一定發生」的事（格式化、通知、擋危險操作、注入背景）→ 用 hook。需要 AI 判斷的彈性指引 → 放 CLAUDE.md / Skill。要擋死的硬權限 → 用 permissions 規則（hook 的篩選是 best-effort，會 fail-open）。
 
 | 事件 | 觸發時機 | 能擋嗎 | 最常拿來 |
 |:--|:--|:--|:--|
@@ -370,6 +382,9 @@
 
 ### `--bare` — 最小模式（啟動旗標，不是 session 內指令）
 
+> [!CAUTION]
+> **日常互動不要開**：`--bare` 會關掉 hooks、skills、plugins、MCP、auto memory、CLAUDE.md。它適合 CI/CD 或排除故障，不適合一般開發對話。
+
 啟動時砍掉所有自動載入（hooks、skills、plugins、MCP、auto memory、CLAUDE.md），只剩 Bash + 讀檔 + 改檔三種工具，讓腳本化呼叫**秒開**。**適合**CI/CD、headless 批次、或隔離「是不是某個 hook/MCP 拖慢啟動」的問題。**日常互動絕對別用**——等於把整套知識庫和工具全關掉，Claude 會「失憶」。
 
 > 💡 順帶一提：`claude -p`（headless）走訂閱 OAuth 認證時，每次冷啟動光認證握手就要約 35 秒；`--bare`（走 API key、跳過認證與載入）則約 1 秒。所以 hook 裡需要快速、輕量呼叫模型時，與其用 `claude -p`，不如直接打外部 API（如 Gemini）更划算。
@@ -384,4 +399,4 @@
 - **內容查證**：每個功能的用法都以官方文件為準（每條附 📖 連結），不憑記憶。
 - **與速查表分工**：這份（FEATURES.md）= 學「何時用」；[速查表 index.html](https://raymondhou0917.github.io/claude-code-cheatsheet-zh/) = 查「怎麼用」。
 
-> 本文檔內容由 Claude Code 並行查證官方文件後彙整，最後更新 2026-06-09。
+> 本文檔內容由 Claude Code 並行查證官方文件後彙整，最後更新 2026-06-13。
