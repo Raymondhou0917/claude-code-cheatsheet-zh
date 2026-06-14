@@ -16,10 +16,12 @@
 | **[Claude Code 功能應用情境指南（FEATURES.md）](FEATURES.md)** | 解釋 Claude Code「這功能幹嘛、什麼時候用」，含 30+ 功能的應用情境與選擇建議 | 還不熟、想知道某功能值不值得學 |
 | **[Codex 功能應用情境指南（CODEX_FEATURES.md）](CODEX_FEATURES.md)** | 解釋 Codex App / CLI / IDE / Web / GitHub review 怎麼分工 | 想知道當下 Codex 能做什麼、該從哪個入口開始 |
 
-## Codex 知識地圖海報
+## 知識地圖海報
 
-- [橫式 4:3 知識地圖](assets/codex-knowledge-map-landscape.png)
-- [直式長圖知識地圖](assets/codex-knowledge-map-portrait.png)
+| 主題 | 橫式 | 直式 |
+|:--|:--|:--|
+| Claude Code 功能地圖 | [橫式 4:3](assets/claude-code-knowledge-map-landscape.png) | [直式長圖](assets/claude-code-knowledge-map-portrait.png) |
+| Codex 功能地圖 | [橫式 4:3](assets/codex-knowledge-map-landscape.png) | [直式長圖](assets/codex-knowledge-map-portrait.png) |
 
 ## 版本對齊資訊
 
