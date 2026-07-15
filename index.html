@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.201</span>
-          <span class="last-updated">更新日期：2026 年 7 月 5 日</span>
+          <span class="version-info">Claude Code v2.1.209</span>
+          <span class="last-updated">更新日期：2026 年 7 月 15 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,14 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>v2.1.209 — 錯誤修復：修正 <code>claude agents</code> 背景 session 中 <code>/model</code> 及其他對話框被阻斷的問題<span class="badge-new" data-added="2026-07-14">NEW</span></li>
+        <li>螢幕閱讀器模式：<code>claude --ax-screen-reader</code>、<code>CLAUDE_AX_SCREEN_READER=1</code>、設定 <code>"axScreenReader": true</code>；<code>vimInsertModeRemaps</code> 設定：Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）；<code>CLAUDE_CODE_PROCESS_WRAPPER</code>：所有自行派送程序透過企業指定啟動器執行；修正快速模式在切換回支援模型後不自動恢復的問題；大量錯誤修復與效能改善 (v2.1.208)<span class="badge-new" data-added="2026-07-14">NEW</span></li>
+        <li>Auto 模式在 Bedrock / Vertex AI / Foundry 無需 <code>CLAUDE_CODE_ENABLE_AUTO_MODE</code> opt-in 即可使用；<code>disableAutoMode</code> 設定可停用；自動更新器不再覆寫 <code>~/.local/bin/claude</code> 的自訂啟動腳本或符號連結 (v2.1.207)<span class="badge-new" data-added="2026-07-11">NEW</span></li>
+        <li><code>/cd</code> 新增目錄路徑自動建議（與 <code>/add-dir</code> 一致）；<code>/doctor</code> 升級為完整安裝診斷與修復工具（別名 <code>/checkup</code>）；<code>/commit-push-pr</code> 自動允許推送至 repo 設定的 push remote；<code>EnterWorktree</code> 進入 <code>.claude/worktrees/</code> 外的 worktree 前先確認 (v2.1.206)<span class="badge-new" data-added="2026-07-09">NEW</span></li>
+        <li>Auto 模式新增規則封鎖竄改 session transcript 檔案；背景 Agent 通知明確聲明無人工介入，防止偽造授權被接受 (v2.1.205)<span class="badge-new" data-added="2026-07-08">NEW</span></li>
+        <li>v2.1.204 — 錯誤修復：修正 headless session 的 SessionStart hook 未串流事件問題<span class="badge-new" data-added="2026-07-08">NEW</span></li>
+        <li>登入即將到期警告；手動權限模式頁尾顯示灰色 ⏸ 徽章；Session 附加工作目錄加入 MCP <code>roots/list</code>，變更時送出 <code>notifications/roots/list_changed</code> (v2.1.203)<span class="badge-new" data-added="2026-07-07">NEW</span></li>
+        <li><code>/config</code> 新增「Dynamic workflow size」設定（small/medium/large，控制動態工作流程的 Agent 規模）；<code>workflow.run_id</code> / <code>workflow.name</code> OpenTelemetry 屬性；<code>/review &lt;pr&gt;</code> 改回快速單次審查，多 Agent 版改用 <code>/code-review &lt;等級&gt; &lt;PR#&gt;</code> (v2.1.202)<span class="badge-new" data-added="2026-07-06">NEW</span></li>
         <li>Claude Sonnet 5 sessions 不再使用對話中的 system role 傳送 harness reminders (v2.1.201)<span class="badge-new" data-added="2026-07-03">NEW</span></li>
         <li><code>AskUserQuestion</code> 對話框預設不再自動繼續，可透過 <code>/config</code> 設定 idle timeout 啟用；預設權限模式 "default" 全面重命名為 "Manual"（<code>--permission-mode manual</code> 與 <code>"defaultMode": "manual"</code> 均可接受）(v2.1.200)<span class="badge-new" data-added="2026-07-03">NEW</span></li>
         <li>多個斜線技能組合呼叫（如 <code>/skill-a /skill-b do XYZ</code>）現可載入所有前導 Skill（最多 5 個）；SSL 憑證錯誤（TLS 攔截 proxy、<code>NODE_EXTRA_CA_CERTS</code> 缺失）立即失敗並顯示解決提示；串流中途伺服器錯誤後保留部分回應 (v2.1.199)<span class="badge-new" data-added="2026-07-02">NEW</span></li>
@@ -862,7 +870,7 @@
           <div class="row"><span class="key">/less-permission-prompts</span> <span class="desc">新增白名單以減少權限提示<span class="badge-new" data-added="2026-04-16">NEW</span></span></div>
           <div class="row"><span class="key">/loop [間隔] [prompt]</span> <span class="desc">排程週期任務（/proactive 別名）<span class="badge-new" data-added="2026-04-16">NEW</span></span></div>
           <div class="row"><span class="key">/voice</span> <span class="desc">按鍵說話語音（20 種語言）</span></div>
-          <div class="row"><span class="key">/doctor</span> <span class="desc">診斷安裝狀態</span></div>
+          <div class="row"><span class="key">/doctor</span> <span class="desc">完整安裝診斷與修復工具；<code>/checkup</code> 為別名<span class="badge-new" data-added="2026-07-09">NEW</span></span></div>
           <div class="row"><span class="key">/pr-comments [PR]</span> <span class="desc">擷取 GitHub PR 留言</span></div>
           <div class="row"><span class="key">/stats</span> <span class="desc">使用統計與偏好</span></div>
           <div class="row"><span class="key">/insights</span> <span class="desc">分析 Session 報告</span></div>
@@ -1011,6 +1019,9 @@
           <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
           <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc">強制刷新：阻擋啟動直到取得最新設定<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
           <div class="row"><span class="key">refreshInterval</span> <span class="desc">自訂狀態列每 N 秒重新執行<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+          <div class="row"><span class="key">vimInsertModeRemaps</span> <span class="desc">設定 Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          <div class="row"><span class="key">axScreenReader</span> <span class="desc">設為 <code>true</code> 啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          <div class="row"><span class="key">disableAutoMode</span> <span class="desc">設為 <code>true</code> 停用 Auto 模式（Bedrock / Vertex / Foundry 自 v2.1.207 起預設啟用）<span class="badge-new" data-added="2026-07-11">NEW</span></span></div>
           <div class="sub-header">重要環境變數</div>
           <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
           <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
@@ -1054,6 +1065,8 @@
           <div class="row"><span class="key">CLAUDE_CLIENT_PRESENCE_FILE</span> <span class="desc">指定檔案路徑；檔案存在時抑制行動裝置推播通知<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪捲動）<span class="badge-new" data-added="2026-06-26">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_LOG_ASSISTANT_RESPONSES</span> <span class="desc">設為 <code>1</code> 時將助理回應文字寫入 OpenTelemetry log；預設跟隨 <code>OTEL_LOG_USER_PROMPTS</code><span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -1140,6 +1153,7 @@
           <div class="row"><span class="key">--fallback-model</span> <span class="desc">主要模型找不到時自動切換至備援模型<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
           <div class="row"><span class="key">--thinking disabled</span> <span class="desc">停用預設會思考的模型的思考功能<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
           <div class="row"><span class="key">--safe-mode</span> <span class="desc">停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器）以排錯<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+          <div class="row"><span class="key">--ax-screen-reader</span> <span class="desc">啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">-w</span> <span class="desc">Git worktree</span></div>
           <div class="row"><span class="key">-n / --name</span> <span class="desc">Session 名稱</span></div>
           <div class="row"><span class="key">--add-dir</span> <span class="desc">新增目錄</span></div>
