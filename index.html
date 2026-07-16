@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.209</span>
-          <span class="last-updated">更新日期：2026 年 7 月 15 日</span>
+          <span class="version-info">Claude Code v2.1.210</span>
+          <span class="last-updated">更新日期：2026 年 7 月 16 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,7 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>v2.1.210 — 啟動警告：<code>Write(path)</code>、<code>NotebookEdit(path)</code>、<code>Glob(path)</code> 權限規則已棄用，請改用 <code>Edit(path)</code> 或 <code>Read(path)</code>；Auto 模式分類器外部 Session 預設改為 Sonnet 5；強化 Agent 工具防範間接提示詞注入；大量錯誤修復（Agent worktree 隔離、背景工作流程、MCP 伺服器等）<span class="badge-new" data-added="2026-07-14">NEW</span></li>
         <li>v2.1.209 — 錯誤修復：修正 <code>claude agents</code> 背景 session 中 <code>/model</code> 及其他對話框被阻斷的問題<span class="badge-new" data-added="2026-07-14">NEW</span></li>
         <li>螢幕閱讀器模式：<code>claude --ax-screen-reader</code>、<code>CLAUDE_AX_SCREEN_READER=1</code>、設定 <code>"axScreenReader": true</code>；<code>vimInsertModeRemaps</code> 設定：Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）；<code>CLAUDE_CODE_PROCESS_WRAPPER</code>：所有自行派送程序透過企業指定啟動器執行；修正快速模式在切換回支援模型後不自動恢復的問題；大量錯誤修復與效能改善 (v2.1.208)<span class="badge-new" data-added="2026-07-14">NEW</span></li>
         <li>Auto 模式在 Bedrock / Vertex AI / Foundry 無需 <code>CLAUDE_CODE_ENABLE_AUTO_MODE</code> opt-in 即可使用；<code>disableAutoMode</code> 設定可停用；自動更新器不再覆寫 <code>~/.local/bin/claude</code> 的自訂啟動腳本或符號連結 (v2.1.207)<span class="badge-new" data-added="2026-07-11">NEW</span></li>
@@ -1022,6 +1023,7 @@
           <div class="row"><span class="key">vimInsertModeRemaps</span> <span class="desc">設定 Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">axScreenReader</span> <span class="desc">設為 <code>true</code> 啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">disableAutoMode</span> <span class="desc">設為 <code>true</code> 停用 Auto 模式（Bedrock / Vertex / Foundry 自 v2.1.207 起預設啟用）<span class="badge-new" data-added="2026-07-11">NEW</span></span></div>
+          <div class="row"><span class="key">Edit(path) / Read(path)</span> <span class="desc">路徑型權限規則請使用 <code>Edit</code> 或 <code>Read</code>；<code>Write(path)</code>/<code>NotebookEdit(path)</code>/<code>Glob(path)</code> 啟動時會顯示棄用警告<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="sub-header">重要環境變數</div>
           <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
           <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
