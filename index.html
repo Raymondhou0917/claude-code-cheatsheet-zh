@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.210</span>
-          <span class="last-updated">更新日期：2026 年 7 月 16 日</span>
+          <span class="version-info">Claude Code v2.1.215</span>
+          <span class="last-updated">更新日期：2026 年 7 月 20 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,9 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li><code>/verify</code> 與 <code>/code-review</code> 技能不再自動執行，需明確呼叫才會觸發 (v2.1.215)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
+        <li>安全修復：修正 Windows PowerShell 5.1、超長 Bash 命令（&gt;10K 字元）及 <code>dir/**</code> 允許規則的權限檢查繞過問題 (v2.1.214)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
+        <li>長時間執行的工具呼叫新增定期心跳，防止過去會沉默失聯的問題 (v2.1.214)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
         <li>v2.1.210 — 啟動警告：<code>Write(path)</code>、<code>NotebookEdit(path)</code>、<code>Glob(path)</code> 權限規則已棄用，請改用 <code>Edit(path)</code> 或 <code>Read(path)</code>；Auto 模式分類器外部 Session 預設改為 Sonnet 5；強化 Agent 工具防範間接提示詞注入；大量錯誤修復（Agent worktree 隔離、背景工作流程、MCP 伺服器等）<span class="badge-new" data-added="2026-07-14">NEW</span></li>
         <li>v2.1.209 — 錯誤修復：修正 <code>claude agents</code> 背景 session 中 <code>/model</code> 及其他對話框被阻斷的問題<span class="badge-new" data-added="2026-07-14">NEW</span></li>
         <li>螢幕閱讀器模式：<code>claude --ax-screen-reader</code>、<code>CLAUDE_AX_SCREEN_READER=1</code>、設定 <code>"axScreenReader": true</code>；<code>vimInsertModeRemaps</code> 設定：Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）；<code>CLAUDE_CODE_PROCESS_WRAPPER</code>：所有自行派送程序透過企業指定啟動器執行；修正快速模式在切換回支援模型後不自動恢復的問題；大量錯誤修復與效能改善 (v2.1.208)<span class="badge-new" data-added="2026-07-14">NEW</span></li>
@@ -984,6 +987,7 @@
           <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
           <div class="row"><span class="key">hooks: if</span> <span class="desc">條件式 Hooks（權限規則語法）</span></div>
           <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">Monitor tool</span> <span class="desc">串流背景腳本事件<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
           <div class="row"><span class="key">PermissionDenied</span> <span class="desc">Hook：自動模式被拒絕<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">allowedChannelPlugins</span> <span class="desc">管理員頻道外掛白名單</span></div>
@@ -1065,7 +1069,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器），等同 <code>--safe-mode</code> 旗標<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CLIENT_PRESENCE_FILE</span> <span class="desc">指定檔案路徑；檔案存在時抑制行動裝置推播通知<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪捲動）<span class="badge-new" data-added="2026-06-26">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪捲動）<span class="badge-new" data-added="2026-06-27">NEW</span></span></div>
           <div class="row"><span class="key">OTEL_LOG_ASSISTANT_RESPONSES</span> <span class="desc">設為 <code>1</code> 時將助理回應文字寫入 OpenTelemetry log；預設跟隨 <code>OTEL_LOG_USER_PROMPTS</code><span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
