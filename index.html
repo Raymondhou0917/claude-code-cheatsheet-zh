@@ -552,8 +552,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.226</span>
-          <span class="last-updated">更新日期：2026 年 8 月 10 日</span>
+          <span class="version-info">Claude Code v2.1.233</span>
+          <span class="last-updated">更新日期：2026 年 8 月 17 日</span>
         </div>
       </div>
     </header>
@@ -562,6 +562,14 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）在 Opus 4.8、Sonnet 5、Fable 5 及更新模型預設停用；設 <code>CLAUDE_CODE_ENABLE_TODO_TOOLS=1</code> 重新啟用 (v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
+        <li><code>CLAUDE_CODE_TOOL_MEMORY_LIMIT</code>（Linux cgroup 記憶體限制）、<code>CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</code>（WebFetch 快取 TTL，預設 15 分鐘）兩個新環境變數 (v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
+        <li>GitLab MR 支援：<code>--worktree</code> 旗標與 <code>claude agents</code> 檢視均支援 GitLab MR URL（顯示為 <code>!N</code>）(v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
+        <li>子 Agent 分叉預設啟用：<code>subagent_type: "fork"</code> 繼承完整對話與 prompt cache；互動式 Session 中非 teammate 的 Agent 派送預設在背景執行 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
+        <li>提示輸入 <code>@Session名稱</code> 直接讓 Claude 發送 <code>SendMessage</code> 與其他 Session 通訊 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
+        <li><code>additionalMarketplaces</code> / <code>allowedMarketplaces</code> 設定：分別作為 <code>extraKnownMarketplaces</code>、<code>strictKnownMarketplaces</code> 的友善別名 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
+        <li><code>claude remote-control --continue</code> — 恢復最近一次 Remote Control Session (v2.1.229)<span class="badge-new" data-added="2026-08-12">NEW</span></li>
+        <li>錯誤修復與穩定性改進（修正 MCP OAuth 重定向、Bash 指令輸入重新導向權限檢查、Windows 路徑繞過等）(v2.1.227–231)</li>
         <li>Gateway 消費限額支援（含限額名稱與重置時間）(v2.1.225)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
         <li><code>claude agents</code> 在不可信目錄中加入工作區信任確認提示 (v2.1.225)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
         <li>錯誤修復：OAuth 401 token 輪換、macOS MCP keychain 逾時、Remote Control 穩定性 (v2.1.225–226)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
@@ -779,7 +787,7 @@
           <div class="sub-header">前綴符號</div>
           <div class="row"><span class="key">/</span> <span class="desc">斜線指令</span></div>
           <div class="row"><span class="key">!</span> <span class="desc">直接執行 Bash</span></div>
-          <div class="row"><span class="key">@</span> <span class="desc">檔案提及 + 自動完成</span></div>
+          <div class="row"><span class="key">@</span> <span class="desc">檔案提及 + 自動完成；輸入 Session 名稱可讓 Claude 直接發送 <code>SendMessage</code> 與其他 Session 通訊<span class="badge-new" data-added="2026-08-13">NEW</span></span></div>
 
           <div class="sub-header">Session 選擇器</div>
           <div class="row"><span class="key"><span class="keycap">↑↓</span></span> <span class="desc">瀏覽</span></div>
@@ -1038,6 +1046,7 @@
           <div class="row"><span class="key">vimInsertModeRemaps</span> <span class="desc">設定 Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">axScreenReader</span> <span class="desc">設為 <code>true</code> 啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">disableAutoMode</span> <span class="desc">設為 <code>true</code> 停用 Auto 模式（Bedrock / Vertex / Foundry 自 v2.1.207 起預設啟用）<span class="badge-new" data-added="2026-07-11">NEW</span></span></div>
+          <div class="row"><span class="key">additionalMarketplaces</span> <span class="desc"><code>extraKnownMarketplaces</code> 的友善別名；<code>allowedMarketplaces</code> 為 <code>strictKnownMarketplaces</code> 的別名<span class="badge-new" data-added="2026-08-13">NEW</span></span></div>
           <div class="row"><span class="key">Edit(path) / Read(path)</span> <span class="desc">路徑型權限規則請使用 <code>Edit</code> 或 <code>Read</code>；<code>Write(path)</code>/<code>NotebookEdit(path)</code>/<code>Glob(path)</code> 啟動時會顯示棄用警告<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="sub-header">重要環境變數</div>
           <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
@@ -1084,6 +1093,9 @@
           <div class="row"><span class="key">OTEL_LOG_ASSISTANT_RESPONSES</span> <span class="desc">設為 <code>1</code> 時將助理回應文字寫入 OpenTelemetry log；預設跟隨 <code>OTEL_LOG_USER_PROMPTS</code><span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_TODO_TOOLS</span> <span class="desc">設為 <code>1</code> 在 Opus 4.8、Sonnet 5、Fable 5 及更新模型上重新啟用任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_TOOL_MEMORY_LIMIT</span> <span class="desc">Linux 上以 cgroup 限制 Bash 工具指令的記憶體用量，防止失控建置程序拖垮 Session<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</span> <span class="desc">設定 WebFetch Session URL 快取 TTL（預設 15 分鐘）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
         </div>
       </section>
       </div>
@@ -1142,6 +1154,7 @@
           <div class="row"><span class="key">agent</span> <span class="desc"><code>settings.json</code> 中的 <code>agent</code> 欄位在已派送 Session 中正確生效<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
           <div class="row"><span class="key">Tool(param:value)</span> <span class="desc">權限規則語法：如 <code>Agent(model:opus)</code> 允許以 Opus 模型派送子 Agent<span class="badge-new" data-added="2026-06-16">NEW</span></span></div>
           <div class="row"><span class="key">5 層巢狀子 Agent</span> <span class="desc">子 Agent 可再派送子 Agent，最多 5 層深<span class="badge-new" data-added="2026-06-18">NEW</span></span></div>
+          <div class="row"><span class="key">subagent_type: "fork"</span> <span class="desc">預設啟用：繼承完整對話與 prompt cache；互動式 Session 中非 teammate 的 Agent 派送預設在背景執行<span class="badge-new" data-added="2026-08-13">NEW</span></span></div>
         </div>
       </section>
 
@@ -1163,6 +1176,7 @@
           <div class="row"><span class="key">claude auth login</span> <span class="desc">支援終端機貼入 OAuth 碼（WSL2 / SSH / 容器）<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
           <div class="row"><span class="key">claude mcp login &lt;name&gt;</span> <span class="desc">從 CLI 驗證 MCP 伺服器（<code>--no-browser</code> 支援 SSH stdin 重定向）<span class="badge-new" data-added="2026-06-22">NEW</span></span></div>
           <div class="row"><span class="key">claude mcp logout &lt;name&gt;</span> <span class="desc">從 CLI 登出 MCP 伺服器<span class="badge-new" data-added="2026-06-22">NEW</span></span></div>
+          <div class="row"><span class="key">claude remote-control --continue</span> <span class="desc">恢復最近一次 Remote Control Session<span class="badge-new" data-added="2026-08-12">NEW</span></span></div>
           <div class="row"><span class="key">claude agents [--cwd &lt;path&gt;]</span> <span class="desc">所有 Session 統一清單（執行中、已阻塞、已完成）；<code>--json</code> 輸出 JSON 供腳本整合（含 <code>waitingFor</code>、<code>id</code>、<code>state</code> 欄位）；<code>--all</code> 含已完成 Session；支援 --add-dir、--settings、--mcp-config、--model 等旗標<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
           <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">非互動式程式碼審查（PR / 分支 / 路徑）<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
           <div class="sub-header">重要旗標</div>
