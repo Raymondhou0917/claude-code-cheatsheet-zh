@@ -27,8 +27,8 @@
 
 | 項目 | 狀態 |
 |:--|:--|
-| **對齊版本** | Claude Code v2.1.233 |
-| **最後更新** | 2026-08-17 |
+| **對齊版本** | Claude Code v2.1.283 |
+| **最後更新** | 2026-09-26 |
 | **原站** | [cc.storyfox.cz](https://cc.storyfox.cz/) |
 | **官方文件** | [code.claude.com/docs](https://code.claude.com/docs) |
 | **官方更新日誌** | [code.claude.com/docs/en/changelog](https://code.claude.com/docs/en/changelog) |
