@@ -208,6 +208,44 @@
       font-weight: bold;
     }
 
+    /* === TIERED DETAILS (zh-Hant only) === */
+    .changelog-more {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: #92400E;
+      text-decoration: none;
+      border-bottom: 1px dashed #92400E;
+    }
+
+    .more {
+      margin: 2px 0 4px;
+      border-top: 1px dashed rgba(0,0,0,0.12);
+    }
+
+    .more > summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6B7280;
+      padding: 3px 0;
+      user-select: none;
+    }
+
+    .more > summary::-webkit-details-marker { display: none; }
+
+    .more > summary::before {
+      content: "▸";
+      display: inline-block;
+      width: 1em;
+      transition: transform 0.15s;
+    }
+
+    .more[open] > summary::before { transform: rotate(90deg); }
+    .more > summary:hover { color: #111827; }
+    .sub-header .nocase { text-transform: none; }
+
     /* === MAIN GRID === */
     .main-grid {
       display: grid;
@@ -427,6 +465,7 @@
       .sub-header { break-after: avoid; page-break-after: avoid; }
       .row { break-inside: avoid; page-break-inside: avoid; }
       .os-toggle, .header-buttons, .changelog { display: none !important; }
+      .more > summary { display: none; }
       .footer { margin-top: 4px; padding: 4px 8px; background: #374151 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
 
@@ -465,7 +504,7 @@
       }
       .footer-sep { display: none; }
       .changelog-list { flex-direction: column; gap: 4px; }
-      /* 手機：長指令／設定名稱可斷行，不再把整頁撐寬（繁中版獨有） */
+      /* mobile: let long keys wrap instead of widening the page (zh-Hant only) */
       .main-grid > *, .section, .section-content, .row, .desc { min-width: 0; }
       .key { white-space: normal; overflow-wrap: anywhere; flex-shrink: 1; max-width: 55%; }
       .desc, .changelog-list li { overflow-wrap: anywhere; }
@@ -574,212 +613,8 @@
         <li><code>maxProseWidth</code> 設定 — 寬終端機中限制 Claude 回應文字的寬度，表格與程式碼區塊仍維持全寬 (v2.1.282)<span class="badge-new" data-added="2026-09-24">NEW</span></li>
         <li>修正恢復／繼續的 Session 重複送出先前訊息的問題 (v2.1.282)<span class="badge-new" data-added="2026-09-24">NEW</span></li>
         <li><code>"attribution": false</code> — 在 <code>settings.json</code> 一次隱藏所有 commit 與 PR 署名；舊版 CLI 會略過含此值的設定檔，跨版本共用的設定檔請保留物件寫法 (v2.1.281)<span class="badge-new" data-added="2026-09-23">NEW</span></li>
-        <li>推出 <strong>Claude Opus 5.5</strong>（<code>claude-opus-5-5</code>）— 現為預設 Opus 模型；1M Token 上下文，$4/$20 per Mtok（快取讀取 $0.20/Mtok）；Pro 與 Team Standard 方案的預設模型由 Sonnet 改為 Opus (v2.1.280)<span class="badge-new" data-added="2026-09-22">NEW</span></li>
-        <li><code>CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</code> 環境變數 — 調整 MCP 工具描述與伺服器指令的 2,048 字元上限（套用至 Session 中所有 MCP 伺服器）(v2.1.280)<span class="badge-new" data-added="2026-09-22">NEW</span></li>
-        <li>Auto 模式預設改用伺服器端分類器（Claude API、Enterprise、Bedrock／Vertex／Foundry／Gateway），分類器額外開銷不另計費；<code>CLAUDE_CODE_AUTO_MODE_SERVER=0</code> 可退出；<code>/status</code> 新增「Auto mode server」列；v2.1.282 起直連 Anthropic API 且關閉遙測時也預設使用 (v2.1.278)<span class="badge-new" data-added="2026-09-19">NEW</span></li>
-        <li>支援 AGENTS.md：專案中沒有 CLAUDE.md 時改讀 <code>AGENTS.md</code>，可在 <code>/config</code> 的「Project instructions」調整；v2.1.281 起 Bedrock／Vertex／Foundry／LLM Gateway 與停用遙測的 Session 也支援 (v2.1.277)<span class="badge-new" data-added="2026-09-18">NEW</span></li>
-        <li>修正 <code>ANTHROPIC_BASE_URL</code> 指向 proxy／gateway 時所有請求都回 400 錯誤的問題（v2.1.275 regression）(v2.1.276)<span class="badge-new" data-added="2026-09-18">NEW</span></li>
-        <li>「立即送出」快捷鍵 <kbd>Ctrl</kbd>+<kbd>Enter</kbd>（或 <kbd>Ctrl</kbd>+<kbd>X</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd>）— 一次送出所有排隊訊息；v2.1.281 起改為把執行中的工具移至背景，不再取消本回合 (v2.1.275)<span class="badge-new" data-added="2026-09-17">NEW</span></li>
-        <li>claude.ai 帳號已啟用的 Skills 與外掛會同步到以該帳號登入的終端機 Session；以 <code>syncClaudeAiSkills: false</code> / <code>syncClaudeAiPlugins: false</code> 退出 (v2.1.275)<span class="badge-new" data-added="2026-09-17">NEW</span></li>
-        <li><code>/output-style [名稱]</code> — 列出並切換輸出風格（含 Remote Control 與雲端／Headless Session）；<code>claude plugin eval</code> — 對外掛執行評測套件，產出可重現的評分報告（JSON + HTML）(v2.1.269)<span class="badge-new" data-added="2026-09-11">NEW</span></li>
-        <li><code>maxEffortLevel</code> 設定 — 在所有 Provider（含 Bedrock、Vertex、Foundry）限制 effort 上限，可整體設定或透過 <code>modelSettings</code> 依模型設定 (v2.1.267)<span class="badge-new" data-added="2026-09-09">NEW</span></li>
-        <li><code>/skill-doctor</code> — 顯示哪些已載入的 Skill 沒被用到、各佔多少上下文，方便精簡；<code>bashOutputMaxChars</code> 設定可提高指令輸出內嵌上限（最高 128K 字元）(v2.1.261)<span class="badge-new" data-added="2026-09-04">NEW</span></li>
-        <li>全螢幕模式新增 diff 面板：在對話旁即時顯示未提交的變更，以 <code>/diff</code> 切換 (v2.1.260)<span class="badge-new" data-added="2026-09-03">NEW</span></li>
-        <li><code>CLAUDE_CODE_SUBAGENT_MODEL_FORCE</code> — 將 <code>CLAUDE_CODE_SUBAGENT_MODEL</code>（或主模型）強制套用到每個子 Agent，忽略個別派送與 Agent 定義的模型；<code>/effort</code> 新增 <kbd>s</kbd> 只調整目前 Session；<code>timeFormat</code> / <code>timeZone</code> 設定介面時間格式 (v2.1.257)<span class="badge-new" data-added="2026-09-02">NEW</span></li>
-        <li>推出 <strong>Claude Fable 5.1</strong>（<code>claude-fable-5-1</code>）— 現為預設 Fable 模型；1M Token 上下文，$10/$50 per Mtok (v2.1.257)<span class="badge-new" data-added="2026-09-01">NEW</span></li>
-        <li><code>PreModelSwitch</code> / <code>PostModelSwitch</code> Hook 事件 — 阻擋、確認或註記模型切換；<code>/effort</code> 改為依模型分別儲存預設等級；<code>CLAUDE_CODE_SUBAGENT_MODEL</code> 改為子 Agent 的預設模型（Agent 定義與個別派送指定的模型優先）(v2.1.251)<span class="badge-new" data-added="2026-08-28">NEW</span></li>
-        <li><code>--restricted</code> 旗標（或 <code>CLAUDE_CODE_RESTRICTED=1</code>）— 移除會執行指令或程式碼的內建工具與 <code>WebFetch</code>，檔案工具限在工作目錄內，拒絕 <code>bypassPermissions</code>，並忽略使用者／專案／本機設定檔 (v2.1.248)<span class="badge-new" data-added="2026-08-27">NEW</span></li>
-        <li><code>modelPicker</code> 設定 — 自訂 <code>/model</code> 選擇器的模型清單（順序、標籤，可附加或取代內建清單）；<code>/usage</code> 新增 Loops 分項，列出各 <code>/loop</code> 任務的執行次數與 Token 用量 (v2.1.243)<span class="badge-new" data-added="2026-08-25">NEW</span></li>
-        <li>內建「Concise」輸出風格 — 先給結果、省略開場與旁白，工作深度不變；在 <code>/config</code> 的 Output style 選擇 (v2.1.237)<span class="badge-new" data-added="2026-08-19">NEW</span></li>
-        <li><code>ANTHROPIC_DEFAULT_MODEL</code> 環境變數 — 設定新 Session 的起始模型；<code>/model</code> 的選擇仍可覆寫並跨重啟保留（與 <code>ANTHROPIC_MODEL</code> 不同）(v2.1.236)<span class="badge-new" data-added="2026-08-19">NEW</span></li>
-        <li><code>spellcheck</code> 設定 — 以本機安裝的 <code>aspell</code>／<code>hunspell</code>／<code>ispell</code> 在提示輸入框標示拼字錯誤 (v2.1.235)<span class="badge-new" data-added="2026-08-18">NEW</span></li>
-        <li>錯誤修復與穩定性改進 (v2.1.234–283)</li>
-        <li>任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）在 Opus 4.8、Sonnet 5、Fable 5 及更新模型預設停用；設 <code>CLAUDE_CODE_ENABLE_TODO_TOOLS=1</code> 重新啟用 (v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
-        <li><code>CLAUDE_CODE_TOOL_MEMORY_LIMIT</code>（Linux cgroup 記憶體限制）、<code>CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</code>（WebFetch 快取 TTL，預設 15 分鐘）兩個新環境變數 (v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
-        <li>GitLab MR 支援：<code>--worktree</code> 旗標與 <code>claude agents</code> 檢視均支援 GitLab MR URL（顯示為 <code>!N</code>）(v2.1.233)<span class="badge-new" data-added="2026-08-14">NEW</span></li>
-        <li>子 Agent 分叉預設啟用：<code>subagent_type: "fork"</code> 繼承完整對話與 prompt cache；互動式 Session 中非 teammate 的 Agent 派送預設在背景執行 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
-        <li>提示輸入 <code>@Session名稱</code> 直接讓 Claude 發送 <code>SendMessage</code> 與其他 Session 通訊 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
-        <li><code>additionalMarketplaces</code> / <code>allowedMarketplaces</code> 設定：分別作為 <code>extraKnownMarketplaces</code>、<code>strictKnownMarketplaces</code> 的友善別名 (v2.1.232)<span class="badge-new" data-added="2026-08-13">NEW</span></li>
-        <li><code>claude remote-control --continue</code> — 恢復最近一次 Remote Control Session (v2.1.229)<span class="badge-new" data-added="2026-08-12">NEW</span></li>
-        <li>錯誤修復與穩定性改進（修正 MCP OAuth 重定向、Bash 指令輸入重新導向權限檢查、Windows 路徑繞過等）(v2.1.227–231)</li>
-        <li>Gateway 消費限額支援（含限額名稱與重置時間）(v2.1.225)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li><code>claude agents</code> 在不可信目錄中加入工作區信任確認提示 (v2.1.225)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li>錯誤修復：OAuth 401 token 輪換、macOS MCP keychain 逾時、Remote Control 穩定性 (v2.1.225–226)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li><code>claude self-hosted-runner</code> 指令：啟動 Team/Enterprise 自架執行環境 (v2.1.224)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li>跨 Session 傳訊：<code>ListAgents</code> + <code>SendMessage</code> 讓 macOS/Linux 上的 Session 互相發現並傳訊 (v2.1.224)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li>安全強化：沙盒新增 JWT 感知憑證遮蔽、AWS SigV4 重新簽署及長路徑隔離修復 (v2.1.224)<span class="badge-new" data-added="2026-08-10">NEW</span></li>
-        <li>Claude Opus 5（<code>claude-opus-5</code>）正式加入 — 1M Token 上下文，成為新預設 Opus；Opus 4.7 已從快速模式移除 (v2.1.219)<span class="badge-new" data-added="2026-07-27">NEW</span></li>
-        <li>子 Agent 預設巢狀層數由 1 提升至 3；可設 <code>CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1</code> 還原舊行為 (v2.1.219)<span class="badge-new" data-added="2026-07-27">NEW</span></li>
-        <li><code>sandbox.network.strictAllowlist</code> 設定：沙盒指令存取非白名單主機時直接拒絕，不再提示 (v2.1.219)<span class="badge-new" data-added="2026-07-27">NEW</span></li>
-        <li><code>DirectoryAdded</code> Hook：<code>/add-dir</code> 或 SDK 在 Session 中途新增工作目錄時觸發 (v2.1.219)<span class="badge-new" data-added="2026-07-27">NEW</span></li>
-        <li>錯誤修復與穩定性改進 (v2.1.220)</li>
-        <li><code>/verify</code> 與 <code>/code-review</code> 技能不再自動執行，需明確呼叫才會觸發 (v2.1.215)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
-        <li>安全修復：修正 Windows PowerShell 5.1、超長 Bash 命令（&gt;10K 字元）及 <code>dir/**</code> 允許規則的權限檢查繞過問題 (v2.1.214)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
-        <li>長時間執行的工具呼叫新增定期心跳，防止過去會沉默失聯的問題 (v2.1.214)<span class="badge-new" data-added="2026-07-20">NEW</span></li>
-        <li>v2.1.210 — 啟動警告：<code>Write(path)</code>、<code>NotebookEdit(path)</code>、<code>Glob(path)</code> 權限規則已棄用，請改用 <code>Edit(path)</code> 或 <code>Read(path)</code>；Auto 模式分類器外部 Session 預設改為 Sonnet 5；強化 Agent 工具防範間接提示詞注入；大量錯誤修復（Agent worktree 隔離、背景工作流程、MCP 伺服器等）<span class="badge-new" data-added="2026-07-14">NEW</span></li>
-        <li>v2.1.209 — 錯誤修復：修正 <code>claude agents</code> 背景 session 中 <code>/model</code> 及其他對話框被阻斷的問題<span class="badge-new" data-added="2026-07-14">NEW</span></li>
-        <li>螢幕閱讀器模式：<code>claude --ax-screen-reader</code>、<code>CLAUDE_AX_SCREEN_READER=1</code>、設定 <code>"axScreenReader": true</code>；<code>vimInsertModeRemaps</code> 設定：Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）；<code>CLAUDE_CODE_PROCESS_WRAPPER</code>：所有自行派送程序透過企業指定啟動器執行；修正快速模式在切換回支援模型後不自動恢復的問題；大量錯誤修復與效能改善 (v2.1.208)<span class="badge-new" data-added="2026-07-14">NEW</span></li>
-        <li>Auto 模式在 Bedrock / Vertex AI / Foundry 無需 <code>CLAUDE_CODE_ENABLE_AUTO_MODE</code> opt-in 即可使用；<code>disableAutoMode</code> 設定可停用；自動更新器不再覆寫 <code>~/.local/bin/claude</code> 的自訂啟動腳本或符號連結 (v2.1.207)<span class="badge-new" data-added="2026-07-11">NEW</span></li>
-        <li><code>/cd</code> 新增目錄路徑自動建議（與 <code>/add-dir</code> 一致）；<code>/doctor</code> 升級為完整安裝診斷與修復工具（別名 <code>/checkup</code>）；<code>/commit-push-pr</code> 自動允許推送至 repo 設定的 push remote；<code>EnterWorktree</code> 進入 <code>.claude/worktrees/</code> 外的 worktree 前先確認 (v2.1.206)<span class="badge-new" data-added="2026-07-09">NEW</span></li>
-        <li>Auto 模式新增規則封鎖竄改 session transcript 檔案；背景 Agent 通知明確聲明無人工介入，防止偽造授權被接受 (v2.1.205)<span class="badge-new" data-added="2026-07-08">NEW</span></li>
-        <li>v2.1.204 — 錯誤修復：修正 headless session 的 SessionStart hook 未串流事件問題<span class="badge-new" data-added="2026-07-08">NEW</span></li>
-        <li>登入即將到期警告；手動權限模式頁尾顯示灰色 ⏸ 徽章；Session 附加工作目錄加入 MCP <code>roots/list</code>，變更時送出 <code>notifications/roots/list_changed</code> (v2.1.203)<span class="badge-new" data-added="2026-07-07">NEW</span></li>
-        <li><code>/config</code> 新增「Dynamic workflow size」設定（small/medium/large，控制動態工作流程的 Agent 規模）；<code>workflow.run_id</code> / <code>workflow.name</code> OpenTelemetry 屬性；<code>/review &lt;pr&gt;</code> 改回快速單次審查，多 Agent 版改用 <code>/code-review &lt;等級&gt; &lt;PR#&gt;</code> (v2.1.202)<span class="badge-new" data-added="2026-07-06">NEW</span></li>
-        <li>Claude Sonnet 5 sessions 不再使用對話中的 system role 傳送 harness reminders (v2.1.201)<span class="badge-new" data-added="2026-07-03">NEW</span></li>
-        <li><code>AskUserQuestion</code> 對話框預設不再自動繼續，可透過 <code>/config</code> 設定 idle timeout 啟用；預設權限模式 "default" 全面重命名為 "Manual"（<code>--permission-mode manual</code> 與 <code>"defaultMode": "manual"</code> 均可接受）(v2.1.200)<span class="badge-new" data-added="2026-07-03">NEW</span></li>
-        <li>多個斜線技能組合呼叫（如 <code>/skill-a /skill-b do XYZ</code>）現可載入所有前導 Skill（最多 5 個）；SSL 憑證錯誤（TLS 攔截 proxy、<code>NODE_EXTRA_CA_CERTS</code> 缺失）立即失敗並顯示解決提示；串流中途伺服器錯誤後保留部分回應 (v2.1.199)<span class="badge-new" data-added="2026-07-02">NEW</span></li>
-        <li>子 Agent 預設在背景執行（Claude 持續工作，完成時收到通知）；Chrome 整合正式上線（GA）；背景 Agent 通知 Hook（<code>agent_needs_input</code> / <code>agent_completed</code>）；新增 <code>/dataviz</code> Skill — 圖表與資料視覺化設計指南（含色彩配置驗證器）(v2.1.198)<span class="badge-new" data-added="2026-07-01">NEW</span></li>
-        <li>推出 <strong>Claude Sonnet 5</strong> — 現為 Claude Code 預設模型；原生 1M Token 上下文窗口；優惠定價 $2/$10 per Mtok 至 2026 年 8 月 31 日 (v2.1.197)<span class="badge-new" data-added="2026-06-30">NEW</span></li>
-        <li>組織預設模型：管理員在 org console 設定，<code>/model</code> 中顯示「Org default」；Session 啟動時自動產生可讀名稱；點擊檔案附件（Cmd/Ctrl-Click）在 Finder/Explorer 開啟；安全強化：<code>claude mcp list/get</code> 不再自動啟動 repo 自我核准的 <code>.mcp.json</code> 伺服器 (v2.1.196)<span class="badge-new" data-added="2026-06-29">NEW</span></li>
-        <li><code>CLAUDE_CODE_DISABLE_MOUSE_CLICKS</code> 環境變數 — 全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪）；Hook 比對器修正：含連字號的識別符（如 <code>mcp__brave-search</code>）改為精確比對，需完整比對所有工具時請用 <code>mcp__brave-search__.*</code> (v2.1.195)<span class="badge-new" data-added="2026-06-26">NEW</span></li>
-        <li><code>autoMode.classifyAllShell</code> 設定 — 將所有 Bash/PowerShell 指令路由至 Auto 模式分類器；Auto 模式拒絕原因現記錄於 transcript、拒絕提示與 <code>/permissions</code> 近期拒絕清單；<code>OTEL_LOG_ASSISTANT_RESPONSES=1</code> 可將助理回應文字寫入 OpenTelemetry log；Bash 模式新增即時檔案路徑自動完成 (v2.1.193)<span class="badge-new" data-added="2026-06-25">NEW</span></li>
-        <li><code>/rewind</code> 新增支援恢復至 <code>/clear</code> 之前的對話狀態 (v2.1.191)<span class="badge-new" data-added="2026-06-24">NEW</span></li>
-        <li>v2.1.190 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-24">NEW</span></li>
-        <li><code>sandbox.credentials</code> 設定 — 阻止沙盒指令讀取憑證檔案與 secret 環境變數；組織設定的模型限制：<code>/model</code>、<code>--model</code>、<code>ANTHROPIC_MODEL</code> 選用受限模型時顯示提示；全螢幕模式選單支援滑鼠點擊 (v2.1.187)<span class="badge-new" data-added="2026-06-23">NEW</span></li>
-        <li><code>claude mcp login &lt;name&gt;</code> / <code>claude mcp logout &lt;name&gt;</code> — 從 CLI 驗證 MCP 伺服器（<code>--no-browser</code> 支援 SSH stdin）；<code>/workflows</code> 新增狀態篩選（按 <kbd>f</kbd>）；<code>/plugin</code> Installed 分頁新增 Skills 區塊；<code>teammateMode: "iterm2"</code> 設定 (v2.1.186)<span class="badge-new" data-added="2026-06-22">NEW</span></li>
-        <li>串流停滯提示更新：20 秒無回應後顯示「Waiting for API response · will retry in …」（原為 10 秒的「No response from API」）(v2.1.185)<span class="badge-new" data-added="2026-06-20">NEW</span></li>
-        <li>Auto 模式安全強化：破壞性 git 指令（<code>git reset --hard</code>、<code>git checkout -- .</code>、Terraform/Pulumi/CDK destroy 等）在非明確要求時自動封鎖；模型棄用警告輸出至 stderr (v2.1.183)<span class="badge-new" data-added="2026-06-21">NEW</span></li>
-        <li><code>attribution.sessionUrl</code> 設定 — 設為 <code>false</code> 可省略 commit 與 PR 中附加的 claude.ai Session 連結 (v2.1.183)<span class="badge-new" data-added="2026-06-21">NEW</span></li>
-        <li><code>/config --help</code> 列出可用的速記鍵（shorthand keys）；<code>/config key=value</code> 語法可直接在提示框設定任意選項（如 <code>/config thinking=false</code>）(v2.1.181~183)<span class="badge-new" data-added="2026-06-21">NEW</span></li>
-        <li>v2.1.182 — 錯誤修復：修正子 Agent 產生 400 錯誤（thinking blocks）、WebSearch 在子 Agent 中恢復正常<span class="badge-new" data-added="2026-06-20">NEW</span></li>
-        <li><code>CLAUDE_CLIENT_PRESENCE_FILE</code> 環境變數 — 檔案存在時抑制行動裝置通知 (v2.1.181)<span class="badge-new" data-added="2026-06-19">NEW</span></li>
-        <li><code>sandbox.allowAppleEvents</code> 設定 — macOS 沙盒選擇性啟用 Apple Events (v2.1.181)<span class="badge-new" data-added="2026-06-19">NEW</span></li>
-        <li>子 Agent 最多支援 5 層巢狀（subagent 可再派送 subagent）；<code>/plugin</code> 市集新增搜尋列 (v2.1.180)<span class="badge-new" data-added="2026-06-18">NEW</span></li>
-        <li>串流中斷保全：連線中途中斷時保留已接收的部分回應 (v2.1.179)<span class="badge-new" data-added="2026-06-17">NEW</span></li>
-        <li><code>Tool(param:value)</code> 權限規則語法 — 如 <code>Agent(model:opus)</code>；巢狀 <code>.claude/skills/</code> 目錄自動載入；<code>.claude/</code> 目錄層級優先順序已定義（Agent / Workflow / Style 衝突以最深層為準）(v2.1.178)<span class="badge-new" data-added="2026-06-16">NEW</span></li>
-        <li>工作流程關鍵字由 "workflow" 改為 <code>ultracode</code>（紫色高亮顯示）；Focus 模式強化（僅顯示關鍵資訊）(v2.1.177)<span class="badge-new" data-added="2026-06-15">NEW</span></li>
-        <li><code>language</code> 設定 — Session 標題以對話語言生成（可設定覆寫）；<code>footerLinksRegexes</code> — 正規表示式比對連結 badge (v2.1.176)<span class="badge-new" data-added="2026-06-14">NEW</span></li>
-        <li><code>enforceAvailableModels</code> 受管理設定 — 限制預設模型至白名單（使用者 / 專案設定無法擴展此清單）(v2.1.175)<span class="badge-new" data-added="2026-06-13">NEW</span></li>
-        <li><code>wheelScrollAccelerationEnabled</code> 設定 — 設為 <code>false</code> 停用全螢幕模式的滾輪加速 (v2.1.174)<span class="badge-new" data-added="2026-06-12">NEW</span></li>
-        <li>Fable 5 模型名稱含 <code>[1m]</code> 後綴時自動正規化；消除 Windows 上誤報的「sandbox 相依缺失」警告 (v2.1.173)<span class="badge-new" data-added="2026-06-11">NEW</span></li>
-        <li>子 Agent 可再派送子 Agent（最多 5 層）；外掛市集瀏覽新增搜尋功能 (v2.1.172)<span class="badge-new" data-added="2026-06-10">NEW</span></li>
-        <li>v2.1.171 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-10">NEW</span></li>
-        <li>Claude Fable 5 正式推出 — Mythos 等級模型，能力超越所有先前可用模型，現已開放一般使用 (v2.1.170)<span class="badge-new" data-added="2026-06-09">NEW</span></li>
-        <li><code>--safe-mode</code> 旗標與 <code>CLAUDE_CODE_SAFE_MODE</code> 環境變數 — 一鍵停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器）以排錯 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li><code>/cd &lt;路徑&gt;</code> 指令 — 切換工作目錄而不中斷 prompt cache (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li><code>disableBundledSkills</code> 設定與 <code>CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</code> 環境變數 — 隱藏內建 Skills、工作流程與斜線指令 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li><code>post-session</code> 生命週期 Hook — 自我托管環境：Session 結束後、工作區刪除前執行；子程序 SIGTERM→SIGKILL 延遲時間可設定（預設 5 秒）(v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li><code>claude agents --all</code> 新旗標含已完成 Session；JSON 輸出新增 <code>id</code> 與 <code>state</code> 欄位 (v2.1.169)<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li>v2.1.168 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-08">NEW</span></li>
-        <li>v2.1.167 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-07">NEW</span></li>
-        <li><code>fallbackModel</code> 設定 — 最多指定三個備援模型，依序嘗試（主要模型過載或不可用時自動切換）(v2.1.166)<span class="badge-new" data-added="2026-06-06">NEW</span></li>
-        <li>權限規則工具名稱欄位支援 glob 模式，設為 <code>"*"</code> 即可拒絕所有工具（deny rules）(v2.1.166)<span class="badge-new" data-added="2026-06-06">NEW</span></li>
-        <li><code>MAX_THINKING_TOKENS=0</code>、<code>--thinking disabled</code> 及每模型思考切換開關現在可停用預設會思考的模型的思考功能 (v2.1.166)<span class="badge-new" data-added="2026-06-06">NEW</span></li>
-        <li>修復多項問題：圖片處理錯誤與額外 token 用量、遠端 Session 永久卡在 worker 註冊、JetBrains 2026.1+ 終端機閃爍、Shift+非 ASCII 字元被丟棄、PowerShell 指令驗證偶爾卡住、macOS <code>--bg-pty-host</code> 孤兒程序 100% CPU、語音模式切換後需重新登入等 (v2.1.166)<span class="badge-new" data-added="2026-06-06">NEW</span></li>
-        <li>v2.1.165 / v2.1.164 — 錯誤修復與穩定性改進<span class="badge-new" data-added="2026-06-05">NEW</span></li>
-        <li><code>/plugin list</code> 新增 <code>--enabled</code>/<code>--disabled</code> 篩選旗標，快速查看已啟用或停用的外掛 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li><code>/btw</code> 新增 <code>c</code> 快捷鍵 — 直接複製原始 Markdown 格式回應至剪貼簿（貼上時保留格式）(v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li><code>requiredMinimumVersion</code> / <code>requiredMaximumVersion</code> 受管理設定 — 版本不在允許範圍時拒絕啟動並引導至核准版本 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>Stop / SubagentStop Hook 可回傳 <code>hookSpecificOutput.additionalContext</code> — 給 Claude 回饋並繼續本回合，不標記為 hook 錯誤 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>Skills 指令主體新增 <code>\$</code> 跳脫語法 — 在數字前輸入字面 <code>$</code> 而不觸發參數替換（如 <code>\$1</code>）(v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>stdio MCP 伺服器在 <code>--resume</code> 時收到與 Hooks / Bash 相同的 <code>CLAUDE_CODE_SESSION_ID</code> (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>修復多項問題：<code>claude -p</code> 背景指令結束後永久懸掛、Bedrock/Vertex/Foundry 搭配 <code>CI=true</code> 時 ANTHROPIC_API_KEY 錯誤、bazel / EDR 環境 Bash 失敗（<code>$TMPDIR</code>）、Windows 「EEXIST」session-env 目錄錯誤、受管理權限規則在啟動期間未套用、背景 session 恢復後遺失正在執行的背景任務、Hook <code>if: "Bash(...)"</code> 誤對所有含 <code>$()</code>/<code>$VAR</code> 指令觸發等 (v2.1.163)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li><code>claude agents --json</code> 輸出新增 <code>waitingFor</code> 欄位，顯示等待中 Session 目前被什麼阻塞 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
-        <li>斜線指令自動完成改進：點擊建議項目後填入提示框，再按 <kbd>Enter</kbd> 執行 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
-        <li>Remote Control UI 改版：改以常駐底部 pill 形式顯示，取代原先的啟動提示訊息 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
-        <li>IDE 名稱更新：Windsurf 在 UI 中全面更名為 Devin Desktop (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
-        <li>修復多項問題：<code>claude --bg</code> 冷啟動崩潰（socket missing）、<code>claude agents</code> 因自動更新重複檢查導致退出凍結、高 CPU 負載下 Esc/方向鍵失去回應、<code>SendMessage</code> 在 <code>CLAUDE_CODE_TMPDIR</code> 路徑過深時跨 Session 訊息失效、背景 Session 附加前額外延遲 5 秒 (v2.1.162)<span class="badge-new" data-added="2026-06-03">NEW</span></li>
-        <li><code>OTEL_RESOURCE_ATTRIBUTES</code> 值現在作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（團隊、倉庫等）切分用量指標 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li><code>claude agents</code> 介面改進：任務分散時列表顯示 <code>done/total</code> 進度；Peek 面板顯示執行最久的項目 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li><code>/mcp</code> 現在將從未登入的 claude.ai connectors 折疊收納至「顯示未使用的連接器」列 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>Linux 全螢幕模式剪貼簿改進：優先使用 <code>wl-copy</code>/<code>xclip</code>/<code>xsel</code>，同時寫入 clipboard 與 PRIMARY selection（支援中鍵貼上）(v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>修復平行工具執行：Bash 指令失敗不再取消同批次的其他呼叫，各工具獨立回傳結果 (v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>修復受管理設定 <code>forceLoginOrgUUID</code>/<code>forceLoginMethod</code> 阻擋第三方 Provider Session（Bedrock、Vertex、Foundry、Mantle）的問題（v2.1.146 regression）(v2.1.161)<span class="badge-new" data-added="2026-06-04">NEW</span></li>
-        <li>Edit 工具改進：單檔 <code>grep</code>/<code>egrep</code>/<code>fgrep</code> 執行後即可直接編輯，不再需要額外的 Read 呼叫 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
-        <li><code>acceptEdits</code> 模式安全強化：寫入可授予程式執行權的建置工具設定檔（<code>.npmrc</code>、<code>.yarnrc*</code>、<code>bunfig.toml</code>、<code>.bazelrc</code>、<code>.pre-commit-config.yaml</code>、<code>.devcontainer/</code> 等）前會顯示提示 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
-        <li>寫入 Shell 啟動設定檔（<code>.zshenv</code>、<code>.zlogin</code>、<code>.bash_login</code>）或 <code>~/.config/git/</code> 前，現在會顯示安全提示，避免意外指令執行 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
-        <li>修復多項問題：WSL 複製選取無法寫入 Windows 剪貼簿（改用 PowerShell 互動取代 OSC 52）、從 <code>claude agents</code> 恢復已完成 Session 時掉失對話記錄、背景 Agent 恢復後仍顯示於 Completed 清單等 (v2.1.160)<span class="badge-new" data-added="2026-06-02">NEW</span></li>
-        <li>Auto 模式現在可在 Bedrock、Vertex 和 Foundry 上使用（Opus 4.7 + 4.8）；以 <code>CLAUDE_CODE_ENABLE_AUTO_MODE=1</code> 啟用 (v2.1.158)<span class="badge-new" data-added="2026-05-30">NEW</span></li>
-        <li><code>.claude/skills/</code> 目錄下的外掛現在自動載入，無需 Marketplace (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
-        <li><code>claude plugin init &lt;name&gt;</code> — 快速建立新外掛目錄鷹架 (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
-        <li><code>settings.json</code> 的 <code>agent</code> 欄位現在在已派送 Session 中正確生效 (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
-        <li><code>EnterWorktree</code> Hook 現在可在 Session 中途切換 Claude 管理的 Worktrees (v2.1.157)<span class="badge-new" data-added="2026-05-29">NEW</span></li>
-        <li>Opus 4.8 正式發布 — 預設 effort 升為 <code>xhigh</code>；快速模式以 2× 費率換取 2.5× 速度；50+ 項修正 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li>動態工作流程 — 讓 Claude 建立可在背景協調數十至數百個 Agent 的自動化工作流程 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li>精簡系統提示 (Lean system prompt) 現為大多數模型的預設（Haiku / Sonnet / Opus 4.7 及更早版本除外）(v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li>Plugin 可在 <code>plugin.json</code> 宣告 <code>defaultEnabled: false</code> — 安裝後預設停用 (v2.1.154)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li><code>claude agents</code> 自動完成現在可建議原生斜線指令與內建 Skills (v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li>狀態列指令現在可接收 <code>COLUMNS</code> 與 <code>LINES</code> 環境變數 (v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li>外掛 GitHub/Git 來源新增 <code>skipLfs</code> 選項（略過 LFS 大型檔案）(v2.1.153)<span class="badge-new" data-added="2026-05-28">NEW</span></li>
-        <li><code>/code-review --fix</code> — 審查後將建議直接套用至工作目錄；<code>/simplify</code> 現為此功能的別名 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li>Skills / 斜線指令 frontmatter 新增 <code>disallowed-tools</code> — Skill 啟用期間從模型中移除指定工具 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>/reload-skills</code> — 重新掃描 Skill 目錄，無需重啟 Session；SessionStart Hook 可回傳 <code>reloadSkills: true</code> 讓安裝後立即生效 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>MessageDisplay</code> Hook 事件 — 讓 Hook 在顯示前轉換或隱藏助理訊息文字 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li>SessionStart Hook 可透過 <code>hookSpecificOutput.sessionTitle</code> 設定 Session 標題（啟動與恢復均適用）(v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>pluginSuggestionMarketplaces</code> 受管理設定 — 管理員可白名單組織市集，允許情境提示建議外掛 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>--fallback-model</code> — 主要模型找不到時自動切換至備援模型 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>OTEL_METRICS_INCLUDE_ENTRYPOINT=true</code> — OpenTelemetry 指標新增 <code>app.entrypoint</code> Session 來源屬性 (v2.1.152)<span class="badge-new" data-added="2026-05-27">NEW</span></li>
-        <li><code>/code-review [等級]</code> — 原 <code>/simplify</code>，現改為回報正確性錯誤並可指定 effort（如 <code>/code-review high</code>）；加 <code>--comment</code> 可直接在 GitHub PR 發行內聯留言 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
-        <li><code>claude agents --json</code> — 以 JSON 輸出所有執行中 Claude Session，適合腳本整合（tmux、狀態列、Session 選擇器）(v2.1.145)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
-        <li><code>claude agents</code> 中以 <code>Ctrl+T</code> 釘選背景 Session — 空閒時保持常駐、自動重啟套用更新、記憶體不足時最後釋放 (v2.1.147)<span class="badge-new" data-added="2026-05-21">NEW</span></li>
-        <li><code>/usage</code> 現在顯示分類用量明細（Skills、子 Agent、外掛、各 MCP 伺服器費用）(v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
-        <li><code>/diff</code> 詳細檢視支援鍵盤捲動（方向鍵、<code>j</code>/<code>k</code>、<code>PgUp</code>/<code>PgDn</code>、<code>Space</code>、<code>Home</code>/<code>End</code>）(v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
-        <li><code>/extra-usage</code> 更名為 <code>/usage-credits</code>（舊名仍可使用）(v2.1.144)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
-        <li>Enterprise：<code>allowAllClaudeAiMcps</code> 受管理設定 — 隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器 (v2.1.149)<span class="badge-new" data-added="2026-05-22">NEW</span></li>
-        <li>Stop / SubagentStop Hook 輸入新增 <code>background_tasks</code> 與 <code>session_crons</code> 欄位 (v2.1.145)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
-        <li><code>/resume</code> 現在也支援背景 Session（<code>claude --bg</code> 或 Agent View 啟動），在列表中以 <code>bg</code> 標記 (v2.1.144)<span class="badge-new" data-added="2026-05-19">NEW</span></li>
-        <li><code>claude agents [--cwd &lt;path&gt;]</code> — 所有 Claude Code Session 統一清單（執行中、已阻塞、已完成），<code>--cwd</code> 可限定目錄範圍 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
-        <li><code>claude agents</code> 新增旗標：<code>--add-dir</code>、<code>--settings</code>、<code>--mcp-config</code>、<code>--plugin-dir</code>、<code>--permission-mode</code>、<code>--model</code>、<code>--effort</code>、<code>--dangerously-skip-permissions</code> (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li>快速模式預設升至 Opus 4.7；以 <code>CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE=1</code> 可固定使用 Opus 4.6 (v2.1.142)<span class="badge-new" data-added="2026-05-14">NEW</span></li>
-        <li><code>worktree.bgIsolation: "none"</code> — 讓背景 session 直接編輯工作目錄，無需 EnterWorktree (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li><code>claude plugin disable</code> 若其他已啟用外掛依賴該目標則拒絕停用，並提示可複製的停用鏈指令；<code>claude plugin enable</code> 現在自動強制啟用所有遞移依賴 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li><code>CLAUDE_CODE_STOP_HOOK_BLOCK_CAP</code> — 覆寫 stop hooks 連續阻塞警告上限（預設 8 次）(v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li><code>CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY=1</code> — 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li><code>ANTHROPIC_WORKSPACE_ID</code> — 工作負載身份聯盟：將 minted token 範圍限定至特定工作區 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
-        <li><code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS</code> — 透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
-        <li>外掛根目錄有 <code>SKILL.md</code> 且無 <code>skills/</code> 子目錄時自動作為 Skill 提供；<code>/plugin</code> 詳情頁顯示 LSP 伺服器資訊 (v2.1.142)<span class="badge-new" data-added="2026-05-14">NEW</span></li>
-        <li><code>NO_COLOR</code> / <code>FORCE_COLOR</code> 現在僅套用至子程序，不影響 Claude Code UI 顏色 (v2.1.143)<span class="badge-new" data-added="2026-05-15">NEW</span></li>
-        <li>Rewind 選單新增「Summarize up to here」— 壓縮早期上下文，同時保留近期對話完整 (v2.1.141)<span class="badge-new" data-added="2026-05-13">NEW</span></li>
-        <li>Agent tool <code>subagent_type</code> 匹配不再區分大小寫或分隔符（<code>code-reviewer</code> 與 <code>Code Reviewer</code> 等同） (v2.1.140)<span class="badge-new" data-added="2026-05-12">NEW</span></li>
-        <li><code>/goal [條件]</code> — 設定完成條件，Claude 持續跨回合工作直到達成，含即時 elapsed/turns/tokens 覆蓋面板；支援互動／<code>-p</code>／遠端控制模式 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li><code>/scroll-speed</code> — 調整滑鼠滾輪速度，含即時預覽 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li><code>claude plugin details &lt;name&gt;</code> — 顯示外掛元件清單及預估每 session token 費用 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li>逐字稿檢視器新增導航快捷鍵：<kbd>?</kbd>（快捷鍵說明）、<kbd>{</kbd>/<kbd>}</kbd>（跳至上／下一個使用者訊息）、<kbd>v</kbd>（切換快捷鍵面板） (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li>PostToolUse Hooks 新增 <code>continueOnBlock: true</code> 選項 — 被拒時回傳拒絕原因給 Claude 並繼續本回合 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li>Hooks <code>args: string[]</code> exec form — 直接 spawn 指令不透過 shell，路徑佔位符無需引號 (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li>MCP stdio 伺服器現在收到 <code>CLAUDE_PROJECT_DIR</code> 環境變數（與 Hooks 環境一致） (v2.1.139)<span class="badge-new" data-added="2026-05-11">NEW</span></li>
-        <li>新增 <code>settings.autoMode.hard_deny</code> — 無條件套用的 Auto 模式分類器拒絕規則 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li>修復 <code>/clear</code> 後 MCP 伺服器被靜默移除的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li>修復並行寫入憑證導致 OAuth token 被覆寫、陷入登入迴圈的問題 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li>WSL2：從 Windows 剪貼簿貼上圖片現在透過 PowerShell fallback 正常運作 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li>修復 Windows 上 VS Code 擴充無法啟動的問題 (v2.1.137)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li>50+ 修正：終端機模式、MCP 工具、設定、權限 (v2.1.136)<span class="badge-new" data-added="2026-05-09">NEW</span></li>
-        <li><code>claude project purge [path]</code> — 刪除專案所有 Claude Code 狀態（逐字稿、任務、檔案歷史、設定項目）；支援 <code>--dry-run</code>、<code>-y/--yes</code>、<code>-i/--interactive</code>、<code>--all</code><span class="badge-new" data-added="2026-05-01">NEW</span></li>
-        <li><code>claude auth login</code> 支援在瀏覽器無法回呼 localhost 時（WSL2、SSH、容器），直接在終端機貼入 OAuth 認證碼<span class="badge-new" data-added="2026-05-01">NEW</span></li>
-        <li><code>--dangerously-skip-permissions</code> 現在也繞過 <code>.claude/</code>、<code>.git/</code>、<code>.vscode/</code> 及 Shell 設定檔的寫入確認（高危刪除指令仍會提示）<span class="badge-new" data-added="2026-05-01">NEW</span></li>
-        <li><code>/model</code> 選擇器：<code>ANTHROPIC_BASE_URL</code> 指向相容 Gateway 時，自動列出 <code>/v1/models</code> 端點的模型清單<span class="badge-new" data-added="2026-05-01">NEW</span></li>
-        <li><code>ANTHROPIC_BEDROCK_SERVICE_TIER</code> — 選擇 Bedrock 服務層級（<code>default</code> / <code>flex</code> / <code>priority</code>），以 <code>X-Amzn-Bedrock-Service-Tier</code> header 傳送<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li><code>/resume</code> 搜尋框支援貼入 PR URL，快速跳至建立該 PR 的 Session（支援 GitHub、GitHub Enterprise、GitLab、Bitbucket）<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li><code>/mcp</code> 顯示被同名手動伺服器遮蔽的 claude.ai connectors，並提示移除重複項目<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li>MCP 伺服器設定新增 <code>alwaysLoad</code> 選項 — 設為 <code>true</code> 時，該伺服器所有工具跳過工具搜尋延遲、始終可用<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li><code>/skills</code> 新增輸入篩選搜尋框，快速定位長列表中的 Skill<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li>PostToolUse Hooks 可透過 <code>hookSpecificOutput.updatedToolOutput</code> 替換所有工具的輸出（先前僅限 MCP 工具）<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li><code>claude plugin prune</code> — 移除孤立的自動安裝外掛相依套件<span class="badge-new" data-added="2026-04-28">NEW</span></li>
-        <li><code>CLAUDE_CODE_HIDE_CWD</code> 隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li><code>prUrlTemplate</code> 設定：自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li><code>--from-pr</code> 現支援 GitLab MR、Bitbucket PR 與 GitHub Enterprise URL<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li>Hooks 事件新增 <code>duration_ms</code> 回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li><code>/config</code> 設定持久化至 <code>~/.claude/settings.json</code>，支援 project/local/policy 層級覆寫<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li>Vim 視覺模式 <code>v</code>（選取 + 運算子）與視覺行模式 <code>V</code><span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li><code>/cost</code> 與 <code>/stats</code> 合併為 <code>/usage</code>（兩者仍作為捷徑保留）<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li>Hooks 可透過 <code>type: "mcp_tool"</code> 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li><code>DISABLE_UPDATES</code> 封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></li>
-        <li>Agent frontmatter <code>mcpServers</code> 可在 <code>--agent</code> 主執行緒 session 中載入<span class="badge-new" data-added="2026-04-22">NEW</span></li>
-        <li><code>CLAUDE_CODE_FORK_SUBAGENT=1</code> 在外部建置上啟用分叉子 Agent<span class="badge-new" data-added="2026-04-22">NEW</span></li>
-        <li><code>/resume</code> 大型 Session（≥ 40 MB）速度提升 67%<span class="badge-new" data-added="2026-04-20">NEW</span></li>
-        <li>思考旋轉指示改為行內進度提示（顯示「仍在思考中」、「即將完成」）<span class="badge-new" data-added="2026-04-20">NEW</span></li>
-        <li><code>/reload-plugins</code> 自動安裝缺少的相依套件<span class="badge-new" data-added="2026-04-20">NEW</span></li>
-        <li>Bash 工具偵測到 <code>gh</code> 觸及 GitHub API 速率限制時顯示提示<span class="badge-new" data-added="2026-04-20">NEW</span></li>
-        <li>Claude Opus 4.7 新增 <code>xhigh</code> effort 等級 — 介於 <code>high</code> 與 <code>max</code> 之間，可透過 <code>/effort</code>、<code>--effort</code> 與模型選擇器使用；<code>/effort</code> 不帶參數時會開啟可用方向鍵調整的互動式滑桿<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li><code>/ultrareview [PR#]</code> — 以多 Agent 平行分析進行雲端程式碼全面審查<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li><code>/theme</code> 新增「Auto（跟隨終端機）」選項，自動對應終端機的深／淺色模式<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li><code>/less-permission-prompts</code> Skill — 掃描對話並為 <code>.claude/settings.json</code> 提出優先權限白名單建議<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li>Plan 檔案改以 prompt 命名（例如 <code>fix-auth-race-snug-otter.md</code>），取代隨機字串<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li><code>Ctrl+U</code> 清空整個輸入緩衝區、<code>Ctrl+Y</code> 還原；逐字稿檢視器底部新增 <code>[</code>（傾印至 scrollback）與 <code>v</code>（在編輯器開啟）<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li>Auto 模式不再需要 <code>--enable-auto-mode</code>；Max 訂閱者使用 Opus 4.7 即可啟用<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li>Windows PowerShell 工具開始推送 — 以 <code>CLAUDE_CODE_USE_POWERSHELL_TOOL</code> 加入；Linux/macOS 設 <code>CLAUDE_CODE_USE_POWERSHELL_TOOL=1</code> 啟用（需 PATH 有 <code>pwsh</code>）<span class="badge-new" data-added="2026-04-17">NEW</span></li>
-        <li><code>/tui fullscreen</code> 在同一對話中啟用無閃爍渲染；<code>/tui</code> 指令與 <code>tui</code> 設定為新增項 (v2.1.110)</li>
       </ul>
+      <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
 
     <!-- MAIN GRID -->
@@ -1031,127 +866,154 @@
         <div class="section-header">⚙️ 設定與環境</div>
         <div class="section-content">
           <div class="sub-header">設定檔</div>
-          <div class="row"><span class="key">~/.claude/settings.json</span> <span class="desc">使用者設定</span></div>
-          <div class="row"><span class="key">.claude/settings.json</span> <span class="desc">專案（共享）</span></div>
-          <div class="row"><span class="key">.claude/settings.local.json</span> <span class="desc">僅限本機</span></div>
-          <div class="row"><span class="key">~/.claude.json</span> <span class="desc">OAuth、MCP、狀態</span></div>
-          <div class="row"><span class="key">.mcp.json</span> <span class="desc">專案 MCP 伺服器</span></div>
-          <div class="row"><span class="key">managed-settings.d/</span> <span class="desc">組織策略片段（Drop-in）</span></div>
-          <div class="sub-header">重要設定</div>
-          <div class="row"><span class="key">modelOverrides</span> <span class="desc">映射模型選擇器 → 自訂 ID</span></div>
-          <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
-          <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
-          <div class="row"><span class="key">worktree.baseRef</span> <span class="desc">Worktree diff 比對的基準分支<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
-          <div class="row"><span class="key">worktree.bgIsolation</span> <span class="desc"><code>"none"</code>：背景 session 直接編輯工作目錄，無需 EnterWorktree<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
-          <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
-          <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
-          <div class="row"><span class="key">hooks: if</span> <span class="desc">條件式 Hooks（權限規則語法）</span></div>
-          <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">Monitor tool</span> <span class="desc">串流背景腳本事件<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
-          <div class="row"><span class="key">PermissionDenied</span> <span class="desc">Hook：自動模式被拒絕<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
-          <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
-          <div class="row"><span class="key">allowedChannelPlugins</span> <span class="desc">管理員頻道外掛白名單</span></div>
-          <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">暫停 Headless → 稍後恢復</span></div>
-          <div class="row"><span class="key">hooks: type: "mcp_tool"</span> <span class="desc">Hook 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">hooks: duration_ms</span> <span class="desc">Hook 事件回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">hookSpecificOutput.updatedToolOutput</span> <span class="desc">PostToolUse Hook 覆寫所有工具輸出（非僅 MCP）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
-          <div class="row"><span class="key">hooks: continueOnBlock</span> <span class="desc">PostToolUse 被拒時回傳拒絕原因給 Claude 並繼續本回合（設為 <code>true</code>）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
-          <div class="row"><span class="key">hooks: args: string[]</span> <span class="desc">exec form：直接 spawn 指令不透過 shell，路徑佔位符無需引號<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
-          <div class="row"><span class="key">hooks: background_tasks</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：目前執行中的背景任務清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
-          <div class="row"><span class="key">hooks: session_crons</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：已排程的 Session Cron 清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
-          <div class="row"><span class="key">hookSpecificOutput.additionalContext</span> <span class="desc">Stop / SubagentStop Hook 回傳值：給 Claude 回饋並繼續本回合，不標記為 hook 錯誤<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
-          <div class="row"><span class="key">allowAllClaudeAiMcps</span> <span class="desc">企業受管理設定：隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
-          <div class="row"><span class="key">pluginSuggestionMarketplaces</span> <span class="desc">受管理設定：白名單組織市集，允許情境提示建議外掛<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
-          <div class="row"><span class="key">requiredMinimumVersion</span> <span class="desc">受管理設定：版本低於此值時拒絕啟動<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
-          <div class="row"><span class="key">requiredMaximumVersion</span> <span class="desc">受管理設定：版本高於此值時拒絕啟動，引導至核准版本<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
-          <div class="row"><span class="key">fallbackModel</span> <span class="desc">最多指定三個備援模型，依序嘗試（主要模型過載或不可用時）<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
-          <div class="row"><span class="key">disableBundledSkills</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
-          <div class="row"><span class="key">post-session hook</span> <span class="desc">自我托管生命週期 Hook：Session 結束後、工作區刪除前執行；SIGTERM→SIGKILL 延遲時間可設定<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
-          <div class="row"><span class="key">enforceAvailableModels</span> <span class="desc">受管理設定：限制 Default 模型至白名單，使用者 / 專案設定無法擴展<span class="badge-new" data-added="2026-06-13">NEW</span></span></div>
-          <div class="row"><span class="key">wheelScrollAccelerationEnabled</span> <span class="desc">設為 <code>false</code> 停用全螢幕模式的滾輪加速<span class="badge-new" data-added="2026-06-12">NEW</span></span></div>
-          <div class="row"><span class="key">language</span> <span class="desc">設定 Session 標題生成語言（預設跟隨對話語言）<span class="badge-new" data-added="2026-06-14">NEW</span></span></div>
-          <div class="row"><span class="key">footerLinksRegexes</span> <span class="desc">正規表示式清單，比對 URL 以顯示自訂連結 badge<span class="badge-new" data-added="2026-06-14">NEW</span></span></div>
-          <div class="row"><span class="key">attribution.sessionUrl</span> <span class="desc">設為 <code>false</code> 可省略 commit 與 PR 中附加的 claude.ai Session 連結<span class="badge-new" data-added="2026-06-21">NEW</span></span></div>
-          <div class="row"><span class="key">sandbox.allowAppleEvents</span> <span class="desc">macOS 沙盒選擇性啟用 Apple Events（設為 <code>true</code>）<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
-          <div class="row"><span class="key">sandbox.credentials</span> <span class="desc">阻止沙盒指令讀取憑證檔案與 secret 環境變數<span class="badge-new" data-added="2026-06-23">NEW</span></span></div>
-          <div class="row"><span class="key">autoMode.classifyAllShell</span> <span class="desc">將所有 Bash/PowerShell 指令路由至 Auto 模式分類器（預設僅路由任意程式碼執行模式）<span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
-          <div class="row"><span class="key">teammateMode: "iterm2"</span> <span class="desc">設定 iTerm2 為 Teammate 模式；未偵測到 <code>it2</code> CLI 時顯示警告<span class="badge-new" data-added="2026-06-22">NEW</span></span></div>
-          <div class="row"><span class="key">MessageDisplay</span> <span class="desc">Hook 事件：在顯示前轉換或隱藏助理訊息文字<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
-          <div class="row"><span class="key">hookSpecificOutput.sessionTitle</span> <span class="desc">SessionStart Hook 回傳值：設定 Session 標題（啟動與恢復均適用）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
-          <div class="row"><span class="key">reloadSkills: true</span> <span class="desc">SessionStart Hook 回傳值：重新掃描 Skill 目錄，讓安裝後立即生效<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
-          <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
-          <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc">強制刷新：阻擋啟動直到取得最新設定<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
-          <div class="row"><span class="key">refreshInterval</span> <span class="desc">自訂狀態列每 N 秒重新執行<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
-          <div class="row"><span class="key">vimInsertModeRemaps</span> <span class="desc">設定 Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
-          <div class="row"><span class="key">axScreenReader</span> <span class="desc">設為 <code>true</code> 啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
-          <div class="row"><span class="key">disableAutoMode</span> <span class="desc">設為 <code>true</code> 停用 Auto 模式（Bedrock / Vertex / Foundry 自 v2.1.207 起預設啟用）<span class="badge-new" data-added="2026-07-11">NEW</span></span></div>
-          <div class="row"><span class="key">additionalMarketplaces</span> <span class="desc"><code>extraKnownMarketplaces</code> 的友善別名；<code>allowedMarketplaces</code> 為 <code>strictKnownMarketplaces</code> 的別名<span class="badge-new" data-added="2026-08-13">NEW</span></span></div>
-          <div class="row"><span class="key">Edit(path) / Read(path)</span> <span class="desc">路徑型權限規則請使用 <code>Edit</code> 或 <code>Read</code>；<code>Write(path)</code>/<code>NotebookEdit(path)</code>/<code>Glob(path)</code> 啟動時會顯示棄用警告<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
-          <div class="row"><span class="key">modelPicker</span> <span class="desc">自訂 <code>/model</code> 選擇器的模型清單（順序、標籤；可附加或取代內建清單）<span class="badge-new" data-added="2026-08-25">NEW</span></span></div>
-          <div class="row"><span class="key">maxProseWidth</span> <span class="desc">限制寬終端機中回應文字的寬度，表格與程式碼區塊維持全寬<span class="badge-new" data-added="2026-09-24">NEW</span></span></div>
-          <div class="row"><span class="key">maxEffortLevel</span> <span class="desc">限制所有 Provider 的 effort 上限（可依模型設定）<span class="badge-new" data-added="2026-09-09">NEW</span></span></div>
-          <div class="row"><span class="key">availableModelsMatch</span> <span class="desc">受管理設定：設為 <code>"exact"</code> 時，<code>availableModels</code> 只放行指定版本<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
-          <div class="row"><span class="key">deniedModels</span> <span class="desc">受管理設定：封鎖特定模型（即使 <code>availableModels</code> 允許）<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
-          <div class="row"><span class="key">"attribution": false</span> <span class="desc">隱藏所有 commit 與 PR 署名<span class="badge-new" data-added="2026-09-23">NEW</span></span></div>
-          <div class="row"><span class="key">PreModelSwitch / PostModelSwitch</span> <span class="desc">Hook 事件：阻擋、確認或註記模型切換<span class="badge-new" data-added="2026-08-28">NEW</span></span></div>
-          <div class="sub-header">重要環境變數</div>
-          <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
-          <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
-          <div class="row"><span class="key">ANTHROPIC_DEFAULT_MODEL</span> <span class="desc">新 Session 的起始模型（<code>/model</code> 的選擇仍可覆寫）<span class="badge-new" data-added="2026-08-19">NEW</span></span></div>
-          <div class="row"><span class="key">ANTHROPIC_BASE_URL</span> <span class="desc">Proxy／Gateway 端點覆寫</span></div>
-          <div class="row"><span class="key">ANTHROPIC_BETAS</span> <span class="desc">額外的 beta header（逗號分隔）</span></div>
-          <div class="row"><span class="key">API_TIMEOUT_MS</span> <span class="desc">API 逾時（預設 600000ms）</span></div>
-          <div class="row"><span class="key">MCP_TIMEOUT</span> <span class="desc">MCP 伺服器啟動逾時（ms）</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_EFFORT_LEVEL</span> <span class="desc">low/medium/high/xhigh/max/auto</span></div>
-          <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc">0=關閉</span></div>
-          <div class="row"><span class="key">ENABLE_PROMPT_CACHING_1H</span> <span class="desc">啟用 1 小時 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">FORCE_PROMPT_CACHING_5M</span> <span class="desc">強制 5 分鐘 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY</span> <span class="desc">設為 <code>1</code> 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE</span> <span class="desc">設為 <code>1</code> 將快速模式固定使用 Opus 4.6（預設已升至 Opus 4.7）<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_FORK_SUBAGENT</span> <span class="desc">在外部建置上啟用分叉子 Agent（=1）<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
-          <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_HIDE_CWD</span> <span class="desc">隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
-          <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc">自訂 /model 選項</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_SUBPROCESS_ENV_SCRUB</span> <span class="desc">從子程序移除憑證</span></div>
-          <div class="row"><span class="key">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> <span class="desc">串流逾時看門狗（預設 90s）</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">替代畫面渲染（=1）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
-          <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc">在 <code>-p</code> 模式跳過 MCP 等待<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_USE_MANTLE</span> <span class="desc">透過 Mantle 使用 Bedrock（=1）<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
-          <div class="row"><span class="key">ANTHROPIC_BEDROCK_SERVICE_TIER</span> <span class="desc">選擇 Bedrock 服務層級（default / flex / priority）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_PERFORCE_MODE</span> <span class="desc">Perforce 模式：唯讀檔案自動提示 p4 edit（=1）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_CERT_STORE</span> <span class="desc">TLS CA 憑證來源（逗號分隔）：預設 <code>bundled,system</code>；設為 <code>bundled</code> 只用內建 CA<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID；stdio MCP 伺服器在 <code>--resume</code> 時也收到相同值<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_PROJECT_DIR</span> <span class="desc">MCP stdio 伺服器可用的專案目錄路徑（與 Hooks 環境一致）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_STOP_HOOK_BLOCK_CAP</span> <span class="desc">覆寫 stop hooks 連續阻塞警告上限（預設 8 次）<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
-          <div class="row"><span class="key">ANTHROPIC_WORKSPACE_ID</span> <span class="desc">工作負載身份聯盟：將 minted token 範圍限定至特定工作區<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_PREFER_HTTPS</span> <span class="desc">透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
-          <div class="row"><span class="key">NO_COLOR / FORCE_COLOR</span> <span class="desc">現在僅套用至子程序，不影響 Claude Code UI 顏色<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
-          <div class="row"><span class="key">OTEL_METRICS_INCLUDE_ENTRYPOINT</span> <span class="desc">設為 <code>true</code> 時在 OpenTelemetry 指標中加入 <code>app.entrypoint</code> Session 來源屬性<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AUTO_MODE</span> <span class="desc">設為 <code>1</code> 在 Bedrock / Vertex / Foundry 上啟用 Auto 模式（Opus 4.7 + 4.8）<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
-          <div class="row"><span class="key">OTEL_LOG_TOOL_DETAILS</span> <span class="desc">設為 <code>1</code> 時，<code>tool_decision</code> 遙測事件包含 <code>tool_parameters</code> 詳情<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
-          <div class="row"><span class="key">OTEL_RESOURCE_ATTRIBUTES</span> <span class="desc">值作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（如 team、repo）切分用量指標<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">停用所有客製化設定（CLAUDE.md、外掛、Skills、Hooks、MCP 伺服器），等同 <code>--safe-mode</code> 旗標<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CLIENT_PRESENCE_FILE</span> <span class="desc">指定檔案路徑；檔案存在時抑制行動裝置推播通知<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪捲動）<span class="badge-new" data-added="2026-06-27">NEW</span></span></div>
-          <div class="row"><span class="key">OTEL_LOG_ASSISTANT_RESPONSES</span> <span class="desc">設為 <code>1</code> 時將助理回應文字寫入 OpenTelemetry log；預設跟隨 <code>OTEL_LOG_USER_PROMPTS</code><span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_TODO_TOOLS</span> <span class="desc">設為 <code>1</code> 在 Opus 4.8、Sonnet 5、Fable 5 及更新模型上重新啟用任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_TOOL_MEMORY_LIMIT</span> <span class="desc">Linux 上以 cgroup 限制 Bash 工具指令的記憶體用量，防止失控建置程序拖垮 Session<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</span> <span class="desc">設定 WebFetch Session URL 快取 TTL（預設 15 分鐘）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">設為 <code>1</code> 將同一模型強制套用到每個子 Agent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_SERVER</span> <span class="desc">Auto 模式伺服器端分類器；設為 <code>0</code> 改用本機分類器（計入用量）<span class="badge-new" data-added="2026-09-19">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</span> <span class="desc">MCP 工具描述與伺服器指令的長度上限（預設 2048 字元）<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
+          <div class="row"><span class="key">~/.claude/settings.json</span> <span class="desc">個人設定：這台電腦的所有專案都套用</span></div>
+          <div class="row"><span class="key">.claude/settings.json</span> <span class="desc">專案設定：commit 進 git，團隊共用</span></div>
+          <div class="row"><span class="key">.claude/settings.local.json</span> <span class="desc">只給自己的專案設定，不進 git</span></div>
+          <details class="more">
+            <summary>其他設定檔（3）</summary>
+            <div class="row"><span class="key">~/.claude.json</span> <span class="desc">Claude Code 自己寫的狀態檔（登入、MCP、專案信任），不用手動改</span></div>
+            <div class="row"><span class="key">.mcp.json</span> <span class="desc">專案 MCP 伺服器</span></div>
+            <div class="row"><span class="key">managed-settings.d/</span> <span class="desc">組織策略片段（Drop-in）</span></div>
+          </details>
+          <div class="sub-header">常用設定（寫在 <span class="nocase">settings.json</span>）</div>
+          <div class="row"><span class="key">permissions</span> <span class="desc">用 allow／ask／deny 規則決定哪些操作免問、要問、禁止（也可用 <code>/permissions</code> 設）</span></div>
+          <div class="row"><span class="key">model</span> <span class="desc">啟動時預設用的模型</span></div>
+          <div class="row"><span class="key">language</span> <span class="desc">讓 Claude 用指定語言回覆</span></div>
+          <div class="row"><span class="key">outputStyle</span> <span class="desc">回覆的角色、語氣與格式（例如 <code>"Explanatory"</code> 會邊做邊解釋）</span></div>
+          <div class="row"><span class="key">env</span> <span class="desc">每個 Session 自動帶入的環境變數，不用每次 export</span></div>
+          <div class="row"><span class="key">hooks</span> <span class="desc">在特定時機自動跑你的指令（例如改完檔自動格式化）</span></div>
+          <div class="row"><span class="key">statusLine</span> <span class="desc">自訂輸入框下方的狀態列</span></div>
+          <div class="row"><span class="key">"attribution": false</span> <span class="desc">隱藏所有 commit 與 PR 署名</span></div>
+          <details class="more">
+            <summary>Hooks 進階（16）</summary>
+            <div class="row"><span class="key">hooks: if</span> <span class="desc">條件式 Hooks（權限規則語法）</span></div>
+            <div class="row"><span class="key">PermissionDenied</span> <span class="desc">Hook：自動模式被拒絕<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">暫停 Headless → 稍後恢復</span></div>
+            <div class="row"><span class="key">hooks: type: "mcp_tool"</span> <span class="desc">Hook 直接呼叫 MCP 工具<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: duration_ms</span> <span class="desc">Hook 事件回報工具執行時間<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">hookSpecificOutput.updatedToolOutput</span> <span class="desc">PostToolUse Hook 覆寫所有工具輸出（非僅 MCP）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: continueOnBlock</span> <span class="desc">PostToolUse 被拒時回傳拒絕原因給 Claude 並繼續本回合（設為 <code>true</code>）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: args: string[]</span> <span class="desc">exec form：直接 spawn 指令不透過 shell，路徑佔位符無需引號<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: background_tasks</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：目前執行中的背景任務清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+            <div class="row"><span class="key">hooks: session_crons</span> <span class="desc">Stop / SubagentStop Hook 輸入欄位：已排程的 Session Cron 清單<span class="badge-new" data-added="2026-05-19">NEW</span></span></div>
+            <div class="row"><span class="key">hookSpecificOutput.additionalContext</span> <span class="desc">Stop / SubagentStop Hook 回傳值：給 Claude 回饋並繼續本回合，不標記為 hook 錯誤<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+            <div class="row"><span class="key">post-session hook</span> <span class="desc">自我托管生命週期 Hook：Session 結束後、工作區刪除前執行；SIGTERM→SIGKILL 延遲時間可設定<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+            <div class="row"><span class="key">MessageDisplay</span> <span class="desc">Hook 事件：在顯示前轉換或隱藏助理訊息文字<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">hookSpecificOutput.sessionTitle</span> <span class="desc">SessionStart Hook 回傳值：設定 Session 標題（啟動與恢復均適用）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">reloadSkills: true</span> <span class="desc">SessionStart Hook 回傳值：重新掃描 Skill 目錄，讓安裝後立即生效<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">PreModelSwitch / PostModelSwitch</span> <span class="desc">Hook 事件：阻擋、確認或註記模型切換<span class="badge-new" data-added="2026-08-28">NEW</span></span></div>
+          </details>
+          <details class="more">
+            <summary>企業／管理員設定（10）</summary>
+            <div class="row"><span class="key">allowedChannelPlugins</span> <span class="desc">管理員頻道外掛白名單</span></div>
+            <div class="row"><span class="key">allowAllClaudeAiMcps</span> <span class="desc">企業受管理設定：隨 <code>managed-mcp.json</code> 一併載入 claude.ai 雲端 MCP 連接器<span class="badge-new" data-added="2026-05-22">NEW</span></span></div>
+            <div class="row"><span class="key">pluginSuggestionMarketplaces</span> <span class="desc">受管理設定：白名單組織市集，允許情境提示建議外掛<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">requiredMinimumVersion</span> <span class="desc">受管理設定：版本低於此值時拒絕啟動<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+            <div class="row"><span class="key">requiredMaximumVersion</span> <span class="desc">受管理設定：版本高於此值時拒絕啟動，引導至核准版本<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+            <div class="row"><span class="key">enforceAvailableModels</span> <span class="desc">受管理設定：限制 Default 模型至白名單，使用者 / 專案設定無法擴展<span class="badge-new" data-added="2026-06-13">NEW</span></span></div>
+            <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc">強制刷新：阻擋啟動直到取得最新設定<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
+            <div class="row"><span class="key">additionalMarketplaces</span> <span class="desc"><code>extraKnownMarketplaces</code> 的友善別名；<code>allowedMarketplaces</code> 為 <code>strictKnownMarketplaces</code> 的別名<span class="badge-new" data-added="2026-08-13">NEW</span></span></div>
+            <div class="row"><span class="key">availableModelsMatch</span> <span class="desc">受管理設定：設為 <code>"exact"</code> 時，<code>availableModels</code> 只放行指定版本<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
+            <div class="row"><span class="key">deniedModels</span> <span class="desc">受管理設定：封鎖特定模型（即使 <code>availableModels</code> 允許）<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
+          </details>
+          <details class="more">
+            <summary>其他進階設定（30）</summary>
+            <div class="row"><span class="key">modelOverrides</span> <span class="desc">映射模型選擇器 → 自訂 ID</span></div>
+            <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
+            <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
+            <div class="row"><span class="key">worktree.baseRef</span> <span class="desc">Worktree diff 比對的基準分支<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+            <div class="row"><span class="key">worktree.bgIsolation</span> <span class="desc"><code>"none"</code>：背景 session 直接編輯工作目錄，無需 EnterWorktree<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+            <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
+            <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
+            <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+            <div class="row"><span class="key">Monitor tool</span> <span class="desc">串流背景腳本事件<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
+            <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+            <div class="row"><span class="key">fallbackModel</span> <span class="desc">最多指定三個備援模型，依序嘗試（主要模型過載或不可用時）<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
+            <div class="row"><span class="key">disableBundledSkills</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+            <div class="row"><span class="key">wheelScrollAccelerationEnabled</span> <span class="desc">設為 <code>false</code> 停用全螢幕模式的滾輪加速<span class="badge-new" data-added="2026-06-12">NEW</span></span></div>
+            <div class="row"><span class="key">footerLinksRegexes</span> <span class="desc">正規表示式清單，比對 URL 以顯示自訂連結 badge<span class="badge-new" data-added="2026-06-14">NEW</span></span></div>
+            <div class="row"><span class="key">attribution.sessionUrl</span> <span class="desc">設為 <code>false</code> 可省略 commit 與 PR 中附加的 claude.ai Session 連結<span class="badge-new" data-added="2026-06-21">NEW</span></span></div>
+            <div class="row"><span class="key">sandbox.allowAppleEvents</span> <span class="desc">macOS 沙盒選擇性啟用 Apple Events（設為 <code>true</code>）<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
+            <div class="row"><span class="key">sandbox.credentials</span> <span class="desc">阻止沙盒指令讀取憑證檔案與 secret 環境變數<span class="badge-new" data-added="2026-06-23">NEW</span></span></div>
+            <div class="row"><span class="key">autoMode.classifyAllShell</span> <span class="desc">將所有 Bash/PowerShell 指令路由至 Auto 模式分類器（預設僅路由任意程式碼執行模式）<span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
+            <div class="row"><span class="key">teammateMode: "iterm2"</span> <span class="desc">設定 iTerm2 為 Teammate 模式；未偵測到 <code>it2</code> CLI 時顯示警告<span class="badge-new" data-added="2026-06-22">NEW</span></span></div>
+            <div class="row"><span class="key">prUrlTemplate</span> <span class="desc">自訂 PR 審查 URL（取代預設 github.com）<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">autoMode: "$defaults"</span> <span class="desc">在自訂規則外一併保留內建規則<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc">禁止 Skills/外掛中的 !`cmd`<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
+            <div class="row"><span class="key">refreshInterval</span> <span class="desc">自訂狀態列每 N 秒重新執行<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+            <div class="row"><span class="key">vimInsertModeRemaps</span> <span class="desc">設定 Vim 插入模式兩鍵序列對應（如 <code>jj</code> → Escape）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+            <div class="row"><span class="key">axScreenReader</span> <span class="desc">設為 <code>true</code> 啟用螢幕閱讀器模式（純文字渲染，供輔助技術使用者使用）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+            <div class="row"><span class="key">disableAutoMode</span> <span class="desc">設為 <code>true</code> 停用 Auto 模式（Bedrock / Vertex / Foundry 自 v2.1.207 起預設啟用）<span class="badge-new" data-added="2026-07-11">NEW</span></span></div>
+            <div class="row"><span class="key">Edit(path) / Read(path)</span> <span class="desc">路徑型權限規則請使用 <code>Edit</code> 或 <code>Read</code>；<code>Write(path)</code>/<code>NotebookEdit(path)</code>/<code>Glob(path)</code> 啟動時會顯示棄用警告<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+            <div class="row"><span class="key">modelPicker</span> <span class="desc">自訂 <code>/model</code> 選擇器的模型清單（順序、標籤；可附加或取代內建清單）<span class="badge-new" data-added="2026-08-25">NEW</span></span></div>
+            <div class="row"><span class="key">maxProseWidth</span> <span class="desc">限制寬終端機中回應文字的寬度，表格與程式碼區塊維持全寬<span class="badge-new" data-added="2026-09-24">NEW</span></span></div>
+            <div class="row"><span class="key">maxEffortLevel</span> <span class="desc">限制所有 Provider 的 effort 上限（可依模型設定）<span class="badge-new" data-added="2026-09-09">NEW</span></span></div>
+          </details>
+          <div class="sub-header">常用環境變數</div>
+          <div class="row"><span class="key">ANTHROPIC_MODEL</span> <span class="desc">指定要用的模型</span></div>
+          <div class="row"><span class="key">ANTHROPIC_API_KEY</span> <span class="desc">API 金鑰；用 Pro／Max 訂閱登入的人不用設</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_EFFORT_LEVEL</span> <span class="desc">思考強度：low／medium／high／xhigh／max／auto</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">設 <code>1</code> 改用全螢幕渲染，減少畫面閃爍</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">設定壞掉時排查用：不載入 CLAUDE.md、Skills、Hooks、MCP 等客製化（同 <code>--safe-mode</code>）</span></div>
+          <details class="more">
+            <summary>模型與 API 進階（16）</summary>
+            <div class="row"><span class="key">ANTHROPIC_DEFAULT_MODEL</span> <span class="desc">新 Session 的起始模型（<code>/model</code> 的選擇仍可覆寫）<span class="badge-new" data-added="2026-08-19">NEW</span></span></div>
+            <div class="row"><span class="key">ANTHROPIC_BASE_URL</span> <span class="desc">Proxy／Gateway 端點覆寫</span></div>
+            <div class="row"><span class="key">ANTHROPIC_BETAS</span> <span class="desc">額外的 beta header（逗號分隔）</span></div>
+            <div class="row"><span class="key">API_TIMEOUT_MS</span> <span class="desc">API 逾時（預設 600000ms）</span></div>
+            <div class="row"><span class="key">MCP_TIMEOUT</span> <span class="desc">MCP 伺服器啟動逾時（ms）</span></div>
+            <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc">0=關閉</span></div>
+            <div class="row"><span class="key">ENABLE_PROMPT_CACHING_1H</span> <span class="desc">啟用 1 小時 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+            <div class="row"><span class="key">FORCE_PROMPT_CACHING_5M</span> <span class="desc">強制 5 分鐘 prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_FORK_SUBAGENT</span> <span class="desc">在外部建置上啟用分叉子 Agent（=1）<span class="badge-new" data-added="2026-04-22">NEW</span></span></div>
+            <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc">自訂 /model 選項</span></div>
+            <div class="row"><span class="key">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> <span class="desc">串流逾時看門狗（預設 90s）</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_ENABLE_TODO_TOOLS</span> <span class="desc">設為 <code>1</code> 在 Opus 4.8、Sonnet 5、Fable 5 及更新模型上重新啟用任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">設為 <code>1</code> 將同一模型強制套用到每個子 Agent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_SERVER</span> <span class="desc">Auto 模式伺服器端分類器；設為 <code>0</code> 改用本機分類器（計入用量）<span class="badge-new" data-added="2026-09-19">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE</span> <span class="desc">設為 <code>1</code> 將快速模式固定使用 Opus 4.6（預設已升至 Opus 4.7）<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
+          </details>
+          <details class="more">
+            <summary>企業、雲端與遙測（11）</summary>
+            <div class="row"><span class="key">CLAUDE_CODE_SUBPROCESS_ENV_SCRUB</span> <span class="desc">從子程序移除憑證</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_USE_MANTLE</span> <span class="desc">透過 Mantle 使用 Bedrock（=1）<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+            <div class="row"><span class="key">ANTHROPIC_BEDROCK_SERVICE_TIER</span> <span class="desc">選擇 Bedrock 服務層級（default / flex / priority）<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_CERT_STORE</span> <span class="desc">TLS CA 憑證來源（逗號分隔）：預設 <code>bundled,system</code>；設為 <code>bundled</code> 只用內建 CA<span class="badge-new" data-added="2026-04-12">NEW</span></span></div>
+            <div class="row"><span class="key">ANTHROPIC_WORKSPACE_ID</span> <span class="desc">工作負載身份聯盟：將 minted token 範圍限定至特定工作區<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
+            <div class="row"><span class="key">OTEL_METRICS_INCLUDE_ENTRYPOINT</span> <span class="desc">設為 <code>true</code> 時在 OpenTelemetry 指標中加入 <code>app.entrypoint</code> Session 來源屬性<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AUTO_MODE</span> <span class="desc">設為 <code>1</code> 在 Bedrock / Vertex / Foundry 上啟用 Auto 模式（Opus 4.7 + 4.8）<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
+            <div class="row"><span class="key">OTEL_LOG_TOOL_DETAILS</span> <span class="desc">設為 <code>1</code> 時，<code>tool_decision</code> 遙測事件包含 <code>tool_parameters</code> 詳情<span class="badge-new" data-added="2026-05-29">NEW</span></span></div>
+            <div class="row"><span class="key">OTEL_RESOURCE_ATTRIBUTES</span> <span class="desc">值作為標籤附加至 OpenTelemetry 指標資料點，可按自訂維度（如 team、repo）切分用量指標<span class="badge-new" data-added="2026-06-04">NEW</span></span></div>
+            <div class="row"><span class="key">OTEL_LOG_ASSISTANT_RESPONSES</span> <span class="desc">設為 <code>1</code> 時將助理回應文字寫入 OpenTelemetry log；預設跟隨 <code>OTEL_LOG_USER_PROMPTS</code><span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          </details>
+          <details class="more">
+            <summary>其他環境變數（23）</summary>
+            <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY</span> <span class="desc">設為 <code>1</code> 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+            <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_HIDE_CWD</span> <span class="desc">隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+            <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc">在 <code>-p</code> 模式跳過 MCP 等待<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_PERFORCE_MODE</span> <span class="desc">Perforce 模式：唯讀檔案自動提示 p4 edit（=1）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">用於 Hooks 與 CI 追蹤的唯一 Session ID；stdio MCP 伺服器在 <code>--resume</code> 時也收到相同值<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">關閉全螢幕替代畫面渲染（=1）<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">透過 Homebrew／WinGet 自動升級<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_PROJECT_DIR</span> <span class="desc">MCP stdio 伺服器可用的專案目錄路徑（與 Hooks 環境一致）<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_STOP_HOOK_BLOCK_CAP</span> <span class="desc">覆寫 stop hooks 連續阻塞警告上限（預設 8 次）<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_PREFER_HTTPS</span> <span class="desc">透過 HTTPS 複製 GitHub 外掛來源，取代預設 SSH<span class="badge-new" data-added="2026-05-13">NEW</span></span></div>
+            <div class="row"><span class="key">NO_COLOR / FORCE_COLOR</span> <span class="desc">現在僅套用至子程序，不影響 Claude Code UI 顏色<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_BUNDLED_SKILLS</span> <span class="desc">隱藏內建 Skills、工作流程與斜線指令<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CLIENT_PRESENCE_FILE</span> <span class="desc">指定檔案路徑；檔案存在時抑制行動裝置推播通知<span class="badge-new" data-added="2026-06-19">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">全螢幕模式下停用滑鼠點擊／拖曳／懸停（保留滾輪捲動）<span class="badge-new" data-added="2026-06-27">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_TOOL_MEMORY_LIMIT</span> <span class="desc">Linux 上以 cgroup 限制 Bash 工具指令的記憶體用量，防止失控建置程序拖垮 Session<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</span> <span class="desc">設定 WebFetch Session URL 快取 TTL（預設 15 分鐘）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</span> <span class="desc">MCP 工具描述與伺服器指令的長度上限（預設 2048 字元）<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
+          </details>
         </div>
       </section>
       </div>
@@ -1359,6 +1221,9 @@
 
   <!-- NEW Badge Auto-hide (8 days) -->
   <script>
+    window.addEventListener('beforeprint', function() {
+      document.querySelectorAll('details.more').forEach(function(d) { d.open = true; });
+    });
     (function() {
       var now = new Date();
       document.querySelectorAll('.badge-new[data-added]').forEach(function(el) {
