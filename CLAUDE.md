@@ -13,8 +13,9 @@
 ├── README.md               ← 版本號 / 更新日期寫在這（check-upstream.sh 讀這份）
 ├── assets/preview.png      ← README 封面截圖
 ├── scripts/
-│   ├── check-upstream.sh   ← 每日比對 upstream vs README 版本（退出碼觸發後續）
-│   └── sync-upstream.md    ← 翻譯同步 SOP（Claude 讀這份執行）
+│   ├── check-upstream.sh   ← 比對 upstream vs README 版本（退出碼觸發後續）；diff 用基準檔算
+│   ├── sync-upstream.md    ← 翻譯同步 SOP（Claude 讀這份執行）
+│   └── upstream-baseline.html ← 上次同步時的上游原檔（進 git）；下一輪 diff「基準檔 vs 新上游」
 └── .github/workflows/
     ├── check-upstream.yml  ← GitHub Actions：每日 00:00 CST，有新版→開 issue
     └── auto-release.yml    ← push 後偵測 README 版本號→發 Release
@@ -58,7 +59,7 @@ bash scripts/check-upstream.sh
 
 ## 刻意不跟進 upstream 的差異
 
-以下是雷蒙版的客製，每次 diff 都會出現，**不要還原**：
+採增量同步：本地保留上游已刪的條目（雷蒙 2026-09-26 拍板），所以例行 diff 比的是「上游基準檔 vs 新上游」，不是上游 vs 本地。以下是雷蒙版的客製，直接對照上游與本地時會出現，**不要還原**：
 
 | 項目 | 本地 | 原站 |
 |:--|:--|:--|

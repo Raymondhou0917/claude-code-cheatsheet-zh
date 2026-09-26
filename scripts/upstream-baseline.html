@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="vnYohdYP4HaXUOjixLFodqhqoBps6WKLpxdp4t8CTyo" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Cheat Sheet</title>
+    <link rel="alternate" hreflang="en" href="https://cc.storyfox.cz/" />
+    <link rel="alternate" hreflang="zh" href="https://cc.storyfox.cz/zh/" />
+    <link rel="alternate" hreflang="ja" href="https://cc.storyfox.cz/jp/" />
+    <link rel="alternate" hreflang="ko" href="https://cc.storyfox.cz/kr/" />
+    <link rel="alternate" hreflang="x-default" href="https://cc.storyfox.cz/" />
+  <meta name="description" content="The most comprehensive Claude Code cheat sheet — keyboard shortcuts, slash commands, CLI flags, MCP servers, memory files, skills, agents, env vars. Auto-updated daily. Printable A4 landscape.">
+  <meta name="keywords" content="Claude Code, cheat sheet, Claude CLI, Anthropic, keyboard shortcuts, slash commands, MCP, CLAUDE.md, AI coding, reference card">
+  <meta name="author" content="Martin Baláž">
+  <link rel="canonical" href="https://cc.storyfox.cz/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Claude Code Cheat Sheet — Complete Reference">
+  <meta property="og:description" content="All Claude Code shortcuts, commands, flags, MCP config, memory files &amp; env vars on one page. Auto-updated daily.">
+  <meta property="og:url" content="https://cc.storyfox.cz/">
+  <meta property="og:site_name" content="Claude Code Cheat Sheet">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code Cheat Sheet — Complete Reference">
+  <meta name="twitter:description" content="All Claude Code shortcuts, commands, flags, MCP config, memory files &amp; env vars on one page. Auto-updated daily.">
+  <meta name="twitter:creator" content="@phasE89">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+  <style>
+    /* === RESET & BASE === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Section colors */
+      --keyboard-bg: #EFF6FF;
+      --keyboard-header: #2563EB;
+      --slash-bg: #F5F3FF;
+      --slash-header: #7C3AED;
+      --skills-bg: #ECFDF5;
+      --skills-header: #059669;
+      --memory-bg: #FFFBEB;
+      --memory-header: #D97706;
+      --config-bg: #FFF7ED;
+      --config-header: #C2410C;
+      --workflows-bg: #FEF2F2;
+      --workflows-header: #DC2626;
+      --mcp-bg: #ECFEFF;
+      --mcp-header: #0891B2;
+      --cli-bg: #F9FAFB;
+      --cli-header: #4B5563;
+      --footer-bg: #1F2937;
+      --footer-text: #F9FAFB;
+      
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    }
+
+    html {
+      font-size: 12px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.15;
+      background: #fff;
+      color: #1F2937;
+      padding: 6mm;
+    }
+
+    /* === PAGE LAYOUT === */
+    @page {
+      size: A4 landscape;
+      margin: 4mm;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 279mm;
+      margin: 0 auto;
+    }
+
+    /* === HEADER === */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2mm;
+      padding-bottom: 1mm;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .header-meta {
+      font-size: 0.75rem;
+      color: #6B7280;
+      text-align: right;
+    }
+
+    .header-meta .version-info {
+      display: block;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .header-meta .last-updated {
+      display: block;
+      font-size: 0.7rem;
+      color: #9CA3AF;
+    }
+
+    /* === CHANGELOG === */
+    .changelog {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 1px solid #F59E0B;
+      border-radius: 4px;
+      padding: 1.5mm 3mm;
+      margin-bottom: 2mm;
+      font-size: 0.72rem;
+    }
+
+    .changelog-header {
+      font-weight: 700;
+      color: #92400E;
+      margin-bottom: 0.5mm;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .changelog-dismiss {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: #92400E;
+      cursor: pointer;
+      opacity: 0.6;
+      line-height: 1;
+    }
+
+    .changelog-dismiss:hover {
+      opacity: 1;
+    }
+
+    .changelog-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1mm 4mm;
+      color: #78350F;
+      list-style: none;
+    }
+
+    .changelog-list li {
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .changelog-list li::before {
+      content: "•";
+      color: #F59E0B;
+      font-weight: bold;
+    }
+
+    /* === MAIN GRID — CSS multi-column auto-balance ===
+       Browser balances column heights regardless of which sections grow.
+       Same approach used in print CSS (line ~430), unified mental model. */
+    .main-grid {
+      column-count: 4;
+      column-gap: 2mm;
+      column-fill: balance;
+    }
+
+    /* === SECTION BASE ===
+       NO overflow:hidden — that would make .section a BFC root, which the
+       CSS spec forbids from fragmenting across columns. We need fragmenting
+       so column-fill: balance can split sections at row boundaries and
+       produce truly equal columns. Border-radius alone still clips the
+       painted background. box-decoration-break: clone gives each column
+       fragment its own rounded box. Headers/sub-headers stay glued to
+       their first row via break-after: avoid below. */
+    .section {
+      border-radius: 3px;
+      display: block;
+      break-inside: auto;
+      page-break-inside: auto;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      margin-bottom: 2mm;
+      width: 100%;
+    }
+
+    .section-header {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .sub-header {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .row {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .section-header {
+      padding: 1.2mm 2mm;
+      color: white;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .section-content {
+      padding: 1.5mm 2.5mm;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    /* === SUB-SECTION === */
+    .sub-header {
+      font-weight: 700;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: #374151;
+      margin-top: 1.2mm;
+      margin-bottom: 0.4mm;
+      padding-bottom: 0.3mm;
+      border-bottom: 1px dotted rgba(0,0,0,0.15);
+    }
+
+    .sub-header:first-child {
+      margin-top: 0;
+    }
+
+    /* === KEY-VALUE ROWS === */
+    .row {
+      display: flex;
+      gap: 1.5mm;
+      padding: 0.3mm 0;
+      line-height: 1.2;
+    }
+
+    .key {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1F2937;
+      white-space: nowrap;
+      flex-shrink: 0;
+      overflow-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .desc {
+      font-size: 0.8rem;
+      color: #4B5563;
+      flex: 1;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      min-width: 0;
+    }
+
+    /* === KEYCAP STYLE === */
+    .keycap {
+      display: inline-block;
+      background: linear-gradient(180deg, #FAFAFA 0%, #E5E7EB 100%);
+      border: 1px solid #D1D5DB;
+      border-radius: 2px;
+      padding: 0.2mm 1.2mm;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #374151;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1), inset 0 -1px 0 rgba(0,0,0,0.05);
+      margin-right: 0.3mm;
+    }
+
+    /* === NEW BADGE === */
+    /* NEW badges: add data-added="YYYY-MM-DD" when adding. Auto-hidden after 8 days via JS. */
+    .badge-new {
+      display: inline-block;
+      background: #EF4444;
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.2mm 1mm;
+      border-radius: 2px;
+      margin-left: 1mm;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* === SECTION SPECIFIC COLORS === */
+    .section-keyboard { background: var(--keyboard-bg); }
+    .section-keyboard .section-header { background: var(--keyboard-header); }
+    
+    .section-slash { background: var(--slash-bg); }
+    .section-slash .section-header { background: var(--slash-header); }
+    
+    .section-skills { background: var(--skills-bg); }
+    .section-skills .section-header { background: var(--skills-header); }
+    
+    .section-memory { background: var(--memory-bg); }
+    .section-memory .section-header { background: var(--memory-header); }
+    
+    .section-workflows { background: var(--workflows-bg); }
+    .section-workflows .section-header { background: var(--workflows-header); }
+    
+    .section-mcp { background: var(--mcp-bg); }
+    .section-mcp .section-header { background: var(--mcp-header); }
+    
+    .section-cli { background: var(--cli-bg); }
+    .section-cli .section-header { background: var(--cli-header); }
+    
+    .section-config { background: var(--config-bg); }
+    .section-config .section-header { background: var(--config-header); }
+
+    /* === WRAPPER FLATTENING ===
+       Sections become direct children of .main-grid so the column-fill
+       algorithm sees one flat list of 8 atomic boxes. */
+    .section-keyboard-mcp,
+    .section-slash-memory,
+    .section-workflows-config,
+    .section-skills-cli {
+      display: contents;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      margin-top: 2mm;
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 1.5mm 2.5mm;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5mm;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2mm;
+      align-items: center;
+    }
+
+    .footer-label {
+      font-weight: 700;
+      color: #9CA3AF;
+      margin-right: 1mm;
+    }
+
+    .footer-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .footer-item code {
+      font-family: var(--font-mono);
+      background: rgba(255,255,255,0.1);
+      padding: 0.3mm 1mm;
+      border-radius: 2px;
+    }
+
+    .footer-sep {
+      color: #6B7280;
+    }
+
+    /* === PRINT STYLES — FLOWING 1-PAGE A4 LANDSCAPE === */
+    /* BEGIN PROTECTED:print-css — tuned for A4 landscape single-page. DO NOT MODIFY. See AGENTS.md §print. CI fails on hash change. */
+    @page {
+      size: A4 landscape;
+      margin: 4mm;
+    }
+
+    @media print {
+      html {
+        font-size: 8.5px !important;
+      }
+
+      body {
+        padding: 0;
+        margin: 0;
+        background: white;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .page {
+        max-width: none;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .header {
+        margin-bottom: 0.8mm;
+        padding-bottom: 0.5mm;
+      }
+
+      .header h1 {
+        font-size: 1.1rem;
+      }
+
+      /* Flatten wrappers so sections become direct children of main-grid,
+         then flow them into 4 columns that naturally balance. */
+      .main-grid {
+        display: block !important;
+        column-count: 4;
+        column-gap: 2.5mm;
+        column-fill: balance;
+      }
+
+      .section-keyboard-mcp,
+      .section-slash-memory,
+      .section-workflows-config,
+      .section-skills-cli {
+        display: contents;
+      }
+
+      .section {
+        break-inside: auto;
+        page-break-inside: auto;
+        margin-bottom: 0.8mm;
+        display: block;
+      }
+
+      /* Keep individual rows intact and sub-headers attached to their rows */
+      .row {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        padding: 0.05mm 0;
+        line-height: 1.1;
+      }
+
+      .sub-header {
+        break-after: avoid;
+        page-break-after: avoid;
+        margin-top: 0.6mm;
+        margin-bottom: 0.2mm;
+        font-size: 0.85rem;
+      }
+
+      /* Don't orphan section headers */
+      .section-header {
+        break-after: avoid;
+        page-break-after: avoid;
+        padding: 0.9mm 2mm;
+        font-size: 0.9rem;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .section-content {
+        padding: 0.8mm 1.8mm;
+      }
+
+      /* Force monospace font for all commands/keys in print */
+      .key,
+      .keycap,
+      code,
+      .footer-item code {
+        font-family: 'Courier New', 'Courier', monospace !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .key {
+        font-size: 0.9rem;
+      }
+
+      .desc {
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        margin-top: 1mm;
+        padding: 0.8mm 1.5mm;
+        font-size: 0.6rem;
+        background: #F3F4F6 !important;
+        color: #1F2937 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .footer-label {
+        color: #374151 !important;
+      }
+
+      .footer-item, .footer-item code {
+        color: #1F2937 !important;
+        background: #E5E7EB !important;
+      }
+
+      .footer-sep {
+        color: #9CA3AF !important;
+      }
+
+      .keycap {
+        background: #F3F4F6 !important;
+        box-shadow: none;
+        border: 1px solid #9CA3AF;
+      }
+
+      .os-toggle {
+        display: none !important;
+      }
+
+      .footer {
+        display: none !important;
+      }
+
+      .changelog {
+        display: none !important;
+      }
+
+      #stickyBar {
+        display: none !important;
+      }
+    }
+
+    /* Dark mode print removed — print is always light for readability */
+
+    /* Hide print toggle + changelog in print */
+    @media print {
+      #printToggle, .changelog, #footerForm { display: none !important; }
+    }
+    /* END PROTECTED:print-css */
+
+    /* Light print theme — ink-friendly */
+    body.light-print { background: #fff; color: #000; }
+    body.light-print .page { background: #fff; }
+    body.light-print .section { background: #fff; border: 1px solid #ccc; }
+    body.light-print .section::before { display: none; }
+    body.light-print .section-header { color: #000; background: #f0f0f0; }
+    body.light-print .sub-header { color: #000; border-color: #ccc; }
+    body.light-print .row { border-color: #e0e0e0; }
+    body.light-print .key { color: #000; }
+    body.light-print .desc { color: #333; }
+    body.light-print .keycap { background: #eee; color: #000; border: 1px solid #aaa; box-shadow: none; }
+    body.light-print code { background: #eee; color: #000; }
+    body.light-print .header { background: #fff; border-bottom: 2px solid #000; }
+    body.light-print h1 { color: #000; }
+    body.light-print .version-info { color: #555; }
+    body.light-print .header-meta { color: #555; }
+    body.light-print footer { background: #f5f5f5; color: #333; }
+    body.light-print footer code { background: #e0e0e0; color: #000; }
+    body.light-print .footer-row { color: #444; }
+    body.light-print .footer-sep { color: #aaa; }
+    body.light-print .footer-item { color: #444; }
+    body.light-print .footer-item code { color: #000; }
+    body.light-print .changelog { display: none; }
+    body.light-print .badge-new { display: none; }
+    body.light-print .os-btn { color: #555; background: #eee; }
+    body.light-print .os-btn.active { color: #000; background: #ddd; }
+    body.light-print #printToggle { color: #fff; border-color: #666; background: #374151; }
+    body.light-print a { color: #000; }
+
+    /* === RESPONSIVE === */
+    @media screen and (max-width: 1100px) {
+      html { font-size: 10px; }
+
+      .main-grid {
+        column-count: 2;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      html { font-size: 11px; }
+      body { padding: 3mm; }
+
+      .header h1 { font-size: 1.2rem; white-space: nowrap; }
+      .header { flex-wrap: wrap; gap: 4px; justify-content: space-between; }
+      .header-right { gap: 2mm; }
+      .os-toggle { order: -1; }
+      .os-btn { padding: 2px 6px; }
+      .os-btn svg { width: 11px; height: 11px; }
+      .os-btn { padding: 2px 6px; }
+      .os-btn svg { width: 11px; height: 11px; }
+
+      .main-grid {
+        column-count: 1;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1px;
+      }
+      .footer-sep {
+        display: none;
+      }
+
+      .changelog-list {
+        flex-direction: column;
+        gap: 1mm;
+      }
+
+      .sub-header {
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #9CA3AF;
+        margin-top: 0.8mm;
+        margin-bottom: 0.2mm;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+    }
+
+    /* === OS TOGGLE === */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+    }
+
+    .os-toggle {
+      display: flex;
+      border: 1px solid #9CA3AF;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #F3F4F6;
+    }
+
+    .os-btn {
+      background: #fff;
+      border: none;
+      padding: 3px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      line-height: 1;
+      color: #6B7280;
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .os-btn + .os-btn {
+      border-left: 1px solid #9CA3AF;
+    }
+
+    .os-btn.active {
+      background: #111827;
+      color: #fff;
+    }
+
+    .os-btn:hover:not(.active) {
+      background: #F3F4F6;
+    }
+
+    /* === COMPACT MULTI-COLUMN LISTS === */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 4mm;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0 3mm;
+    }
+
+    @media screen and (max-width: 500px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+    .show-mobile { display: none; }
+    .hide-mobile { display: inline; }
+    @media (max-width: 600px) {
+      .show-mobile { display: inline; }
+      .hide-mobile { display: none; }
+    }
+
+    /* Print override: the sticky-bar offset on .page must not apply when
+       sticky bar is hidden (in print). Otherwise print loses ~9.5mm at
+       top and content overflows to a second page. */
+    @media print {
+      .page { margin-top: 0 !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky email bar, dismissable via × button -->
+  <div id="stickyBar" style="display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: linear-gradient(90deg, #1E3A5F 0%, #2D5A87 100%); padding: 6px 12px; justify-content: center; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.15); flex-wrap: nowrap;">
+    <span style="color: #E0E7EF; font-size: 12px; white-space: nowrap;"><span class="hide-mobile">📬 Get notified when Claude Code ships new features:</span><span class="show-mobile">📬 CC updates</span></span>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/claudecode" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/claudecode', 'popupwindow')" style="display: flex; gap: 4px; margin: 0; flex-shrink: 0;">
+      <input type="hidden" name="tag" value="sticky-v2">
+      <input type="email" name="email" placeholder="email" required style="font-size: 12px; padding: 5px 8px; border: none; border-radius: 4px; background: rgba(255,255,255,0.95); width: 120px; outline: none;">
+      <button type="submit" style="font-size: 11px; padding: 5px 10px; border: none; border-radius: 4px; background: #60A5FA; color: white; cursor: pointer; font-weight: 600; white-space: nowrap;">Subscribe</button>
+    </form>
+    <button onclick="document.getElementById('stickyBar').style.display='none'; document.querySelector('.page').style.marginTop='0';" style="background: none; border: none; color: #9CB3CC; cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1;">×</button>
+  </div>
+  <div class="page" style="margin-top: 36px;">
+    <!-- HEADER -->
+    <header class="header">
+      <h1>Claude Code Cheat Sheet</h1>
+      <div class="header-right">
+        <button id="printToggle" class="hide-mobile" onclick="document.body.classList.toggle('light-print'); this.textContent = document.body.classList.contains('light-print') ? '🎨 Color' : '🖨️ Print'" style="background: none; border: 1px solid #555; border-radius: 4px; color: #374151; font-size: 0.85rem; font-weight: 600; padding: 4px 10px; cursor: pointer; margin-right: 6px;">🖨️ Print</button>
+        <div class="os-toggle" id="osToggle">
+          <button class="os-btn active" data-os="mac" title="Mac shortcuts"><svg width="14" height="14" viewBox="0 0 814 1000" fill="currentColor"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.4-83-106.3-211.5-106.3-334.2 0-196.5 127.8-300.9 253.3-300.9 66.8 0 122.4 43.4 164.1 43.4 39.5 0 101.1-46 176.2-46 28.5 0 130.9 2.6 198.3 99.1zm-169.5-92.8c31.2-37 52.4-88.1 52.4-139.3 0-7.1-.6-14.3-1.9-20.1-50 1.6-109.2 33.3-145 75.1-25.8 29.3-52.4 79.8-52.4 131.6 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.3 1.3 44.7 0 101.1-30.5 135.3-66.8z"/></svg></button>
+          <button class="os-btn" data-os="win" title="Windows shortcuts"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
+        </div>
+        <div class="header-meta">
+          <span class="version-info">Claude Code v2.1.283</span>
+          <span class="last-updated">Last updated: September 25, 2026</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CHANGELOG -->
+    <div class="changelog">
+      <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 Recent Changes</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
+      <ul class="changelog-list">
+        <li>New <code>/doctor prompt-audit</code> sub-command audits CLAUDE.md files for outdated model references (v2.1.283)</li>
+        <li>New managed settings <code>availableModelsMatch</code> + <code>deniedModels</code> to control which models are available per deployment (v2.1.283)</li>
+        <li>New <code>maxProseWidth</code> setting caps prose width in wide terminals; tables/code blocks stay full width (v2.1.282)</li>
+        <li>Fixed resumed/continued sessions re-sending earlier messages (v2.1.282)</li>
+      </ul>
+    </div>
+
+    <!-- MAIN GRID -->
+    <main class="main-grid">
+      
+      <!-- KEYBOARD + MCP WRAPPER -->
+      <div class="section-keyboard-mcp">
+      <!-- KEYBOARD SHORTCUTS -->
+      <section class="section section-keyboard">
+        <div class="section-header">⌨️ Keyboard Shortcuts</div>
+        <div class="section-content">
+          <div class="sub-header">General Controls</div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">C</span></span> <span class="desc">Cancel input/generation</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">D</span></span> <span class="desc">Exit session</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">L</span></span> <span class="desc">Clear prompt input + force full screen redraw</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span> <span class="desc">Toggle transcript viewer (verbose tool usage); cycles focus view in fullscreen<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">U</span></span> <span class="desc">Clear entire input buffer</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">Y</span></span> <span class="desc">Restore cleared input buffer</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">G</span></span> <span class="desc">Open in editor (same as Ctrl+X Ctrl+E)</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">R</span></span> <span class="desc">Reverse search history</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span class="keycap">Ctrl</span><span class="keycap">K</span></span> <span class="desc">Kill all background agents (press twice to confirm)</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">B</span></span> <span class="desc">Background running tasks</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">T</span></span> <span class="desc">Toggle task list</span></div>
+          <div class="row"><span class="key"><span class="keycap">Esc</span><span class="keycap">Esc</span></span> <span class="desc">Rewind or summarize</span></div>
+          
+          <div class="sub-header">Mode Switching</div>
+          <div class="row"><span class="key"><span class="keycap">Shift</span><span class="keycap">Tab</span></span> <span class="desc">Cycle permission modes (default → acceptEdits → plan → …)</span></div>
+          
+          <div class="sub-header">Mac Option Keys (configure Option as Meta)</div>
+          <div class="row"><span class="key"><span class="keycap">⌥</span><span class="keycap">P</span></span> <span class="desc">Switch model</span></div>
+          <div class="row"><span class="key"><span class="keycap">⌥</span><span class="keycap">T</span></span> <span class="desc">Toggle extended thinking</span></div>
+          <div class="row"><span class="key"><span class="keycap">⌥</span><span class="keycap">O</span></span> <span class="desc">Toggle fast mode</span></div>
+          
+          <div class="sub-header">Input</div>
+          <div class="row"><span class="key"><span class="keycap">\</span><span class="keycap">Enter</span></span> <span class="desc">Newline</span></div>
+          <div class="row"><span class="key"><span class="keycap">v</span></span> <span class="desc">Vim visual mode (char selection + operators)<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key"><span class="keycap">V</span></span> <span class="desc">Vim visual-line mode<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+
+          <div class="sub-header">Prefixes</div>
+          <div class="row"><span class="key">/</span> <span class="desc">Slash command</span></div>
+          <div class="row"><span class="key">!</span> <span class="desc">Direct bash; live file path autocomplete<span class="badge-new" data-added="2026-06-25">NEW</span></span></div>
+          <div class="row"><span class="key">@</span> <span class="desc">File mention + autocomplete</span></div>
+          
+          <!-- Session picker shortcuts removed: not documented on interactive-mode.md, so left out to avoid unverifiable claims. -->
+          
+          <!-- Transcript viewer: footer shows [ (dump to scrollback) and v (open in editor) — both added in v2.1.111 -->
+        </div>
+      </section>
+
+      <!-- MCP SERVERS (under keyboard) -->
+      <section class="section section-mcp">
+        <div class="section-header">🔌 MCP Servers</div>
+        <div class="section-content">
+          <div class="sub-header">Add Servers</div>
+          <div class="row"><span class="key">--transport http</span> <span class="desc">Remote HTTP (recommended)</span></div>
+          <div class="row"><span class="key">--transport stdio</span> <span class="desc">Local process</span></div>
+          <div class="row"><span class="key">--transport sse</span> <span class="desc">Remote SSE</span></div>
+          <div class="sub-header">Scopes</div>
+          <div class="row"><span class="key">Local</span> <span class="desc">~/.claude.json (you only)</span></div>
+          <div class="row"><span class="key">Project</span> <span class="desc">.mcp.json (shared/VCS)</span></div>
+          <div class="row"><span class="key">User</span> <span class="desc">~/.claude.json (global)</span></div>
+          <div class="sub-header">Manage</div>
+          <div class="row"><span class="key">/mcp</span> <span class="desc">Interactive UI</span></div>
+          <div class="row"><span class="key">claude mcp list</span> <span class="desc">List all servers</span></div>
+          <!-- claude mcp serve, Elicitation, 2KB each — not in mcp.md, removed as unverifiable -->
+          <div class="row"><span class="key">alwaysLoad: true</span> <span class="desc">Keep server connected across all sessions (server config)<span class="badge-new" data-added="2026-04-28">NEW</span></span></div>
+          <div class="row"><span class="key">maxResultSizeChars</span> <span class="desc"><code>_meta["anthropic/maxResultSizeChars"]</code> raises per-tool text threshold (up to 500K chars)<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
+        </div>
+      </section>
+      </div><!-- end keyboard-mcp wrapper -->
+
+      <!-- SLASH + MEMORY WRAPPER -->
+      <div class="section-slash-memory">
+      <!-- SLASH COMMANDS -->
+      <section class="section section-slash">
+        <div class="section-header">⚡ Slash Commands</div>
+        <div class="section-content">
+          <div class="sub-header">Session</div>
+          <div class="row"><span class="key">/clear</span> <span class="desc">Clear conversation</span></div>
+          <div class="row"><span class="key">/compact [focus]</span> <span class="desc">Compact context</span></div>
+
+          <div class="row"><span class="key">/branch [name]</span> <span class="desc">Branch conversation (/fork alias)</span></div>
+          <div class="row"><span class="key">/usage</span> <span class="desc">Token usage, cost and cache breakdown (replaces <code>/cost</code>/<code>/stats</code>)<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">/context</span> <span class="desc">Visualize context (grid)</span></div>
+          <div class="row"><span class="key">/diff</span> <span class="desc">Interactive diff viewer</span></div>
+          <div class="row"><span class="key">/copy [N]</span> <span class="desc">Copy last (or Nth) response</span></div>
+          <div class="row"><span class="key">/recap</span> <span class="desc">Summarize session context when returning<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">/undo</span> <span class="desc">Alias for /rewind<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">/rewind</span> <span class="desc">Rewind conv / code checkpoint; resumes past <code>/clear</code><span class="badge-new" data-added="2026-06-24">NEW</span></span></div>
+          <div class="row"><span class="key">/export</span> <span class="desc">Export conversation</span></div>
+          <div class="row"><span class="key">/plan [desc]</span> <span class="desc">Enter plan mode directly</span></div>
+          <div class="row"><span class="key">/resume [session]</span> <span class="desc">Resume by ID/name</span></div>
+          <div class="row"><span class="key">/focus</span> <span class="desc">Toggle focus view (fullscreen only)<span class="badge-new" data-added="2026-04-16">NEW</span></span></div>
+          <div class="row"><span class="key">/goal [desc]</span> <span class="desc">Set completion goal; Claude works until met with live progress overlay<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+
+          <div class="sub-header">Config</div>
+          <div class="row"><span class="key">/config [key [value]]</span> <span class="desc">View/set settings (persists to <code>~/.claude/settings.json</code>)<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">/model [model]</span> <span class="desc">Switch model (←→ effort)<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">/fast [on|off]</span> <span class="desc">Toggle fast mode</span></div>
+          <div class="row"><span class="key">/theme [name]</span> <span class="desc">Create and switch named custom themes; includes "Auto (match terminal)" dark/light<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">/permissions</span> <span class="desc">View/update permissions</span></div>
+          <div class="row"><span class="key">/effort [level]</span> <span class="desc">Set effort (low/medium/high/xhigh/max); opens interactive slider with arrow keys when called without args</span></div>
+          <div class="row"><span class="key">/color [color]</span> <span class="desc">Set prompt-bar color</span></div>
+          <div class="row"><span class="key">/keybindings</span> <span class="desc">Customize keyboard shortcuts</span></div>
+          <div class="row"><span class="key">/scroll-speed [speed]</span> <span class="desc">Adjust output scroll speed<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key">/terminal-setup</span> <span class="desc">Configure terminal keybindings</span></div>
+          
+          <div class="sub-header">Tools</div>
+          <div class="row"><span class="key">/init</span> <span class="desc">Create CLAUDE.md</span></div>
+          <div class="row"><span class="key">/memory</span> <span class="desc">Edit CLAUDE.md files, toggle auto memory, view entries</span></div>
+          <div class="row"><span class="key">/mcp</span> <span class="desc">Manage MCP servers</span></div>
+          <div class="row"><span class="key">/hooks</span> <span class="desc">Manage hooks</span></div>
+          <div class="row"><span class="key">/skills</span> <span class="desc">List available skills</span></div>
+          <div class="row"><span class="key">/reload-skills</span> <span class="desc">Reload skills without restarting<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">/agents</span> <span class="desc">Manage agent configurations<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+          <div class="row"><span class="key">/workflows</span> <span class="desc">View and manage background multi-agent workflow runs<span class="badge-new" data-added="2026-05-28">NEW</span></span></div>
+          <div class="row"><span class="key">/skill-doctor</span> <span class="desc">Identify unused skills and their context costs<span class="badge-new" data-added="2026-09-04">NEW</span></span></div>
+          <div class="row"><span class="key">/ultrareview [PR#]</span> <span class="desc">Cloud code review — parallel multi-agent analysis</span></div>
+          <div class="row"><span class="key">/security-review</span> <span class="desc">Scan diff for vulnerabilities</span></div>
+          <div class="row"><span class="key">/loop [interval] [prompt]</span> <span class="desc">Recurring task (/proactive alias)<span class="badge-new" data-added="2026-04-16">NEW</span></span></div>
+          <div class="row"><span class="key">/ide</span> <span class="desc">IDE integrations status</span></div>
+          <div class="row"><span class="key">/add-dir &lt;path&gt;</span> <span class="desc">Add working directory</span></div>
+          
+          <div class="sub-header">Special</div>
+
+          <div class="row"><span class="key">/btw &lt;question&gt;</span> <span class="desc">Ask a side question without adding to the conversation</span></div>
+          <div class="row"><span class="key">/extra-usage</span> <span class="desc">Extra usage when rate limited</span></div>
+
+          <div class="row"><span class="key">/voice</span> <span class="desc">Toggle push-to-talk voice dictation</span></div>
+          <div class="row"><span class="key">/doctor [prompt-audit]</span> <span class="desc">Full setup checkup (<code>/checkup</code> alias); <code>prompt-audit</code> audits CLAUDE.md for stale model refs<span class="badge-new" data-added="2026-07-08">NEW</span></span></div>
+          <!-- /pr-comments removed in v2.1.91 (commands.md: "Ask Claude directly to view pull request comments instead") -->
+
+          <div class="row"><span class="key">/insights</span> <span class="desc">Analyze sessions report</span></div>
+          <div class="row"><span class="key">/desktop</span> <span class="desc">Continue in Desktop app</span></div>
+          <div class="row"><span class="key">/rename [name]</span> <span class="desc">Rename current session</span></div>
+
+          <div class="row"><span class="key">/help</span> <span class="desc">Show help + commands</span></div>
+          <div class="row"><span class="key">/feedback</span> <span class="desc">Submit feedback (alias: /bug)</span></div>
+
+        </div>
+      </section>
+      <!-- MEMORY & FILES (under Slash) -->
+      <section class="section section-memory">
+        <div class="section-header">📁 Memory &amp; Files</div>
+        <div class="section-content">
+          <div class="sub-header">CLAUDE.md Locations</div>
+          <div class="row"><span class="key">./CLAUDE.md or ./.claude/CLAUDE.md</span> <span class="desc">Project (team-shared)</span></div>
+          <div class="row"><span class="key">./CLAUDE.local.md</span> <span class="desc">Local personal project notes (gitignored)</span></div>
+          <div class="row"><span class="key">~/.claude/CLAUDE.md</span> <span class="desc">Personal (all projects)</span></div>
+          <div class="row"><span class="key">/etc/claude-code/CLAUDE.md</span> <span class="desc">Managed policy (Linux/WSL, org-wide)</span></div>
+          <div class="sub-header">Rules &amp; Import</div>
+          <div class="row"><span class="key">.claude/rules/*.md</span> <span class="desc">Project rules</span></div>
+          <div class="row"><span class="key">~/.claude/rules/*.md</span> <span class="desc">User rules</span></div>
+          <div class="row"><span class="key">paths: frontmatter</span> <span class="desc">Path-specific rules</span></div>
+          <div class="row"><span class="key">@path/to/file</span> <span class="desc">Import in CLAUDE.md</span></div>
+          <div class="sub-header">Auto Memory</div>
+          <div class="row"><span class="key">~/.claude/projects/&lt;proj&gt;/memory/</span></div>
+          <div class="row"><span class="desc"><code>MEMORY.md</code> auto-loads at startup (first 25KB or 200 lines); topic files load on demand</span></div>
+        </div>
+      </section>
+      </div><!-- end slash-memory wrapper -->
+
+      <!-- WORKFLOWS + CONFIG WRAPPER -->
+      <div class="section-workflows-config">
+      <!-- WORKFLOWS & TIPS -->
+      <section class="section section-workflows">
+        <div class="section-header">🧠 Workflows &amp; Tips</div>
+        <div class="section-content">
+          <div class="sub-header">Plan Mode</div>
+          <div class="row"><span class="key"><span class="keycap">Shift</span><span class="keycap">Tab</span></span> <span class="desc">Manual → Auto-Accept → Plan</span></div>
+          <div class="row"><span class="key">--permission-mode plan</span> <span class="desc">Start in plan mode</span></div>
+          <div class="row"><span class="key">Plan file naming</span> <span class="desc">Files named after your prompt (e.g. <code>fix-auth-race-snug-otter.md</code>)</span></div>
+          <div class="sub-header">Thinking &amp; Effort</div>
+          <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">T</span></span> <span class="desc">Toggle thinking on/off</span></div>
+          <div class="row"><span class="key">"ultrathink"</span> <span class="desc">Max effort for turn</span></div>
+          <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span> <span class="desc">See thinking (verbose)</span></div>
+          <div class="row"><span class="key">/effort</span> <span class="desc">○ low · ◐ medium · ● high · ★ xhigh · ★★ max</span></div>
+          <div class="sub-header">Auto Mode Denied</div>
+          <div class="row"><span class="key">/permissions → Recent</span> <span class="desc">Retry denied with <span class="keycap">R</span><span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
+          <div class="sub-header">Git Worktrees</div>
+          <div class="row"><span class="key">--worktree name</span> <span class="desc">Isolated branch per feature</span></div>
+          <div class="row"><span class="key">isolation: worktree</span> <span class="desc">Agent in own worktree</span></div>
+          <div class="row"><span class="key">sparsePaths</span> <span class="desc">Checkout only needed dirs</span></div>
+          <div class="row"><span class="key">workspace.git_worktree</span> <span class="desc">Status line JSON: linked worktree path<span class="badge-new" data-added="2026-04-08">NEW</span></span></div>
+          <div class="row"><span class="key">/batch</span> <span class="desc">Auto-creates worktrees</span></div>
+          <div class="sub-header">Voice Mode</div>
+          <div class="row"><span class="key">/voice</span> <span class="desc">Enable push-to-talk</span></div>
+          <div class="row"><span class="key"><span class="keycap">Space</span> (hold)</span> <span class="desc">Record, release to send</span></div>
+          <div class="row"><span class="key">20 languages</span> <span class="desc">EN, ES, FR, DE, CZ, PL…</span></div>
+          <div class="sub-header">Context Management</div>
+          <div class="row"><span class="key">/context</span> <span class="desc">Usage + optimization tips</span></div>
+          <div class="row"><span class="key">/compact [focus]</span> <span class="desc">Compress with focus</span></div>
+          <div class="row"><span class="key">1M context</span> <span class="desc">Sonnet 5 (promo), Opus 5 (Max/Team/Ent)<span class="badge-new" data-added="2026-06-30">NEW</span></span></div>
+          <div class="sub-header">Session Power Moves</div>
+          <div class="row"><span class="key">claude -c</span> <span class="desc">Continue last conv</span></div>
+          <div class="row"><span class="key">claude -r "name"</span> <span class="desc">Resume by name</span></div>
+          <div class="row"><span class="key">/btw question</span> <span class="desc">Side Q, no context cost</span></div>
+          <div class="sub-header">SDK / Headless</div>
+          <div class="row"><span class="key">claude -p "query"</span> <span class="desc">Non-interactive</span></div>
+          <div class="row"><span class="key">--output-format json</span> <span class="desc">Structured output</span></div>
+          <div class="row"><span class="key">--max-budget-usd 5</span> <span class="desc">Cost cap</span></div>
+          <div class="row"><span class="key">cat file | claude -p</span> <span class="desc">Pipe input</span></div>
+          <div class="sub-header">Scheduling &amp; Remote</div>
+          <div class="row"><span class="key">/loop 5m msg</span> <span class="desc">Recurring task</span></div>
+
+          <div class="row"><span class="key">--remote</span> <span class="desc">Web session on claude.ai</span></div>
+          <div class="row"><span class="key">! &lt;cmd&gt;</span> <span class="desc">Run shell cmd as background session<span class="badge-new" data-added="2026-05-28">NEW</span></span></div>
+        </div>
+      </section>
+      <!-- CONFIG & ENV (under Workflows) -->
+      <section class="section section-config">
+        <div class="section-header">⚙️ Config &amp; Env</div>
+        <div class="section-content">
+          <div class="sub-header">Config Files</div>
+          <div class="row"><span class="key">~/.claude/settings.json</span> <span class="desc">User settings</span></div>
+          <div class="row"><span class="key">.claude/settings.json</span> <span class="desc">Project (shared)</span></div>
+          <div class="row"><span class="key">.claude/settings.local.json</span> <span class="desc">Local only</span></div>
+          <div class="row"><span class="key">~/.claude.json</span> <span class="desc">OAuth, MCP, state</span></div>
+          <div class="row"><span class="key">.mcp.json</span> <span class="desc">Project MCP servers</span></div>
+          <div class="row"><span class="key">managed-settings.d/</span> <span class="desc">Drop-in policy fragments</span></div>
+          <div class="sub-header">Key Settings</div>
+          <div class="row"><span class="key">modelOverrides</span> <span class="desc">Map model picker → custom IDs</span></div>
+          <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Unconditional auto-mode classifier deny rules<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: if</span> <span class="desc">Conditional hooks (permission rule syntax)</span></div>
+          <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">Startup warning when prompt caching is disabled<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">Monitor tool</span> <span class="desc">Stream events from background scripts<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
+          <div class="row"><span class="key">PermissionDenied</span> <span class="desc">Hook: auto-mode denial<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+          <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">Opt-in (off by default now)<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+          <div class="row"><span class="key">hooks: "defer"</span> <span class="desc">Pause headless → resume later</span></div>
+          <div class="row"><span class="key">axScreenReader</span> <span class="desc">Plain-text screen reader rendering<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+          <div class="row"><span class="key">continueOnBlock</span> <span class="desc">Hook config: keep running after a blocked tool call<span class="badge-new" data-added="2026-05-11">NEW</span></span></div>
+          <div class="row"><span class="key">fallbackModel</span> <span class="desc">Up to 3 fallback models on failure<span class="badge-new" data-added="2026-06-06">NEW</span></span></div>
+          <div class="row"><span class="key">modelPicker</span> <span class="desc">Curate <code>/model</code> picker with custom model list<span class="badge-new" data-added="2026-08-25">NEW</span></span></div>
+          <div class="sub-header">Key Env Vars</div>
+          <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
+          <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
+          <div class="row"><span class="key">ANTHROPIC_BASE_URL</span> <span class="desc">Proxy/gateway override</span></div>
+          <div class="row"><span class="key">ANTHROPIC_BETAS</span> <span class="desc">Additional beta headers</span></div>
+          <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc">Custom /model entry</span></div>
+          <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc">0=off</span></div>
+          <div class="row"><span class="key">ENABLE_PROMPT_CACHING_1H</span> <span class="desc">Opt into 1h prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">Force recap when telemetry disabled<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">Detect CC shell (=1)</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">Disable scheduled tasks</span></div>
+          <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">Block all update paths<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">API_TIMEOUT_MS</span> <span class="desc">API timeout (default: 600000ms)</span></div>
+          <div class="row"><span class="key">MCP_TIMEOUT</span> <span class="desc">MCP server startup timeout (ms)</span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">Unique session ID for hooks and CI tracing<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">Opt out of fullscreen rendering (=1)<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">Apply a model to every subagent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">Disable mouse click/drag/hover in fullscreen (=1)<span class="badge-new" data-added="2026-06-27">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">Auto-upgrade via Homebrew/WinGet<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">Screen reader mode (=1)<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
+        </div>
+      </section>
+      </div><!-- end workflows-config wrapper -->
+
+      <!-- SKILLS + CLI WRAPPER -->
+      <div class="section-skills-cli">
+      <!-- SKILLS & AGENTS -->
+      <section class="section section-skills">
+          <div class="section-header">🔧 Skills &amp; Agents</div>
+          <div class="section-content">
+            <div class="sub-header">Built-in Skills</div>
+            <div class="row"><span class="key">Skill tool</span> <span class="desc">Discovers built-in slash commands (/init, /review, /security-review…)<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+            <div class="row"><span class="key">/code-review [effort]</span> <span class="desc">Code review; <code>--fix</code> flag applies findings to working tree<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">/batch</span> <span class="desc">Large parallel changes (5-30 worktrees)</span></div>
+            <div class="row"><span class="key">/debug [desc]</span> <span class="desc">Troubleshoot from debug log</span></div>
+            <div class="row"><span class="key">/loop [interval]</span> <span class="desc">Recurring scheduled task</span></div>
+            <div class="row"><span class="key">/claude-api</span> <span class="desc">Load API + SDK reference</span></div>
+            
+            <div class="sub-header">Custom Skill Locations</div>
+            <div class="row"><span class="key">.claude/skills/&lt;name&gt;/</span> <span class="desc">Project skills</span></div>
+            <div class="row"><span class="key">~/.claude/skills/&lt;name&gt;/</span> <span class="desc">Personal skills</span></div>
+            
+            <div class="sub-header">Skill Frontmatter</div>
+            <div class="row"><span class="key">description</span> <span class="desc">Auto-invocation trigger</span></div>
+            <div class="row"><span class="key">allowed-tools</span> <span class="desc">Skip permission prompts</span></div>
+            <div class="row"><span class="key">disallowed-tools</span> <span class="desc">Block specific tools from skill<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+            <div class="row"><span class="key">model</span> <span class="desc">Override model for skill</span></div>
+            <div class="row"><span class="key">effort</span> <span class="desc">Override effort level</span></div>
+            <div class="row"><span class="key">paths: [globs]</span> <span class="desc">Path-specific (YAML list)<span class="badge-new" data-added="2026-03-26">NEW</span></span></div>
+            <div class="row"><span class="key">context: fork</span> <span class="desc">Run in subagent</span></div>
+            <div class="row"><span class="key">$ARGUMENTS</span> <span class="desc">User input placeholder</span></div>
+            <div class="row"><span class="key">${CLAUDE_SKILL_DIR}</span> <span class="desc">Skill's own directory</span></div>
+            <div class="row"><span class="key">${CLAUDE_EFFORT}</span> <span class="desc">Current effort level (skill variable)<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
+            <div class="row"><span class="key">!`cmd`</span> <span class="desc">Dynamic context injection</span></div>
+            <div class="row"><span class="key">plugin bin/</span> <span class="desc">Ship executables for Bash tool<span class="badge-new" data-added="2026-04-03">NEW</span></span></div>
+            
+            <div class="sub-header">Built-in Agents</div>
+            <div class="row"><span class="key">Explore</span> <span class="desc">Fast read-only (Haiku)</span></div>
+            <div class="row"><span class="key">Plan</span> <span class="desc">Research for plan mode</span></div>
+            <div class="row"><span class="key">General</span> <span class="desc">Full tools, complex tasks</span></div>
+            <div class="row"><span class="key">Bash</span> <span class="desc">Terminal separate context</span></div>
+            
+            <div class="sub-header">Agent Frontmatter</div>
+            <div class="row"><span class="key">permissionMode</span> <span class="desc">default/acceptEdits/plan/dontAsk/bypassPermissions</span></div>
+            <div class="row"><span class="key">isolation: worktree</span> <span class="desc">Run in git worktree</span></div>
+            <div class="row"><span class="key">memory: user|project|local</span> <span class="desc">Persistent memory</span></div>
+            <div class="row"><span class="key">background: true</span> <span class="desc">Background task</span></div>
+            <div class="row"><span class="key">maxTurns</span> <span class="desc">Limit agentic turns</span></div>
+            <div class="row"><span class="key">initialPrompt</span> <span class="desc">Auto-submit first turn</span></div>
+            <div class="row"><span class="key">SendMessage</span> <span class="desc">Resume agents (replaces resume)</span></div>
+            <div class="row"><span class="key">@agent-name</span> <span class="desc">Mention named subagents<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
+          </div>
+        </section>
+
+      <!-- CLI COMMANDS & FLAGS -->
+      <section class="section section-cli">
+        <div class="section-header">🖥️ CLI &amp; Flags</div>
+        <div class="section-content">
+          <div class="sub-header">Core Commands</div>
+          <div class="row"><span class="key">claude</span> <span class="desc">Interactive</span></div>
+          <div class="row"><span class="key">claude "q"</span> <span class="desc">With prompt</span></div>
+          <div class="row"><span class="key">claude -p "q"</span> <span class="desc">Headless (SDK)</span></div>
+          <div class="row"><span class="key">claude -c</span> <span class="desc">Continue last</span></div>
+          <div class="row"><span class="key">claude -r "n"</span> <span class="desc">Resume by ID/name</span></div>
+          <div class="row"><span class="key">claude update</span> <span class="desc">Update</span></div>
+          <div class="row"><span class="key">claude auth login</span> <span class="desc">Sign in (--sso, --console)</span></div>
+          <div class="row"><span class="key">claude agents</span> <span class="desc">List agents</span></div>
+          <div class="row"><span class="key">claude mcp</span> <span class="desc">MCP config</span></div>
+          <div class="row"><span class="key">claude plugin</span> <span class="desc">Plugin management</span></div>
+          <div class="row"><span class="key">claude plugin init &lt;name&gt;</span> <span class="desc">Scaffold new plugin<span class="badge-new" data-added="2026-05-30">NEW</span></span></div>
+          <div class="row"><span class="key">claude project purge [path]</span> <span class="desc">Delete all Claude Code project state<span class="badge-new" data-added="2026-05-01">NEW</span></span></div>
+          <div class="row"><span class="key">claude ultrareview [target]</span> <span class="desc">Non-interactive code review (PR / branch / path)<span class="badge-new" data-added="2026-04-25">NEW</span></span></div>
+          <div class="sub-header">Key Flags</div>
+          <div class="row"><span class="key">--model</span> <span class="desc">Set model</span></div>
+          <div class="row"><span class="key">-n / --name</span> <span class="desc">Session name</span></div>
+          <div class="row"><span class="key">--resume, -r</span> <span class="desc">Resume session</span></div>
+          <div class="row"><span class="key">--continue, -c</span> <span class="desc">Continue most recent</span></div>
+          <div class="row"><span class="key">--add-dir</span> <span class="desc">Add working dir</span></div>
+          <div class="row"><span class="key">--agent</span> <span class="desc">Use agent</span></div>
+          <div class="row"><span class="key">--allowedTools</span> <span class="desc">Pre-approve tools</span></div>
+          <div class="row"><span class="key">--disallowedTools</span> <span class="desc">Remove tools</span></div>
+
+          <div class="row"><span class="key">--output-format</span> <span class="desc">text/json/stream-json</span></div>
+          <div class="row"><span class="key">--max-budget-usd</span> <span class="desc">Cost cap</span></div>
+          <div class="row"><span class="key">--remote</span> <span class="desc">Web session on claude.ai</span></div>
+          <div class="row"><span class="key">--effort</span> <span class="desc">low/medium/high/xhigh/max</span></div>
+          <div class="row"><span class="key">--permission-mode</span> <span class="desc">default/acceptEdits/plan/auto/dontAsk/bypassPermissions</span></div>
+          <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc">Skip all prompts ⚠️</span></div>
+          <div class="row"><span class="key">--debug [filter]</span> <span class="desc">Debug logging</span></div>
+          <div class="row"><span class="key">--safe-mode</span> <span class="desc">Disable all customizations for troubleshooting (CLAUDE.md, plugins, hooks, MCP)<span class="badge-new" data-added="2026-06-08">NEW</span></span></div>
+          <div class="row"><span class="key">--settings &lt;file&gt;</span> <span class="desc">Load settings JSON</span></div>
+          <div class="row"><span class="key">--from-pr</span> <span class="desc">Load PR context (GitHub / GitLab / Bitbucket / GHE)<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
+          <div class="row"><span class="key">--restricted</span> <span class="desc">Strip built-in tools from Claude's toolset<span class="badge-new" data-added="2026-08-27">NEW</span></span></div>
+          <!-- PowerShell tool remains documented, but as env var CLAUDE_CODE_USE_POWERSHELL_TOOL rather than a CLI flag, so omitted here. -->
+        </div>
+      </section>
+      </div><!-- end skills-cli wrapper -->
+
+      <!-- (sections moved into wrappers above) -->
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-row">
+        <span class="footer-label">Permission Modes:</span>
+        <span class="footer-item"><code>default</code> prompts</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>acceptEdits</code> auto-accept edits</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>plan</code> read-only</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>dontAsk</code> deny unless allowed</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>bypassPermissions</code> skip all</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>--dangerously-skip-permissions</code> CLI flag</span>
+      </div>
+      <div class="footer-row">
+        <span class="footer-label">More Env Vars:</span>
+        <span class="footer-item"><code>CLAUDE_CODE_CERT_STORE</code> (TLS CA: bundled,system)</span>
+      </div>
+      <div class="footer-row" style="margin-top: 1mm; padding-top: 1mm; border-top: 1px solid rgba(255,255,255,0.15);">
+        <span style="font-size: 0.65rem; color: #6B7280;">Made by <a href="https://x.com/phasE89" target="_blank" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dotted #6B7280;">@phasE89</a></span>
+      </div>
+    </footer>
+  </div>
+  <script>
+    (function() {
+      var toggle = document.getElementById('osToggle');
+      var btns = toggle.querySelectorAll('.os-btn');
+      function detectOS() {
+        var p = navigator.platform || '';
+        var ua = navigator.userAgent || '';
+        if (/Mac|iPhone|iPod|iPad/.test(p) || /Mac/.test(ua)) return 'mac';
+        return 'win';
+      }
+      // v2: reset old hardcoded preference, use auto-detect
+      if (localStorage.getItem('cc-os') && !localStorage.getItem('cc-os-manual')) {
+        localStorage.removeItem('cc-os');
+      }
+      var saved = localStorage.getItem('cc-os') || detectOS();
+
+      function apply(os) {
+        btns.forEach(function(b) { b.classList.toggle('active', b.dataset.os === os); });
+
+        var allKeycaps = document.querySelectorAll('.keycap');
+
+        allKeycaps.forEach(function(keycap) {
+          var text = keycap.textContent.trim();
+
+          // Ctrl stays Ctrl on all platforms — these are terminal shortcuts, not OS shortcuts
+          // Only Alt↔Option changes between Mac and Windows
+          if (text === 'Alt' || text === '⌥') {
+            keycap.textContent = (os === 'mac') ? '⌥' : 'Alt';
+          } else if (text === 'Shift' || text === '⇧') {
+            keycap.textContent = (os === 'mac') ? '⇧' : 'Shift';
+          }
+          // Esc, Enter, Tab, letters, arrows etc. — unchanged
+        });
+
+        localStorage.setItem('cc-os', os);
+      }
+
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() { localStorage.setItem('cc-os-manual', '1'); apply(btn.dataset.os); });
+      });
+
+      apply(saved);
+    })();
+  </script>
+  <!-- NEW badges: add data-added="YYYY-MM-DD" when adding. Auto-hidden after 8 days via JS. -->
+  <script>
+    (function() {
+      var now = new Date();
+      document.querySelectorAll('.badge-new[data-added]').forEach(function(el) {
+        var added = new Date(el.getAttribute('data-added'));
+        if ((now - added) / 86400000 > 8) el.style.display = 'none';
+      });
+    })();
+  </script>
+  <script data-goatcounter="https://stats.storyfox.cz/count"
+    async src="https://stats.storyfox.cz/count.js"></script>
+</body>
+</html>
