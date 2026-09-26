@@ -72,6 +72,7 @@ bash scripts/check-upstream.sh
 | `<title>` / meta / OG / Twitter | 全中文 + 雷蒙三十署名 | 英文 + Martin Baláž |
 | `canonical` / `hreflang` | 不加 | 指向 cc.storyfox.cz |
 | favicon PNG | 只用 emoji SVG | 另引 `/favicon.png` |
+| 手機排版（`max-width: 700px` 內） | 長 `.key`／說明可斷行、grid 子項 `min-width: 0`、近期更新一條一行（2026-09-26，手機頁寬 946→375px） | 無，長 key 會把整頁撐寬 |
 
 ## 故障排查
 

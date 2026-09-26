@@ -465,6 +465,13 @@
       }
       .footer-sep { display: none; }
       .changelog-list { flex-direction: column; gap: 4px; }
+      /* 手機：長指令／設定名稱可斷行，不再把整頁撐寬（繁中版獨有） */
+      .main-grid > *, .section, .section-content, .row, .desc { min-width: 0; }
+      .key { white-space: normal; overflow-wrap: anywhere; flex-shrink: 1; max-width: 55%; }
+      .desc, .changelog-list li { overflow-wrap: anywhere; }
+      .changelog-list li { display: block; }
+      .changelog-list li::before { margin-right: 4px; }
+      .three-col { grid-template-columns: 1fr; }
       .sub-header {
         font-size: 0.7rem;
         font-style: normal;
