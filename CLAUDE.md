@@ -74,6 +74,7 @@ bash scripts/check-upstream.sh
 | favicon PNG | 只用 emoji SVG | 另引 `/favicon.png` |
 | 近期更新 | 只留最新 5 條＋「看完整更新紀錄 →」連結（2026-09-26） | 保留十幾條 |
 | 長小標題分兩層 | 設定與環境、特殊指令、核心指令、重要旗標、Skill／Agent Frontmatter：常用項直接顯示（含繁中版補的 `permissions`、`model`、`env` 等），其餘收進 `<details class="more">`（2026-09-26／27） | 全部平鋪 |
+| 頁面名稱 | 「Claude Code 功能懶人包」（h1、og:site_name；`<title>`、og／twitter title 為「Claude Code 功能懶人包｜繁體中文快速參考表」保留舊關鍵字，2026-09-27） | Claude Code Cheat Sheet |
 | 手機排版（`max-width: 700px` 內） | 長 `.key`／說明可斷行、grid 子項 `min-width: 0`、近期更新一條一行（2026-09-26，手機頁寬 946→375px） | 無，長 key 會把整頁撐寬 |
 
 ## 故障排查
