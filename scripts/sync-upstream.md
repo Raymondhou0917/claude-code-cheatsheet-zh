@@ -56,7 +56,7 @@ cat tmp/upstream.diff
   - `@page { size: A4 landscape }` 在原站有，繁中版刻意移除
   - 作者署名：`<meta name="author" content="雷蒙三十">`
   - favicon：繁中版只用 emoji SVG，不引 `/favicon.png`
-  - `og:url` / `canonical` / `hreflang` 指向 `cc.storyfox.cz`，繁中版不抄
+  - `og:url` / `canonical` / `hreflang` 指向 `cc.storyfox.cz`，繁中版不抄；繁中版自己的 `canonical`、`og:url`、`meta refresh` 指向 `https://ai.lifehacker.tw/claude-code-cheatsheet-zh/`，**不要刪**
 
 ### 3. 鎖定真正需要翻譯的內容變動
 

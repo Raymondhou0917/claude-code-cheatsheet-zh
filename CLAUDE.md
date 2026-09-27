@@ -70,7 +70,7 @@ bash scripts/check-upstream.sh
 | `.header-left/right/buttons/btn` | 有（雷蒙獨有的 header 按鈕） | 無 |
 | `lang` | `zh-Hant` | `en` |
 | `<title>` / meta / OG / Twitter | 全中文 + 雷蒙三十署名 | 英文 + Martin Baláž |
-| `canonical` / `hreflang` | 不加 | 指向 cc.storyfox.cz |
+| `canonical` / `og:url` / `meta refresh` | 指向 `https://ai.lifehacker.tw/claude-code-cheatsheet-zh/`（SEO 權重算給 ai 站，**不要刪**），不加 hreflang | 指向 cc.storyfox.cz |
 | favicon PNG | 只用 emoji SVG | 另引 `/favicon.png` |
 | 近期更新 | 只留最新 5 條＋「看完整更新紀錄 →」連結（2026-09-26） | 保留十幾條 |
 | 長小標題分兩層 | 設定與環境、特殊指令、核心指令、重要旗標、Skill／Agent Frontmatter：常用項直接顯示（含繁中版補的 `permissions`、`model`、`env` 等），其餘收進 `<details class="more">`（2026-09-26／27） | 全部平鋪 |
@@ -90,7 +90,7 @@ bash scripts/check-upstream.sh
 
 - **代碼 / 翻譯**：雷蒙（raymondhou0917）+ Claude Code
 - **原站**：[@phasE89](https://x.com/phasE89)（Martin Baláž）
-- **部署**：GitHub Pages（`https://raymondhou0917.github.io/claude-code-cheatsheet-zh/`）
+- **部署**：GitHub Pages 是來源（`https://raymondhou0917.github.io/claude-code-cheatsheet-zh/`），對外正式網址是 `https://ai.lifehacker.tw/claude-code-cheatsheet-zh/`，由 Cloudflare Worker `cheatsheet-proxy`（原始碼 `deploy/cloudflare-worker.js`，route `ai.lifehacker.tw/claude-code-cheatsheet-zh*`）代理。github.io 版用 canonical＋`meta refresh` 轉到正式網址，Worker 會把 `meta refresh` 拿掉避免自己轉自己（2026-09-27）
 
 ## 絕對不做
 

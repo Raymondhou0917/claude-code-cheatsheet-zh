@@ -70,7 +70,7 @@ jobs:
             echo "### 變更"
             echo "$LOG"
             echo ""
-            echo "👉 [線上閱讀](https://raymondhou0917.github.io/claude-code-cheatsheet-zh/)"
+            echo "👉 [線上閱讀](https://ai.lifehacker.tw/claude-code-cheatsheet-zh/)"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
