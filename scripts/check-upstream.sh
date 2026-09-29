@@ -52,7 +52,7 @@ compute_diff() {
     diff "$BASELINE" "$target" > "$DIFF_FILE" || true
   else
     DIFF_MODE="legacy"
-    echo "⚠️  找不到基準檔 $BASELINE，退回舊行為：diff 新上游 vs 本地 index.html" >&2
+    echo "⚠️  找不到基準檔 ${BASELINE}，退回舊行為：diff 新上游 vs 本地 index.html" >&2
     echo "   （本地保留上游已刪條目，這份 diff 必然偏大；同步完成後請跑 --update-baseline 建立基準檔）" >&2
     diff "$target" index.html > "$DIFF_FILE" || true
   fi
@@ -67,7 +67,7 @@ compute_diff() {
 print_diff_summary() {
   local base_label="$BASELINE"
   [[ "$DIFF_MODE" == "legacy" ]] && base_label="index.html（legacy）"
-  echo "Diff     : $DIFF_LINES 行（$base_label vs 新上游，門檻 $DIFF_THRESHOLD）→ $DIFF_FILE"
+  echo "Diff     : $DIFF_LINES 行（$base_label vs 新上游，門檻 ${DIFF_THRESHOLD}）→ $DIFF_FILE"
   if [[ "$NEEDS_REVIEW" == "1" ]]; then
     echo "⚠️  diff 超過 $DIFF_THRESHOLD 行：上游可能改版，停下來請雷蒙確認"
   fi
@@ -76,21 +76,21 @@ print_diff_summary() {
 case "${1:-}" in
   --diff-only)
     TARGET="${2:-$LATEST}"
-    [[ -f "$TARGET" ]] || { echo "❌ 找不到 $TARGET（先跑 bash scripts/check-upstream.sh）" >&2; exit 2; }
+    [[ -f "$TARGET" ]] || { echo "❌ 找不到 ${TARGET}（先跑 bash scripts/check-upstream.sh）" >&2; exit 2; }
     compute_diff "$TARGET"
     print_diff_summary
     exit 0
     ;;
   --update-baseline)
-    [[ -f "$LATEST" ]] || { echo "❌ 找不到 $LATEST，無法更新基準檔" >&2; exit 2; }
+    [[ -f "$LATEST" ]] || { echo "❌ 找不到 ${LATEST}，無法更新基準檔" >&2; exit 2; }
     LATEST_VER="$(version_of "$LATEST")"
     CURRENT_VER="$(version_of README.md)"
     if [[ -z "$LATEST_VER" || "$LATEST_VER" != "$CURRENT_VER" ]]; then
-      echo "❌ $LATEST 的版本（$LATEST_VER）≠ README 版本（$CURRENT_VER），先完成同步再更新基準檔" >&2
+      echo "❌ $LATEST 的版本（${LATEST_VER}）≠ README 版本（${CURRENT_VER}），先完成同步再更新基準檔" >&2
       exit 2
     fi
     cp "$LATEST" "$BASELINE"
-    echo "✅ 基準檔已更新為 $LATEST_VER → $BASELINE（記得跟 index.html / README.md 一起 commit）"
+    echo "✅ 基準檔已更新為 $LATEST_VER → ${BASELINE}（記得跟 index.html / README.md 一起 commit）"
     exit 0
     ;;
   "")
