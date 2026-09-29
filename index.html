@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.283</span>
-          <span class="last-updated">更新日期：2026 年 9 月 26 日</span>
+          <span class="version-info">Claude Code v2.1.284</span>
+          <span class="last-updated">更新日期：2026 年 9 月 30 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
+        <li>Claude Sonnet 5.5 成為預設模型 — 1M 上下文視窗，定價 $2/$10 每百萬 token (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
+        <li><code>/usage</code> 與狀態列現在會顯示花費追蹤 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
+        <li><code>/mcp reconnect all</code> — 一次重試所有連線失敗的 MCP 伺服器 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
+        <li>修正遞迴 <code>rm</code> 繞過安全提示的問題 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
         <li><code>/doctor prompt-audit</code>（亦可用 <code>/checkup prompt-audit</code>）— 檢查 CLAUDE.md、Skills、Agents 與指令中為舊模型寫的提示寫法（如過時的模型引用）(v2.1.283)<span class="badge-new" data-added="2026-09-25">NEW</span></li>
-        <li><code>availableModelsMatch</code>、<code>deniedModels</code> 受管理設定 — 前者設為 <code>"exact"</code> 時，<code>availableModels</code> 只放行指定的模型版本；後者可封鎖特定模型（即使 <code>availableModels</code> 允許）(v2.1.283)<span class="badge-new" data-added="2026-09-25">NEW</span></li>
-        <li><code>maxProseWidth</code> 設定 — 寬終端機中限制 Claude 回應文字的寬度，表格與程式碼區塊仍維持全寬 (v2.1.282)<span class="badge-new" data-added="2026-09-24">NEW</span></li>
-        <li>修正恢復／繼續的 Session 重複送出先前訊息的問題 (v2.1.282)<span class="badge-new" data-added="2026-09-24">NEW</span></li>
-        <li><code>"attribution": false</code> — 在 <code>settings.json</code> 一次隱藏所有 commit 與 PR 署名；舊版 CLI 會略過含此值的設定檔，跨版本共用的設定檔請保留物件寫法 (v2.1.281)<span class="badge-new" data-added="2026-09-23">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
