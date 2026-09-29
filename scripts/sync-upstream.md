@@ -94,6 +94,7 @@ cat tmp/upstream.diff
 - 「Memory Files」→「記憶檔案」
 - 「Environment Variables」→「環境變數」
 - 動詞用短句，如「Interrupt current action」→「中斷目前動作」
+- **模型、方案、價格類條目逐字對照官方 CHANGELOG**（`https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md`）：「the default Sonnet model」是「預設 Sonnet 模型」，不是「預設模型」；適用方案（Pro／Max／Team／Enterprise／API）照原文寫，不要自己推論（2026-09-30 v2.1.284 曾誤譯）
 
 ### 5. 更新版本號三處
 
