@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.284</span>
-          <span class="last-updated">更新日期：2026 年 9 月 30 日</span>
+          <span class="version-info">Claude Code v2.1.289</span>
+          <span class="last-updated">更新日期：2026 年 10 月 5 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>推出 Claude Sonnet 5.5（<code>claude-sonnet-5-5</code>）— Anthropic API 上的預設 Sonnet 模型；1M 上下文，$2/$10 per Mtok（快取讀取 $0.20/Mtok）(v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
-        <li><code>/usage</code> 與狀態列現在會顯示花費追蹤 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
-        <li><code>/mcp reconnect all</code> — 一次重試所有連線失敗的 MCP 伺服器 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
-        <li>修正遞迴 <code>rm</code> 繞過安全提示的問題 (v2.1.284)<span class="badge-new" data-added="2026-09-29">NEW</span></li>
-        <li><code>/doctor prompt-audit</code>（亦可用 <code>/checkup prompt-audit</code>）— 檢查 CLAUDE.md、Skills、Agents 與指令中為舊模型寫的提示寫法（如過時的模型引用）(v2.1.283)<span class="badge-new" data-added="2026-09-25">NEW</span></li>
+        <li>修正權限 deny／ask 規則未套用到巢狀 shell 指令的問題 (v2.1.289)<span class="badge-new" data-added="2026-10-04">NEW</span></li>
+        <li>修正終端機在某些腳本輸入下凍結的問題 (v2.1.289)<span class="badge-new" data-added="2026-10-04">NEW</span></li>
+        <li>雲端 Session 內建 <code>gh api</code>，不需另外安裝 GitHub CLI (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
+        <li>Prompt 復原：Ctrl+C 清掉輸入後，按 ↑ 可還原 (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
+        <li><code>/code-review</code> 新增 <code>--max-findings &lt;n&gt;|all</code> 旗標 (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
@@ -998,7 +998,7 @@
             <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           </details>
           <details class="more">
-            <summary>其他環境變數（23）</summary>
+            <summary>其他環境變數（24）</summary>
             <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY</span> <span class="desc">設為 <code>1</code> 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
@@ -1021,6 +1021,7 @@
             <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">設為 <code>1</code> 啟用螢幕閱讀器模式純文字渲染（等同 <code>--ax-screen-reader</code> 旗標或設定 <code>axScreenReader: true</code>）<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_TOOL_MEMORY_LIMIT</span> <span class="desc">Linux 上以 cgroup 限制 Bash 工具指令的記憶體用量，防止失控建置程序拖垮 Session<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</span> <span class="desc">設定 WebFetch Session URL 快取 TTL（預設 15 分鐘）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_WEB_FETCH</span> <span class="desc">停用 WebFetch 工具（=1）<span class="badge-new" data-added="2026-09-29">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</span> <span class="desc">MCP 工具描述與伺服器指令的長度上限（預設 2048 字元）<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
           </details>
         </div>
@@ -1034,7 +1035,7 @@
         <div class="section-content">
           <div class="sub-header">內建 Skills</div>
           <div class="row"><span class="key">Skill tool</span> <span class="desc">發現內建斜線指令（/init、/review、/security-review…）<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">/code-review [等級]</span> <span class="desc">程式碼審查，回報正確性錯誤；<code>--fix</code> 直接套用建議；<code>--comment</code> 在 GitHub PR 發行內聯留言（<code>/simplify</code> 為 <code>--fix</code> 別名）<span class="badge-new" data-added="2026-05-27">NEW</span></span></div>
+          <div class="row"><span class="key">/code-review [等級]</span> <span class="desc">程式碼審查，回報正確性錯誤；<code>--fix</code> 直接套用建議；<code>--comment</code> 在 GitHub PR 發行內聯留言；<code>--max-findings &lt;n&gt;|all</code> 限制回報數量（<code>/simplify</code> 為 <code>--fix</code> 別名）<span class="badge-new" data-added="2026-10-03">NEW</span></span></div>
           <div class="row"><span class="key">/batch</span> <span class="desc">大規模平行變更（5-30 worktrees）</span></div>
           <div class="row"><span class="key">/debug [描述]</span> <span class="desc">從除錯日誌排錯</span></div>
           <div class="row"><span class="key">/loop [間隔]</span> <span class="desc">週期性排程任務</span></div>
