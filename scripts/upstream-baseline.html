@@ -731,8 +731,8 @@
           <button class="os-btn" data-os="win" title="Windows shortcuts"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.289</span>
-          <span class="last-updated">Last updated: October 4, 2026</span>
+          <span class="version-info">Claude Code v2.1.296</span>
+          <span class="last-updated">Last updated: October 10, 2026</span>
         </div>
       </div>
     </header>
@@ -741,12 +741,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 Recent Changes</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>Fixed permission deny/ask rules not applying to nested shell commands (v2.1.289)</li>
-        <li>Fixed terminal freezing on certain script inputs (v2.1.289)</li>
-        <li>Built-in <code>gh api</code> in cloud sessions — no GitHub CLI install needed (v2.1.288)</li>
-        <li>Prompt recovery: ↑ arrow restores input after Ctrl+C clears it (v2.1.288)</li>
-        <li><code>--max-findings &lt;n&gt;|all</code> flag added to <code>/code-review</code> (v2.1.288)</li>
-        <li>MCP server OAuth scope re-authentication prompts (v2.1.288)</li>
+        <li>Sonnet 5.5 cache reads halved to $0.10/M tokens (was $0.20) (v2.1.296)</li>
+        <li><code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code> — run all workflow agents on one model (v2.1.296)</li>
+        <li><code>autoCompactWindow</code> in subagent definitions — compact earlier than main conv (v2.1.296)</li>
+        <li>MCP tool description/instruction limit raised from 2,048 to 4,096 chars (v2.1.296)</li>
+        <li><code>onFailure: "block"</code> on command/HTTP hooks — hook failure now blocks action (v2.1.295)</li>
+        <li>OSC 7501 Program Status Protocol — terminals can show Claude working/waiting/done (v2.1.295)</li>
       </ul>
     </div>
 
@@ -940,7 +940,7 @@
           <div class="sub-header">Context Management</div>
           <div class="row"><span class="key">/context</span> <span class="desc">Usage + optimization tips</span></div>
           <div class="row"><span class="key">/compact [focus]</span> <span class="desc">Compress with focus</span></div>
-          <div class="row"><span class="key">1M context</span> <span class="desc">Sonnet 5 (promo), Opus 5 (Max/Team/Ent)<span class="badge-new" data-added="2026-06-30">NEW</span></span></div>
+          <div class="row"><span class="key">1M context</span> <span class="desc">Haiku 5.5, Sonnet 5 (promo), Opus 5 (Max/Team/Ent)</span></div>
           <div class="sub-header">Session Power Moves</div>
           <div class="row"><span class="key">claude -c</span> <span class="desc">Continue last conv</span></div>
           <div class="row"><span class="key">claude -r "name"</span> <span class="desc">Resume by name</span></div>
@@ -995,8 +995,8 @@
           <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">Block all update paths<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
           <div class="row"><span class="key">MCP_TIMEOUT</span> <span class="desc">MCP server startup timeout (ms)</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">Unique session ID for hooks and CI tracing<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN</span> <span class="desc">Opt out of fullscreen rendering (=1)<span class="badge-new" data-added="2026-05-07">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">Apply a model to every subagent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</span> <span class="desc">Run all workflow agents on one model<span class="badge-new" data-added="2026-10-10">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MOUSE_CLICKS</span> <span class="desc">Disable mouse click/drag/hover in fullscreen (=1)<span class="badge-new" data-added="2026-06-27">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">Auto-upgrade via Homebrew/WinGet<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">Screen reader mode (=1)<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
@@ -1124,7 +1124,7 @@
         <span class="footer-item"><code>CLAUDE_CODE_CERT_STORE</code> (TLS CA: bundled,system)</span>
       </div>
       <div class="footer-row" style="margin-top: 1mm; padding-top: 1mm; border-top: 1px solid rgba(255,255,255,0.15);">
-        <span style="font-size: 0.65rem; color: #6B7280;">Made by <a href="https://x.com/phasE89" target="_blank" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dotted #6B7280;">@phasE89</a></span>
+        <span style="font-size: 0.65rem; color: #6B7280;">Made by <a href="https://x.com/phasE89" target="_blank" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dotted #6B7280;">@phasE89</a> · Also by me: <a href="https://kdyhrajem.cz/" target="_blank" style="color: #9CA3AF; text-decoration: none; border-bottom: 1px dotted #6B7280;">KdyHrajem.cz</a> — friendly matches for youth football teams (Czech)</span>
       </div>
     </footer>
   </div>

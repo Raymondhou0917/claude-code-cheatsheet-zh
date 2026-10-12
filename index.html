@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.289</span>
-          <span class="last-updated">更新日期：2026 年 10 月 5 日</span>
+          <span class="version-info">Claude Code v2.1.296</span>
+          <span class="last-updated">更新日期：2026 年 10 月 12 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>修正權限 deny／ask 規則未套用到巢狀 shell 指令的問題 (v2.1.289)<span class="badge-new" data-added="2026-10-04">NEW</span></li>
-        <li>修正終端機在某些腳本輸入下凍結的問題 (v2.1.289)<span class="badge-new" data-added="2026-10-04">NEW</span></li>
-        <li>雲端 Session 內建 <code>gh api</code>，不需另外安裝 GitHub CLI (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
-        <li>Prompt 復原：Ctrl+C 清掉輸入後，按 ↑ 可還原 (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
-        <li><code>/code-review</code> 新增 <code>--max-findings &lt;n&gt;|all</code> 旗標 (v2.1.288)<span class="badge-new" data-added="2026-10-03">NEW</span></li>
+        <li>Sonnet 5.5 快取讀取價格減半，降為 $0.10/M tokens（原 $0.20）(v2.1.296)<span class="badge-new" data-added="2026-10-10">NEW</span></li>
+        <li><code>CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</code>：讓所有 workflow Agent 使用同一個模型 (v2.1.296)<span class="badge-new" data-added="2026-10-10">NEW</span></li>
+        <li>子 Agent 定義新增 <code>autoCompactWindow</code>，可比主對話更早自動壓縮 (v2.1.296)<span class="badge-new" data-added="2026-10-10">NEW</span></li>
+        <li>MCP 工具描述／伺服器指令的長度上限由 2,048 提高到 4,096 字元 (v2.1.296)<span class="badge-new" data-added="2026-10-10">NEW</span></li>
+        <li>command／HTTP hook 新增 <code>onFailure: "block"</code>：hook 失敗時會擋下該動作 (v2.1.295)<span class="badge-new" data-added="2026-10-10">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
@@ -850,7 +850,7 @@
           <div class="row"><span class="key">/context</span> <span class="desc">用量 + 最佳化建議</span></div>
           <div class="row"><span class="key">/compact [焦點]</span> <span class="desc">聚焦壓縮</span></div>
           <div class="row"><span class="key">自動壓縮</span> <span class="desc">約 95% 容量觸發（抖動偵測：3 次）<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
-          <div class="row"><span class="key">1M 上下文</span> <span class="desc">Sonnet 5、Opus 5／Opus 5.5、Fable 5.1 皆原生支援<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
+          <div class="row"><span class="key">1M 上下文</span> <span class="desc">Haiku 5.5、Sonnet 5、Opus 5／Opus 5.5、Fable 5.1 皆原生支援<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE.md</span> <span class="desc">壓縮後仍保留！</span></div>
           <div class="sub-header">Session 進階操作</div>
           <div class="row"><span class="key">claude -c</span> <span class="desc">繼續上次對話</span></div>
@@ -965,7 +965,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">設 <code>1</code> 改用全螢幕渲染，減少畫面閃爍</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">設定壞掉時排查用：不載入 CLAUDE.md、Skills、Hooks、MCP 等客製化（同 <code>--safe-mode</code>）</span></div>
           <details class="more">
-            <summary>模型與 API 進階（16）</summary>
+            <summary>模型與 API 進階（17）</summary>
             <div class="row"><span class="key">ANTHROPIC_DEFAULT_MODEL</span> <span class="desc">新 Session 的起始模型（<code>/model</code> 的選擇仍可覆寫）<span class="badge-new" data-added="2026-08-19">NEW</span></span></div>
             <div class="row"><span class="key">ANTHROPIC_BASE_URL</span> <span class="desc">Proxy／Gateway 端點覆寫</span></div>
             <div class="row"><span class="key">ANTHROPIC_BETAS</span> <span class="desc">額外的 beta header（逗號分隔）</span></div>
@@ -980,6 +980,7 @@
             <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
             <div class="row"><span class="key">CLAUDE_CODE_ENABLE_TODO_TOOLS</span> <span class="desc">設為 <code>1</code> 在 Opus 4.8、Sonnet 5、Fable 5 及更新模型上重新啟用任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">設為 <code>1</code> 將同一模型強制套用到每個子 Agent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</span> <span class="desc">讓所有 workflow Agent 使用同一個模型<span class="badge-new" data-added="2026-10-10">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_SERVER</span> <span class="desc">Auto 模式伺服器端分類器；設為 <code>0</code> 改用本機分類器（計入用量）<span class="badge-new" data-added="2026-09-19">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_OPUS_4_6_FAST_MODE_OVERRIDE</span> <span class="desc">設為 <code>1</code> 將快速模式固定使用 Opus 4.6（預設已升至 Opus 4.7）<span class="badge-new" data-added="2026-05-14">NEW</span></span></div>
           </details>
@@ -1022,7 +1023,7 @@
             <div class="row"><span class="key">CLAUDE_CODE_TOOL_MEMORY_LIMIT</span> <span class="desc">Linux 上以 cgroup 限制 Bash 工具指令的記憶體用量，防止失控建置程序拖垮 Session<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS</span> <span class="desc">設定 WebFetch Session URL 快取 TTL（預設 15 分鐘）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_DISABLE_WEB_FETCH</span> <span class="desc">停用 WebFetch 工具（=1）<span class="badge-new" data-added="2026-09-29">NEW</span></span></div>
-            <div class="row"><span class="key">CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</span> <span class="desc">MCP 工具描述與伺服器指令的長度上限（預設 2048 字元）<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_MAX_MCP_DESCRIPTION_LENGTH</span> <span class="desc">MCP 工具描述與伺服器指令的長度上限（預設 4096 字元）<span class="badge-new" data-added="2026-09-22">NEW</span></span></div>
           </details>
         </div>
       </section>
