@@ -731,8 +731,8 @@
           <button class="os-btn" data-os="win" title="Windows shortcuts"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.302</span>
-          <span class="last-updated">Last updated: October 17, 2026</span>
+          <span class="version-info">Claude Code v2.1.310</span>
+          <span class="last-updated">Last updated: October 24, 2026</span>
         </div>
       </div>
     </header>
@@ -741,12 +741,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 Recent Changes</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>Fork subagents on by default in <code>claude -p</code>, Agent SDK, desktop app, VS Code — disable with <code>CLAUDE_CODE_FORK_SUBAGENT=0</code> (v2.1.302)</li>
-        <li>Idle compaction toggle added to <code>/config</code> (v2.1.302)</li>
-        <li><code>CLAUDE_CODE_AUTO_MODE_MODEL</code> selects model for auto mode classifier (v2.1.302)</li>
-        <li>Vim <code>%</code> jumps to matching bracket; works with <code>d</code>/<code>c</code>/<code>y</code> operators (v2.1.301)</li>
-        <li>VS Code: LaTeX math rendering; "Get more usage" link in usage-limit banner (v2.1.301)</li>
-        <li>Switching to a model with smaller context window now summarizes first if conversation is too long (v2.1.301)</li>
+        <li>Monitor tool and plugin monitors now work on Bedrock, Vertex, and Foundry, and when telemetry is disabled (v2.1.310)</li>
+        <li>Requests no longer fail behind gateways that reject the <code>effort-2025-11-24</code> header; Claude Code retries automatically without it (v2.1.310)</li>
+        <li><code>claude ultrareview</code> now requires workspace trust; pass <code>--trust-workspace</code> or set <code>CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK=1</code> to bypass (v2.1.309)</li>
+        <li><code>sed -i</code> now uses standard Bash prompt and is no longer reverted by <code>/rewind</code> (v2.1.309)</li>
+        <li>Dangerous <code>rm</code>/<code>rmdir</code> blocked immediately in bypass permissions mode with a rewrite hint (v2.1.309)</li>
+        <li>Multiple security fixes: sandboxed Bash startup files ran outside sandbox, MCP config file now protected, disabled servers no longer reconnectable (v2.1.309)</li>
       </ul>
     </div>
 
@@ -1013,11 +1013,11 @@
           <div class="section-content">
             <div class="sub-header">Built-in Skills</div>
             <div class="row"><span class="key">Skill tool</span> <span class="desc">Discovers built-in slash commands (/init, /review, /security-review…)<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-            <div class="row"><span class="key">/code-review [effort]</span> <span class="desc">Code review; <code>--fix</code> applies findings; <code>--max-findings &lt;n&gt;|all</code> limits count<span class="badge-new" data-added="2026-10-03">NEW</span></span></div>
+            <div class="row"><span class="key">/code-review [effort]</span> <span class="desc">Code review; Quick/Standard/Deep levels; GitHub org-wide review; <code>--fix</code> applies findings<span class="badge-new" data-added="2026-10-20">NEW</span></span></div>
             <div class="row"><span class="key">/batch</span> <span class="desc">Large parallel changes (5-30 worktrees)</span></div>
             <div class="row"><span class="key">/debug [desc]</span> <span class="desc">Troubleshoot from debug log</span></div>
             <div class="row"><span class="key">/loop [interval]</span> <span class="desc">Recurring scheduled task</span></div>
-            <div class="row"><span class="key">/claude-api</span> <span class="desc">Load API + SDK reference</span></div>
+            <div class="row"><span class="key">/claude-api [subcmd]</span> <span class="desc">Load API + SDK reference; <code>managed-agents-secure</code> audits security posture<span class="badge-new" data-added="2026-10-20">NEW</span></span></div>
             
             <div class="sub-header">Custom Skill Locations</div>
             <div class="row"><span class="key">.claude/skills/&lt;name&gt;/</span> <span class="desc">Project skills</span></div>
