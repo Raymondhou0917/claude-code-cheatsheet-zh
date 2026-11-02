@@ -731,7 +731,7 @@
           <button class="os-btn" data-os="win" title="Windows shortcuts"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.310</span>
+          <span class="version-info">Claude Code v2.1.316</span>
           <span class="last-updated">Last updated: October 24, 2026</span>
         </div>
       </div>
@@ -741,12 +741,12 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 Recent Changes</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>Monitor tool and plugin monitors now work on Bedrock, Vertex, and Foundry, and when telemetry is disabled (v2.1.310)</li>
-        <li>Requests no longer fail behind gateways that reject the <code>effort-2025-11-24</code> header; Claude Code retries automatically without it (v2.1.310)</li>
-        <li><code>claude ultrareview</code> now requires workspace trust; pass <code>--trust-workspace</code> or set <code>CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK=1</code> to bypass (v2.1.309)</li>
-        <li><code>sed -i</code> now uses standard Bash prompt and is no longer reverted by <code>/rewind</code> (v2.1.309)</li>
-        <li>Dangerous <code>rm</code>/<code>rmdir</code> blocked immediately in bypass permissions mode with a rewrite hint (v2.1.309)</li>
-        <li>Multiple security fixes: sandboxed Bash startup files ran outside sandbox, MCP config file now protected, disabled servers no longer reconnectable (v2.1.309)</li>
+        <li><code>CLAUDE_CODE_DISABLE_ULTRATHINK</code> env var disables the <code>ultrathink</code> keyword (v2.1.316)</li>
+        <li><code>CLAUDE_CODE_SUBAGENT_EFFORT</code> env var sets default effort level for subagents (v2.1.316)</li>
+        <li>Fast mode for Opus 4.8 deprecated Oct 30; removed Nov 30 — migrate to Opus 5.5 (v2.1.316)</li>
+        <li><code>permissions.blockWritesOutsideWorkingDirectories</code>: Write, Edit, and NotebookEdit refuse paths outside working dirs in all permission modes (v2.1.314)</li>
+        <li>Idle compaction added in VS Code and Claude Desktop Code tab (v2.1.314)</li>
+        <li><code>FORCE_HYPERLINK=false</code> / <code>no</code> / <code>off</code> now correctly turns hyperlinks off (was inverted) (v2.1.314)</li>
       </ul>
     </div>
 
@@ -972,7 +972,7 @@
           <div class="row"><span class="key">modelOverrides</span> <span class="desc">Map model picker → custom IDs</span></div>
           <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Unconditional auto-mode classifier deny rules<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
           <div class="row"><span class="key">hooks: if</span> <span class="desc">Conditional hooks (permission rule syntax)</span></div>
-          <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">Startup warning when prompt caching is disabled<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
+          <div class="row"><span class="key">permissions.blockWritesOutsideWorkingDirectories</span> <span class="desc">Refuse writes outside working dirs in all permission modes<span class="badge-new" data-added="2026-10-30">NEW</span></span></div>
           <div class="row"><span class="key">Monitor tool</span> <span class="desc">Stream events from background scripts<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
           <div class="row"><span class="key">PermissionDenied</span> <span class="desc">Hook: auto-mode denial<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
           <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">Opt-in (off by default now)<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
@@ -989,7 +989,6 @@
           <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc">Custom /model entry</span></div>
           <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc">0=off</span></div>
           <div class="row"><span class="key">ENABLE_PROMPT_CACHING_1H</span> <span class="desc">Opt into 1h prompt cache TTL<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
-          <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">Force recap when telemetry disabled<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">Detect CC shell (=1)</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">Disable scheduled tasks</span></div>
           <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">Block all update paths<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
@@ -997,6 +996,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_SESSION_ID</span> <span class="desc">Unique session ID for hooks and CI tracing<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">Apply a model to every subagent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</span> <span class="desc">Run all workflow agents on one model<span class="badge-new" data-added="2026-10-10">NEW</span></span></div>
+          <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_EFFORT</span> <span class="desc">Default effort level for subagents<span class="badge-new" data-added="2026-10-31">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_MODEL</span> <span class="desc">Model for auto mode classifier (client-side)<span class="badge-new" data-added="2026-10-17">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_CODE_PACKAGE_MANAGER_AUTO_UPDATE</span> <span class="desc">Auto-upgrade via Homebrew/WinGet<span class="badge-new" data-added="2026-05-06">NEW</span></span></div>
           <div class="row"><span class="key">CLAUDE_AX_SCREEN_READER</span> <span class="desc">Screen reader mode (=1)<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>

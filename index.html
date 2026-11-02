@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.310</span>
-          <span class="last-updated">更新日期：2026 年 10 月 26 日</span>
+          <span class="version-info">Claude Code v2.1.316</span>
+          <span class="last-updated">更新日期：2026 年 11 月 2 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>Monitor 工具與外掛 monitor 現在可在 Bedrock、Vertex、Foundry 上使用，遙測停用時也能用 (v2.1.310)<span class="badge-new" data-added="2026-10-24">NEW</span></li>
-        <li>在會拒絕 <code>effort-2025-11-24</code> header 的閘道後方，請求不再失敗；Claude Code 會自動改為不帶該 header 重試 (v2.1.310)<span class="badge-new" data-added="2026-10-24">NEW</span></li>
-        <li><code>claude ultrareview</code> 現在需要工作區信任；可加 <code>--trust-workspace</code> 或設定 <code>CLAUDE_CODE_DISABLE_ULTRAREVIEW_TRUST_CHECK=1</code> 略過 (v2.1.309)<span class="badge-new" data-added="2026-10-24">NEW</span></li>
-        <li><code>sed -i</code> 改走標準 Bash 權限提示，且 <code>/rewind</code> 不再還原它的修改 (v2.1.309)<span class="badge-new" data-added="2026-10-24">NEW</span></li>
-        <li>bypass permissions 模式下，危險的 <code>rm</code>／<code>rmdir</code> 會立刻被擋下並附上改寫建議 (v2.1.309)<span class="badge-new" data-added="2026-10-24">NEW</span></li>
+        <li><code>CLAUDE_CODE_DISABLE_ULTRATHINK</code> 環境變數可關閉 <code>ultrathink</code> 關鍵字 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
+        <li><code>CLAUDE_CODE_SUBAGENT_EFFORT</code> 環境變數：設定子 Agent 在沒有其他指定時使用的 effort 等級，不再沿用主 session 的 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
+        <li>Opus 4.8 的快速模式自 2026 年 10 月 30 日起棄用，將於 2026 年 11 月 30 日移除；移除後，Opus 4.8 上的快速模式請求會回傳錯誤，不會退回標準 Opus 4.8。請改用 Opus 5.5 以保留加速效果 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
+        <li><code>permissions.blockWritesOutsideWorkingDirectories</code>：Write、Edit、NotebookEdit 在所有權限模式下都會拒絕工作目錄以外的路徑 (v2.1.314)<span class="badge-new" data-added="2026-10-30">NEW</span></li>
+        <li>VS Code 與 Claude Desktop 的 Code 分頁新增閒置壓縮：閒置的 200K+ token 對話會先被摘要，prompt cache 過期後，下一則訊息就使用該摘要 (v2.1.314)<span class="badge-new" data-added="2026-10-30">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
@@ -926,7 +926,7 @@
             <div class="row"><span class="key">deniedModels</span> <span class="desc">受管理設定：封鎖特定模型（即使 <code>availableModels</code> 允許）<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
           </details>
           <details class="more">
-            <summary>其他進階設定（30）</summary>
+            <summary>其他進階設定（31）</summary>
             <div class="row"><span class="key">modelOverrides</span> <span class="desc">映射模型選擇器 → 自訂 ID</span></div>
             <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
             <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
@@ -934,6 +934,7 @@
             <div class="row"><span class="key">worktree.bgIsolation</span> <span class="desc"><code>"none"</code>：背景 session 直接編輯工作目錄，無需 EnterWorktree<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
             <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
             <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
+            <div class="row"><span class="key">permissions.blockWritesOutsideWorkingDirectories</span> <span class="desc">所有權限模式下都拒絕寫入工作目錄以外的路徑<span class="badge-new" data-added="2026-10-30">NEW</span></span></div>
             <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
             <div class="row"><span class="key">Monitor tool</span> <span class="desc">串流背景腳本事件<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
             <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
@@ -965,7 +966,7 @@
           <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc">設 <code>1</code> 改用全螢幕渲染，減少畫面閃爍</span></div>
           <div class="row"><span class="key">CLAUDE_CODE_SAFE_MODE</span> <span class="desc">設定壞掉時排查用：不載入 CLAUDE.md、Skills、Hooks、MCP 等客製化（同 <code>--safe-mode</code>）</span></div>
           <details class="more">
-            <summary>模型與 API 進階（18）</summary>
+            <summary>模型與 API 進階（19）</summary>
             <div class="row"><span class="key">ANTHROPIC_DEFAULT_MODEL</span> <span class="desc">新 Session 的起始模型（<code>/model</code> 的選擇仍可覆寫）<span class="badge-new" data-added="2026-08-19">NEW</span></span></div>
             <div class="row"><span class="key">ANTHROPIC_BASE_URL</span> <span class="desc">Proxy／Gateway 端點覆寫</span></div>
             <div class="row"><span class="key">ANTHROPIC_BETAS</span> <span class="desc">額外的 beta header（逗號分隔）</span></div>
@@ -980,6 +981,7 @@
             <div class="row"><span class="key">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span> <span class="desc">預設 32K</span></div>
             <div class="row"><span class="key">CLAUDE_CODE_ENABLE_TODO_TOOLS</span> <span class="desc">設為 <code>1</code> 在 Opus 4.8、Sonnet 5、Fable 5 及更新模型上重新啟用任務追蹤工具（<code>TaskCreate</code>/<code>Get</code>/<code>Update</code>/<code>List</code>、<code>TodoWrite</code>）<span class="badge-new" data-added="2026-08-14">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_MODEL_FORCE</span> <span class="desc">設為 <code>1</code> 將同一模型強制套用到每個子 Agent<span class="badge-new" data-added="2026-09-02">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_SUBAGENT_EFFORT</span> <span class="desc">子 Agent 預設的 effort 等級<span class="badge-new" data-added="2026-10-31">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_WORKFLOW_SUBAGENT_MODEL</span> <span class="desc">讓所有 workflow Agent 使用同一個模型<span class="badge-new" data-added="2026-10-10">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_SERVER</span> <span class="desc">Auto 模式伺服器端分類器；設為 <code>0</code> 改用本機分類器（計入用量）<span class="badge-new" data-added="2026-09-19">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_AUTO_MODE_MODEL</span> <span class="desc">Auto 模式本機分類器使用的模型（不影響伺服器端 Auto 模式）<span class="badge-new" data-added="2026-10-17">NEW</span></span></div>
