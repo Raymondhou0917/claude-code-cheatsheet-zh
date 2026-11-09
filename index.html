@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.316</span>
-          <span class="last-updated">更新日期：2026 年 11 月 2 日</span>
+          <span class="version-info">Claude Code v2.1.319</span>
+          <span class="last-updated">更新日期：2026 年 11 月 9 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li><code>CLAUDE_CODE_DISABLE_ULTRATHINK</code> 環境變數可關閉 <code>ultrathink</code> 關鍵字 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
-        <li><code>CLAUDE_CODE_SUBAGENT_EFFORT</code> 環境變數：設定子 Agent 在沒有其他指定時使用的 effort 等級，不再沿用主 session 的 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
-        <li>Opus 4.8 的快速模式自 2026 年 10 月 30 日起棄用，將於 2026 年 11 月 30 日移除；移除後，Opus 4.8 上的快速模式請求會回傳錯誤，不會退回標準 Opus 4.8。請改用 Opus 5.5 以保留加速效果 (v2.1.316)<span class="badge-new" data-added="2026-10-31">NEW</span></li>
-        <li><code>permissions.blockWritesOutsideWorkingDirectories</code>：Write、Edit、NotebookEdit 在所有權限模式下都會拒絕工作目錄以外的路徑 (v2.1.314)<span class="badge-new" data-added="2026-10-30">NEW</span></li>
-        <li>VS Code 與 Claude Desktop 的 Code 分頁新增閒置壓縮：閒置的 200K+ token 對話會先被摘要，prompt cache 過期後，下一則訊息就使用該摘要 (v2.1.314)<span class="badge-new" data-added="2026-10-30">NEW</span></li>
+        <li>MCP 工具呼叫改在背景執行，完成後 Claude Code 會回報結果；設 <code>CLAUDE_CODE_DISABLE_MCP_TASKS=1</code> 可關閉 (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
+        <li><code>permissions.denyInsteadOfPrompting</code>：會跳出權限提示的工具呼叫改為直接拒絕，讓終端機、子 Agent 與 Teammate session 的這一輪繼續跑下去 (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
+        <li>自我調速的 <code>/loop</code> 在某一輪結束且沒有重新排程時就會結束；要保留舊的 keep-alive 行為請設 <code>CLAUDE_CODE_LOOP_KEEPALIVE=1</code> (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
+        <li>IDE 擴充功能不再從 IDE 內建終端機自動安裝；請改在 IDE 以外的終端機執行 <code>/ide</code> (v2.1.318)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
+        <li>修正 <code>--continue</code> 在 tool call 格式錯誤並重試後遺失對話的問題（v2.1.314 引入的 regression） (v2.1.318)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
@@ -926,7 +926,7 @@
             <div class="row"><span class="key">deniedModels</span> <span class="desc">受管理設定：封鎖特定模型（即使 <code>availableModels</code> 允許）<span class="badge-new" data-added="2026-09-25">NEW</span></span></div>
           </details>
           <details class="more">
-            <summary>其他進階設定（31）</summary>
+            <summary>其他進階設定（32）</summary>
             <div class="row"><span class="key">modelOverrides</span> <span class="desc">映射模型選擇器 → 自訂 ID</span></div>
             <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc">自訂記憶目錄</span></div>
             <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc">Sparse checkout 目錄</span></div>
@@ -935,6 +935,7 @@
             <div class="row"><span class="key">autoMode.hard_deny</span> <span class="desc">Auto 模式分類器無條件拒絕規則<span class="badge-new" data-added="2026-05-08">NEW</span></span></div>
             <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc">沙盒失敗則退出</span></div>
             <div class="row"><span class="key">permissions.blockWritesOutsideWorkingDirectories</span> <span class="desc">所有權限模式下都拒絕寫入工作目錄以外的路徑<span class="badge-new" data-added="2026-10-30">NEW</span></span></div>
+            <div class="row"><span class="key">permissions.denyInsteadOfPrompting</span> <span class="desc">會跳出權限提示的工具呼叫改為直接拒絕，不等待確認——終端機、子 Agent、Teammate session 都適用<span class="badge-new" data-added="2026-11-07">NEW</span></span></div>
             <div class="row"><span class="key">DISABLE_PROMPT_CACHING*</span> <span class="desc">停用 prompt caching 時啟動會警告<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
             <div class="row"><span class="key">Monitor tool</span> <span class="desc">串流背景腳本事件<span class="badge-new" data-added="2026-04-09">NEW</span></span></div>
             <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc">選擇啟用（預設關閉）<span class="badge-new" data-added="2026-03-31">NEW</span></span></div>
@@ -1002,13 +1003,14 @@
             <div class="row"><span class="key">CLAUDE_CODE_PROCESS_WRAPPER</span> <span class="desc">指定企業啟動器可執行檔：所有 Claude Code 自行派送的程序（agent view、背景服務）都透過此啟動器執行<span class="badge-new" data-added="2026-07-14">NEW</span></span></div>
           </details>
           <details class="more">
-            <summary>其他環境變數（24）</summary>
+            <summary>其他環境變數（25）</summary>
             <div class="row"><span class="key">CLAUDE_CODE_ENABLE_AWAY_SUMMARY</span> <span class="desc">停用遙測時仍強制產生回來時的 recap<span class="badge-new" data-added="2026-04-15">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_USE_POWERSHELL_TOOL</span> <span class="desc">啟用 Windows PowerShell 工具（Linux/macOS 設 =1，需 pwsh 在 PATH）<span class="badge-new" data-added="2026-04-17">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_POWERSHELL_RESPECT_EXECUTION_POLICY</span> <span class="desc">設為 <code>1</code> 退出 PowerShell <code>-ExecutionPolicy Bypass</code> 預設值<span class="badge-new" data-added="2026-05-15">NEW</span></span></div>
             <div class="row"><span class="key">DISABLE_UPDATES</span> <span class="desc">封鎖所有更新路徑，包含手動 <code>claude update</code><span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_HIDE_CWD</span> <span class="desc">隱藏啟動 Logo 中的工作目錄<span class="badge-new" data-added="2026-04-23">NEW</span></span></div>
             <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc">在 <code>-p</code> 模式跳過 MCP 等待<span class="badge-new" data-added="2026-04-01">NEW</span></span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_DISABLE_MCP_TASKS</span> <span class="desc">關閉 MCP 任務背景執行——工具呼叫改為原地等待結果（=1）<span class="badge-new" data-added="2026-11-07">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDE_CODE_PERFORCE_MODE</span> <span class="desc">Perforce 模式：唯讀檔案自動提示 p4 edit（=1）<span class="badge-new" data-added="2026-04-10">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDECODE</span> <span class="desc">偵測 CC Shell 環境（=1）</span></div>
             <div class="row"><span class="key">CLAUDE_CODE_DISABLE_CRON</span> <span class="desc">停用排程任務</span></div>
