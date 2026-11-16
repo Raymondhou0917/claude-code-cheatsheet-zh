@@ -603,8 +603,8 @@
           <button class="os-btn" data-os="win" title="Windows 快捷鍵"><svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg></button>
         </div>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.319</span>
-          <span class="last-updated">更新日期：2026 年 11 月 9 日</span>
+          <span class="version-info">Claude Code v2.1.325</span>
+          <span class="last-updated">更新日期：2026 年 11 月 16 日</span>
         </div>
       </div>
     </header>
@@ -613,11 +613,11 @@
     <div class="changelog">
       <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;">📋 近期更新</a> <span class="changelog-dismiss" onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li>MCP 工具呼叫改在背景執行，完成後 Claude Code 會回報結果；設 <code>CLAUDE_CODE_DISABLE_MCP_TASKS=1</code> 可關閉 (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
-        <li><code>permissions.denyInsteadOfPrompting</code>：會跳出權限提示的工具呼叫改為直接拒絕，讓終端機、子 Agent 與 Teammate session 的這一輪繼續跑下去 (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
-        <li>自我調速的 <code>/loop</code> 在某一輪結束且沒有重新排程時就會結束；要保留舊的 keep-alive 行為請設 <code>CLAUDE_CODE_LOOP_KEEPALIVE=1</code> (v2.1.319)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
-        <li>IDE 擴充功能不再從 IDE 內建終端機自動安裝；請改在 IDE 以外的終端機執行 <code>/ide</code> (v2.1.318)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
-        <li>修正 <code>--continue</code> 在 tool call 格式錯誤並重試後遺失對話的問題（v2.1.314 引入的 regression） (v2.1.318)<span class="badge-new" data-added="2026-11-09">NEW</span></li>
+        <li>沙盒內的 Bash 預設改走一般權限流程；設 <code>sandbox.autoAllowBashIfSandboxed: true</code> 可恢復自動允許 (v2.1.325)<span class="badge-new" data-added="2026-11-16">NEW</span></li>
+        <li>排程任務與 <code>/loop</code> 執行帶有 <code>allowed-tools</code> 的 skill 前會先詢問；無人值守執行請把 <code>Skill(name)</code> 加進 <code>permissions.allow</code> (v2.1.325)<span class="badge-new" data-added="2026-11-16">NEW</span></li>
+        <li>VS Code：預設啟用提示建議（按 Tab 接受）；設 <code>promptSuggestionEnabled: false</code> 可關閉 (v2.1.325)<span class="badge-new" data-added="2026-11-16">NEW</span></li>
+        <li>Code Mode（實驗性、需手動啟用）：Claude 改寫 JS 來呼叫工具，而非原生工具呼叫 (v2.1.323)<span class="badge-new" data-added="2026-11-16">NEW</span></li>
+        <li>安全性：被 Read deny 規則涵蓋的路徑，現在也會擋下 <code>Write</code>／<code>Edit</code>；補上 Bash 權限漏洞 (v2.1.323)<span class="badge-new" data-added="2026-11-16">NEW</span></li>
       </ul>
       <a class="changelog-more" href="https://code.claude.com/docs/en/changelog" target="_blank" rel="noopener">看完整更新紀錄 →</a>
     </div>
